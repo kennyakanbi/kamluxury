@@ -10,3 +10,5 @@ python manage.py migrate --noinput
 python manage.py loaddata listings_fixture.cleaned.json || true
 
 python manage.py collectstatic --noinput
+
+sh -lc "/opt/render/project/src/.venv/bin/python /opt/render/project/src/manage.py migrate --noinput && /opt/render/project/src/.venv/bin/python /opt/render/project/src/manage.py loaddata listings_fixture.cleaned.json || true && /opt/render/project/src/.venv/bin/gunicorn config.wsgi:application"
