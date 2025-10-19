@@ -11,18 +11,11 @@ SECRET_KEY = env("SECRET_KEY", default="dev-secret-key")
 # Use env.bool so DEBUG becomes a proper boolean
 DEBUG = env.bool("DEBUG", default=True)
 
-# Allow hosts as a comma-separated env var; default to dev wildcard
-ALLOWED_HOSTS = env.list("ALLOWED_HOSTS", default=["*"])
+ALLOWED_HOSTS =['kamluxng.onrender', 'localhost', '127.0.0.1']
 
-
-AWS_ACCESS_KEY_ID = "your-access-key"
-AWS_SECRET_ACCESS_KEY = "your-secret-key"
-AWS_STORAGE_BUCKET_NAME = "your-bucket-name"
-AWS_S3_CUSTOM_DOMAIN = f"{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com"
 
 
 INSTALLED_APPS = [
-    "storages",
     "django.contrib.humanize",
     "django.contrib.admin",
     "django.contrib.auth",
