@@ -1,11 +1,12 @@
 #!/usr/bin/env bash
-set -e
+set -o errexit  # exit on error
 
-# Install Python dependencies
 pip install -r requirements.txt
 
-# Run migrations
+# Run migrations and load your data automatically
 python manage.py migrate --noinput
 
-# Collect static files for WhiteNoise
+# Load your listings data (optional, remove if not needed every deploy)
+python manage.py loaddata listings_fixture.cleaned.json || true
+
 python manage.py collectstatic --noinput
