@@ -70,21 +70,42 @@ TEMPLATES = [
 
 WSGI_APPLICATION = "config.wsgi.application"
 
-# DATABASES: use DATABASE_URL if provided (Render/Postgres), otherwise fallback to sqlite
-DATABASE_URL = os.environ.get("DATABASE_URL")
-if DATABASE_URL:
-    # Use dj_database_url to parse the DATABASE_URL
-    DATABASES = {
-        "default": dj_database_url.parse(DATABASE_URL, conn_max_age=600, ssl_require=True)
-    }
+# --- DATABASE configuration (robust for Render) ---
+import os
+from urllib.parse import urlparse
+
+DATABASE_URL = os.environ.get("DATABASE_URL", "") or ""
+
+def is_valid_db_url(url: str) -> bool:
+    # quick check: non-empty and contains a scheme (like 'postgres://' or 'sqlite:///')
+    if not url:
+        return False
+    parsed = urlparse(url)
+    return bool(parsed.scheme) and parsed.scheme != ""
+
+if is_valid_db_url(DATABASE_URL):
+    # dj_database_url.parse expects a normal URL like "postgres://..."
+    try:
+        DATABASES = {
+            "default": dj_database_url.parse(DATABASE_URL, conn_max_age=600, ssl_require=True)
+        }
+    except Exception:
+        # If parsing fails, fall back to sqlite instead of crashing
+        DATABASES = {
+            "default": {
+                "ENGINE": "django.db.backends.sqlite3",
+                "NAME": BASE_DIR / "db.sqlite3",
+            }
+        }
 else:
-    # Local development fallback
+    # Fallback to local sqlite for development or when DATABASE_URL not set / invalid
     DATABASES = {
         "default": {
             "ENGINE": "django.db.backends.sqlite3",
             "NAME": BASE_DIR / "db.sqlite3",
         }
     }
+# --- end DATABASE block ---
 
 AUTH_PASSWORD_VALIDATORS = [
     {"NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator"},
