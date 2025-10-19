@@ -1,0 +1,74 @@
+{% extends 'listings/base.html' %}
+{% load static %}
+{% block title %}Our Activities | Kam Luxury Nigeria{% endblock %}
+
+{% block content %}
+<section class="py-5 bg-light text-center">
+  <div class="container">
+    <h1 class="fw-bold mb-3">Our Activities</h1>
+    <p class="lead text-muted">Explore how we bring real estate excellence to life — from site inspections to project launches.</p>
+  </div>
+</section>
+
+<section class="py-5">
+  <div class="container">
+    <div class="row g-4">
+      <div class="col-md-6">
+        <div class="card border-0 shadow-sm">
+          <img src="{% static 'img/garth.png' %}" class="card-img-top" alt="Site Inspection">
+          <div class="card-body">
+            <h5 class="card-title fw-bold">Site Visitations</h5>
+            <p class="card-text">
+              We organize regular client site inspections to provide first-hand experience of our ongoing and completed projects. Transparency and trust are the foundations of our process.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <div class="card border-0 shadow-sm">
+          <img src="{% static 'img/palm.png' %}" class="card-img-top" alt="Project Launch">
+          <div class="card-body">
+            <h5 class="card-title fw-bold">Project Launch Events</h5>
+            <p class="card-text">
+              Our launch events bring together investors, clients, and partners to celebrate new developments and unveil our vision for the future of luxury living in Nigeria.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <div class="card border-0 shadow-sm">
+          <img src="{% static 'img/media.jpg' %}" class="card-img-top" alt="Media Coverage">
+          <div class="card-body">
+            <h5 class="card-title fw-bold">Media & Publicity</h5>
+            <p class="card-text">
+              We showcase our milestones through live coverage, social media campaigns, and press features — ensuring our community stays informed and inspired.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <div class="card border-0 shadow-sm">
+          <img src="{% static 'img/client.jpg' %}" class="card-img-top" alt="Client Testimonials">
+          <div class="card-body">
+            <h5 class="card-title fw-bold">Client Success Stories</h5>
+            <p class="card-text">
+              Hear directly from satisfied clients who have trusted Kam Luxury Nigeria for their dream homes, investment lands, and property portfolios.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="py-5 bg-dark text-white text-center">
+  <div class="container">
+    <h2 class="fw-bold mb-3">Join Our Next Site Tour</h2>
+    <p>Follow us on our social media platforms to stay updated on our next property visitations and exclusive project tours.</p>
+    <a href="https://wa.me/2347036067548" class="btn btn-success mt-3">Book a Visit</a>
+  </div>
+</section>
+{% endblock %}

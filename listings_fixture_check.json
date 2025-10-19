@@ -1,0 +1,298 @@
+﻿[
+{
+  "model": "listings.property",
+  "pk": 1,
+  "fields": {
+    "title": "LUXURY LIVING AT ITS FINEST!",
+    "slug": "luxury-living-at-its-finest",
+    "category": "3BR",
+    "location": "Chevron Drive",
+    "description": "LUXURY LIVING AT ITS FINEST!\r\n\r\nIntroducing Chevy Castle Apartments, strategically located in the heart of Lekki, Lagos, on the prestigious Chevron Drive. This prime estate offers a limited opportunity to own a piece of luxury, with 3 bedroom apartment units available for sale:\r\n\r\n3 Bedroom Apartment: Γéª160,000,000\r\nInitial Deposit: Γéª40,000,000\r\nPayment Plan: 0-3 months\r\nUnits Available: 3\r\n\r\nDon't miss this incredible opportunity to invest in your dream home! Chevy Castle Apartments offers a unique blend of luxury, comfort, and convenience, making it the perfect choice for discerning homeowners.\r\n\r\nContact us today to schedule a viewing and make your dream a reality!\r\n\r\nHurry! Units are selling fast!",
+    "price": "160000000.00",
+    "initial_deposit": "40000000.00",
+    "installment_plan": "",
+    "bedrooms": 0,
+    "bathrooms": 0,
+    "parking": 0,
+    "square_meters": 0,
+    "is_featured": true,
+    "cover": "properties/chv.png",
+    "gallery1": "",
+    "gallery2": "",
+    "created_at": "2025-10-02T16:35:34.471Z"
+  }
+},
+{
+  "model": "listings.property",
+  "pk": 2,
+  "fields": {
+    "title": "Maison DΓÇÖEko Residence ΓÇô Luxury Apartments in Lekki Phase 1",
+    "slug": "maison-deko-residence-luxury-apartments-in-lekki-p",
+    "category": "STUDIO",
+    "location": "Abeke Animashaun Street, Lekki Phase 1, Lagos",
+    "description": "≡ƒÅó Maison DΓÇÖEko Residence ΓÇô Luxury Apartments in Lekki Phase 1\r\nMaison DΓÇÖEko Residence is a premium off-plan development located at Abeke Animashaun Street, Lekki Phase 1, Lagos. Designed for modern living, it blends elegance, comfort, and convenience within one of LagosΓÇÖ most prestigious addresses.\r\n\r\n≡ƒÆ░ Price Guide\r\nΓÇó\tStudio Apartment ΓÇô Γéª100 Million\r\nΓÇó\t2-Bedroom Apartment ΓÇô Γéª230 Million\r\n\r\n(Flexible payment plans available)\r\nΓ£¿ Key Features\r\nΓ£ö∩╕Å 24/7 Power Supply\r\nΓ£ö∩╕Å Fully Equipped Gym\r\nΓ£ö∩╕Å En-suite Bathrooms\r\nΓ£ö∩╕Å Smart Home Technology\r\nΓ£ö∩╕Å Central Gas System\r\nΓ£ö∩╕Å Swimming Pool\r\nΓ£ö∩╕Å Elevator Access\r\nΓ£ö∩╕Å Water Treatment Plant\r\n\r\n≡ƒÄ» Why Choose Maison DΓÇÖEko Residence?\r\nMaison DΓÇÖEko Residence offers more than just a home ΓÇö itΓÇÖs a lifestyle. With world-class facilities, prime location, and future-proof investment potential, this development is perfect for homeowners seeking serenity and investors seeking growth.\r\n\r\n≡ƒô₧ Contact Kam Luxury Nigeria\r\nFor inquiries, site inspection, and payment details:\r\n≡ƒôì 59, Murtala Mohammed Way, Ebute-Metta, Lagos\r\n≡ƒô₧ 08053309281\r\n≡ƒîÉ kamluxurynigeria.com\r\n≡ƒô▓ Instagram | Twitter | Facebook: @kamluxuryng\r\nΓ£¿ Marketed exclusively by Kam Luxury Nigeria ΓÇô Luxury Homes, Smart Investments.",
+    "price": "250000000.00",
+    "initial_deposit": null,
+    "installment_plan": "",
+    "bedrooms": 2,
+    "bathrooms": 0,
+    "parking": 0,
+    "square_meters": 0,
+    "is_featured": true,
+    "cover": "properties/mai_2Z8vhtO.png",
+    "gallery1": "properties/maision_nDqtOyN.png",
+    "gallery2": "",
+    "created_at": "2025-10-03T12:03:50.794Z"
+  }
+},
+{
+  "model": "listings.property",
+  "pk": 3,
+  "fields": {
+    "title": "Grow Wealth from the Soil ΓÇö Join Palm Crest 2 Agricultural Investment.",
+    "slug": "agro-real-estate-assets",
+    "category": "FARM",
+    "location": "Agurenge, Iseyin-Saki road, Oyo State.",
+    "description": "≡ƒî┤ Palm Crest 2 ΓÇô The Future-Proof Agricultural Investment\r\nWe Farm. You Earn.\r\nPalm Crest 2 represents a groundbreaking opportunity for individuals and organizations seeking a secure, long-term, and sustainable investment. Nestled within over 3,000 acres of fertile land in Imeko-Afon, Ogun State, this innovative project merges real estate ownership with agricultural profitability, giving investors full control of their land while we handle the farming.\r\nAt Palm Crest, we cultivate F1 Tenera hybrid palm trees, known for producing up to 4x more oil per hectare than traditional crops. These trees begin to yield from the 4th year, generating steady annual income for the next 25ΓÇô30 years. Investors enjoy passive earnings while we manage all planting, maintenance, harvesting, and processing activities.\r\n\r\n≡ƒîì Why Palm Crest?\r\n≡ƒö╣ Global Demand on the Rise\r\nPalm oil is a powerhouse ingredient used across five major industries:\r\nΓÇó\tPharmaceuticals ΓÇô essential in drug formulations and therapeutic products\r\nΓÇó\tFood & Beverage ΓÇô found in over 50% of packaged foods worldwide\r\nΓÇó\tBiofuels ΓÇô a clean, renewable alternative to fossil fuels\r\nΓÇó\tCosmetics & Personal Care ΓÇô a key natural ingredient in the global beauty industry\r\nΓÇó\tIndustrial Manufacturing ΓÇô used in lubricants, detergents, paints, and adhesives\r\nAs global sustainability goals push industries toward renewable materials, palm oilΓÇÖs market potential continues to grow ΓÇö positioning your investment at the center of a thriving global demand.\r\n\r\n≡ƒÆ╝ Investment Highlights\r\nΓÇó\tLand Ownership ΓÇô Investors receive titled land backed by a Certificate of Occupancy (C of O).\r\nΓÇó\tFully Managed Plantation ΓÇô We handle everything from cultivation to sales.\r\nΓÇó\tHigh Yield Returns ΓÇô Begin earning from the 4th year of investment.\r\nΓÇó\tLong-Term Passive Income ΓÇô Continuous returns for 25ΓÇô30 years.\r\nΓÇó\tNo Hidden Fees ΓÇô Management and maintenance costs are covered by a 20% revenue deduction post-harvest.\r\nΓÇó\tRegular Updates ΓÇô Weekly, bi-weekly, or monthly progress reports plus annual performance reports.\r\nΓÇó\tProject Visits ΓÇô Investors can visit anytime or join quarterly guided tours.\r\n\r\n≡ƒôì Project Location\r\nOff Afon Road, Imeko-Afon LGA, Ogun State, Nigeria.\r\nA strategic agricultural hub with proximity to major transport corridors and export routes.\r\n\r\n≡ƒÆ░ Flexible Payment Plans\r\n1 Acre Plan:\r\nΓÇó\tΓéª3,000,000 ΓÇô Γéª3,400,000 (spread over 12 months)\r\nΓÇó\tInitial Deposit: Γéª1,000,000\r\n1 Hectare Plan:\r\nΓÇó\tΓéª7,000,000 ΓÇô Γéª7,600,000 (spread over 12 months)\r\nΓÇó\tInitial Deposit: Γéª2,000,000\r\n\r\n≡ƒÅå Why Choose Palm Crest?\r\nPalm Crest is more than an investment ΓÇö itΓÇÖs a movement toward agricultural transformation, job creation, and economic empowerment. By joining, youΓÇÖre helping reduce NigeriaΓÇÖs dependence on palm oil imports while building wealth through a sustainable and future-focused enterprise.",
+    "price": "3000000.00",
+    "initial_deposit": null,
+    "installment_plan": "",
+    "bedrooms": 0,
+    "bathrooms": 0,
+    "parking": 0,
+    "square_meters": 0,
+    "is_featured": true,
+    "cover": "properties/palm_crest_feature.png",
+    "gallery1": "properties/palm2.png",
+    "gallery2": "properties/price_38QAibQ.png",
+    "created_at": "2025-10-03T16:54:59.291Z"
+  }
+},
+{
+  "model": "listings.property",
+  "pk": 4,
+  "fields": {
+    "title": "IBILE City & Resort ΓÇô A Smart Community for Modern Living & Sustainable Investment",
+    "slug": "ibile-city-resort-a-smart-community-for-modern-liv",
+    "category": "LAND",
+    "location": "off Imota, Ikorodu",
+    "description": "≡ƒî┤ IBILE CITY & RESORT ΓÇô Live ΓÇó Farm ΓÇó Thrive\r\nWelcome to IBILE City & Resort, a revolutionary 3,000-acre community where modern living meets sustainable agriculture. This innovative agrihood development is redefining real estate investment by combining residential comfort, productive farmland, and world-class recreational spaces ΓÇö all in one integrated environment.\r\nLocated off Imota, Ikorodu, the estate is designed for forward-thinking Nigerians seeking to live, invest, and thrive in a balanced, future-ready community.\r\n≡ƒÅí Residential Cluster ΓÇô Live\r\nExperience eco-friendly living with modern modular homes, smart security, and green energy systems. The residential cluster offers well-planned plots surrounded by a good road network, community gardens, and co-working hubs that promote connection and convenience.\r\nAvailable Plot Sizes:\r\nΓÇó\t300 SQM ΓÇô Γéª1.38M\r\nΓÇó\t500 SQM ΓÇô Γéª2.3M\r\nΓÇó\t1 Acre ΓÇô Γéª13.8M\r\n≡ƒÆ░ Outright payment attracts up to 17.86% discount.\r\n\r\n≡ƒî╛ Agricultural Cluster ΓÇô Farm\r\nJoin the future of agriculture through commercial organic farms, greenhouses, and vertical farming units that support sustainability and income generation.\r\nAvailable Farmland Options:\r\nΓÇó\t1 Acre ΓÇô Γéª11M\r\nΓÇó\t2 Acres ΓÇô Γéª22M\r\nΓÇó\t5 Acres ΓÇô Γéª55M\r\n\r\nEach subscription includes statutory fees, survey documentation, and access to processing and storage facilities.\r\n\r\n≡ƒî│ Recreational Cluster ΓÇô Thrive\r\nThe resort zone offers a luxurious retreat featuring swimming pools, wellness centers, sports fields, and picnic areas ΓÇö all designed for relaxation and social engagement.\r\nEnjoy monthly community events, from bonfires to workshops, fostering a vibrant, connected neighborhood.\r\n\r\n≡ƒ¢í∩╕Å Why Choose IBILE City & Resort?\r\nΓÇó\tΓ£à Secure & Verified Title: Registered Survey, free from government acquisition\r\nΓÇó\tΓ£à Flexible Payment Plans: 0ΓÇô8 months with 40% initial deposit\r\nΓÇó\tΓ£à High-Value Appreciation: Strategic location ensures strong ROI\r\nΓÇó\tΓ£à Fully Serviced Infrastructure: Gatehouse, fencing, earth road network, and drainage\r\nΓÇó\tΓ£à Community-Centered Living: Residential, agricultural, and leisure clusters integrated for a sustainable lifestyle\r\n\r\n≡ƒô£ Documentation & Allocation\r\nUpon full payment, subscribers receive an Acknowledgement Letter, Contract of Sale, and Deed of Assignment.\r\n\r\nPhysical allocation is done instantly after statutory fees are cleared, with survey and documentation delivered on allocation day.\r\n\r\n≡ƒÆí Key Investment Advantages\r\nΓÇó\t3-in-1 opportunity: Live, Farm, and Earn\r\nΓÇó\tPerfect for homeowners, agripreneurs, and investors\r\nΓÇó\tBacked by ACE Real Estate Development Ltd (RC 1695202)\r\nΓÇó\tTransparent process with no hidden charges\r\n\\\r\n≡ƒô₧ Contact Kam Luxury Nigeria\r\nFor all inquiries, site inspections, and payment assistance:\r\n≡ƒôì 59, Murtala Mohammed Way, Ebute-Metta, Lagos\r\n≡ƒô₧ 08053309281\r\n≡ƒîÉ kamluxurynigeria.com\r\n≡ƒô▓ Instagram | Twitter | Facebook: @kamluxuryng\r\n\r\n\r\nΓ£¿ Marketed exclusively by Kam Luxury Nigeria ΓÇô Luxury Homes, Smart Investments.",
+    "price": "1380000.00",
+    "initial_deposit": null,
+    "installment_plan": "",
+    "bedrooms": 0,
+    "bathrooms": 0,
+    "parking": 0,
+    "square_meters": 0,
+    "is_featured": true,
+    "cover": "properties/ibile.png",
+    "gallery1": "properties/acre.png",
+    "gallery2": "properties/WhatsApp_Image_2025-09-22_at_08.51.11_ed6b3943.jpg",
+    "created_at": "2025-10-04T15:18:08.840Z"
+  }
+},
+{
+  "model": "listings.property",
+  "pk": 5,
+  "fields": {
+    "title": "Discover Echelon Apartments ΓÇô Premium Comfort, Smart Investment",
+    "slug": "discover-echelon-apartments-premium-comfort-smart",
+    "category": "RESIDENT",
+    "location": "Oribanwa axis of Lagos",
+    "description": "≡ƒÅÖ∩╕Å Echelon Apartments ΓÇô Designed for Life, Built for the Future\r\nWelcome to Echelon Apartments, where architecture meets aspiration. Located in the fast-growing Oribanwa axis of Lagos, Echelon redefines modern urban living with a blend of functionality, sophistication, and long-term investment value.\r\n\r\nIn a world where the idea of ΓÇ£homeΓÇ¥ keeps evolving, Echelon Apartments offers a bold response ΓÇö spaces that inspire comfort, pride, and connection. Whether youΓÇÖre seeking your first home or expanding your investment portfolio, this is a property designed to mirror your ambition and lifestyle.\r\n\r\n≡ƒÅí Apartment Options\r\nEchelon offers three distinct living spaces tailored to your needs and aspirations:\r\nΓÇó\t1-Bedroom Unit ΓÇô Sleek, intimate, and perfect for singles or young couples seeking independence with style.\r\nΓÇó\t2-Bedroom Pro ΓÇô Designed for creative professionals who love dynamic spaces and open flow.\r\nΓÇó\t2-Bedroom Max ΓÇô Spacious and structured for families who value comfort, connection, and functionality.\r\n\r\nΓ£¿ Premium Features & Facilities\r\nEvery detail at Echelon is crafted to deliver a seamless living experience:\r\nΓÇó\tFully fitted kitchens\r\nΓÇó\tWater heaters in all units\r\nΓÇó\tSpacious parking area\r\nΓÇó\tModern drainage system\r\nΓÇó\tConstant water supply\r\nΓÇó\t24/7 security with CCTV surveillance\r\n\r\n≡ƒôì Why Oribanwa?\r\nOribanwa is one of LagosΓÇÖ fastest-growing residential hubs, combining urban accessibility with serene suburban living.\r\nΓÇó\tClose to major highways, schools, shopping districts, and business centers\r\nΓÇó\tPromising high value appreciation and strong return on investment\r\nΓÇó\tA location thatΓÇÖs smart, peaceful, and future-proof\r\n\r\n≡ƒÆ░ Pricing & Payment Plans\r\nΓÇó\t1-Bedroom Apartment: Starting from Γéª53 Million\r\nΓÇó\t2-Bedroom Apartment: Starting from Γéª73 Million\r\n\r\nSecure your unit today with an initial deposit and spread the balance across 6 months.\r\n\r\nNo hidden charges, no red tape ΓÇö just a clear path to homeownership.\r\n\r\n≡ƒÅù∩╕Å Investment Advantage\r\nWhether youΓÇÖre a homeowner or an investor, Echelon offers both lifestyle luxury and financial growth. As Oribanwa continues to expand, your investment appreciates alongside modern infrastructure and community development.\r\n\r\nΓÇ£Echelon is a winning move. Located in a rapidly developing area, the value trajectory is upward.ΓÇ¥\r\n\r\n≡ƒô₧ Contact Kam Luxury Nigeria ΓÇô Authorized Marketer\r\nFor inspection, inquiries, and payment details:\r\n≡ƒôì 59, Murtala Mohammed Way, Ebute-Metta, Lagos\r\n≡ƒô₧ 08053309281\r\n≡ƒîÉ kamluxurynigeria.com\r\n≡ƒô▓ Instagram | Twitter | Facebook: @kamluxuryng\r\n\r\nΓ£¿ Marketed exclusively by Kam Luxury Nigeria ΓÇô Luxury Homes, Smart Investments.",
+    "price": "53000000.00",
+    "initial_deposit": "10000000.00",
+    "installment_plan": "",
+    "bedrooms": 0,
+    "bathrooms": 0,
+    "parking": 0,
+    "square_meters": 0,
+    "is_featured": true,
+    "cover": "properties/ech.png",
+    "gallery1": "properties/ech_upPosWY.png",
+    "gallery2": "",
+    "created_at": "2025-10-05T07:53:20.365Z"
+  }
+},
+{
+  "model": "listings.property",
+  "pk": 6,
+  "fields": {
+    "title": "Own Fertile Land, earn Passive Income, and Secure your Legacy.",
+    "slug": "own-fertile-land-earn-passive-income-and-secure-yo",
+    "category": "FARM",
+    "location": "Apa Egbede Community, Imodi Ijasi, Ikorodu / Ijebu Ode Road, Ogun State",
+    "description": "≡ƒÅí Zara Farm City ΓÇô The Land of Wealth\r\nInvestment that grows with time.\r\nZara Farm City is more than just land ΓÇö itΓÇÖs a thriving ecosystem designed for residential living, agriculture, and long-term wealth creation. Whether you want to build your dream country home, grow sustainable crops, or bank your land for capital appreciation, this estate gives you the power to do it all.\r\n\r\n≡ƒôì Location\r\nApa Egbede Community, Imodi Ijasi, Ikorodu / Ijebu Ode Road, Ogun State\r\n\r\n≡ƒÆí Why Choose Zara Farm City\r\nΓÇó\t≡ƒî╛ Capital appreciation of up to 43 % annually\r\nΓÇó\t≡ƒôê Certificate of Occupancy ensures lasting ownership value\r\nΓÇó\t≡ƒÆ░ Earn residual income through land banking & agriculture\r\nΓÇó\t≡ƒ¢ú∩╕Å Prime location with easy road access\r\nΓÇó\t≡ƒÅù∩╕Å Immediate allocation upon purchase\r\nΓÇó\t≡ƒñ¥ Integrity | Value | Time Delivery | Quality ΓÇô our core principles\r\n\r\n≡ƒôª Plot Sizes & Prices\r\nSize\tPrice\tInitial Deposit\r\n500 SQM\t    Γéª 1.8 Million\t   Γéª 500 K\r\n1 Acre\t    Γéª 10.8 Million\t   Γéª 3 Million\r\n1 Hectare\t    Γéª 27 Million\t   Γéª 9 Million\r\nFlexible payment plans available (up to 8 months).\r\nEnjoy 17.86 % discount on outright payments.\r\n\r\n≡ƒÅí Nearby Landmarks\r\nΓÇó\tGrace Polytechnic\r\nΓÇó\tSikiru Adetona College of Education\r\nΓÇó\tLagos Food Security and Logistics Hub\r\nΓÇó\tLekki Free Trade Zone & Deep Sea Port\r\nΓÇó\tLekki New International Airport\r\nΓÇó\tSurrounding Residential Communities\r\n\r\n≡ƒî│ Estate Facilities\r\nΓÇó\tSecure perimeter fencing & gatehouse\r\nΓÇó\tInternal access roads\r\nΓÇó\tRecreational centre & green area\r\nΓÇó\tEstate layout with irrigation support\r\nΓÇó\tSolar-powered electricity\r\n\r\n≡ƒî▒ Investment Highlight\r\nAt Zara Farm City, your land becomes an income-producing asset. Combine crop cultivation and land banking to generate a steady stream of revenue ΓÇö turning every acre into opportunity.\r\n\r\n≡ƒô₧ Contact Us Today\r\nSecure your future now!\r\nCall / WhatsApp: 0805 330 9281\r\n≡ƒîÉ kamluxurynigeria.com\r\n≡ƒôì 59 Muritala Mohammed Way, Ebute-Metta, Lagos\r\n≡ƒô▓ Instagram | Twitter | Facebook: @kamluxuryng\r\nMarketed exclusively by Kam Luxury Nigeria ΓÇö Authorized Realtor & Consultant.",
+    "price": "1800000.00",
+    "initial_deposit": "500000.00",
+    "installment_plan": "",
+    "bedrooms": 0,
+    "bathrooms": 0,
+    "parking": 0,
+    "square_meters": 0,
+    "is_featured": true,
+    "cover": "properties/WhatsApp_Image_2025-10-01_at_05.16.56_c39b0dbb.jpg",
+    "gallery1": "properties/WhatsApp_Image_2025-10-01_at_05.16.57_545d5a43.jpg",
+    "gallery2": "properties/WhatsApp_Image_2025-10-01_at_05.16.56_d09d7d83.jpg",
+    "created_at": "2025-10-05T09:53:08.742Z"
+  }
+},
+{
+  "model": "listings.property",
+  "pk": 7,
+  "fields": {
+    "title": "Γüá4 Bedroom penthouse apartmen at Ocean Bay Estate, Orchid-Lekki",
+    "slug": "hillstar-court-2-at-ocean-bay-estate-orchid-lekki",
+    "category": "RESIDENT",
+    "location": "Ocean Bay Estate, Orchid-Lekki, Lagos",
+    "description": "HILLSTAR COURT 2 \r\n\r\n4 bedroom penthouse \r\n\r\nLocation: Ocean Bay Estate, Orchid-Lekki, Lagos \r\n\r\nTitle : Governors Consent\r\n\r\nPrice Guide \r\n- Γüá4 Bedroom penthouse apartment- N110Million \r\n\r\nUnique Features: \r\nAll rooms ensuite\r\nFully- fitted kitchen \r\nDining Area\r\nAmple parking space \r\nMaid room/ BQ\r\nIn-built ceiling speakers CCTV cameras\r\nPrivate compound space\r\n24/7 power\r\n24/7 security\r\nCentral water system\r\nCentral sewage system\r\nRecreational Facilities\r\nFully serviced estate\r\nGated and secured area\r\nBalcony \r\n\r\nNeighborhood and Landmarks: \r\nChevron Tollgate\r\nOrchid hotel\r\nPrime mall\r\nMega chicken\r\nLekki conservation center\r\nFor more information & payment details contact us!",
+    "price": "110000000.00",
+    "initial_deposit": "60000000.00",
+    "installment_plan": "All 3 Months Plans",
+    "bedrooms": 0,
+    "bathrooms": 0,
+    "parking": 0,
+    "square_meters": 0,
+    "is_featured": true,
+    "cover": "properties/WhatsApp_Image_2025-10-02_at_10.29.34_09eee7ae.jpg",
+    "gallery1": "properties/jaircourt.png",
+    "gallery2": "",
+    "created_at": "2025-10-06T06:29:38.570Z"
+  }
+},
+{
+  "model": "listings.property",
+  "pk": 8,
+  "fields": {
+    "title": "De Lekki Apartment, Ikate ΓÇô Prime Short-Let Investment",
+    "slug": "de-lekki-apartment-ikate-prime-short-let-investmen",
+    "category": "1BR",
+    "location": "Ikate, Lekki, Lagos",
+    "description": "De Lekki Apartment, Ikate ΓÇô Prime Short-Let Investment\r\n\r\n1 & 2-Bedroom Luxury Apartments in Lekki\r\nHigh-yield short-let potential in a secure, high-demand location.\r\n\r\nHighlights\r\nIkate, Lekki ΓÇö walkable, central, premium neighborhood\r\n\r\nTitle: C of O & GovernorΓÇÖs Consent\r\n\r\nAmenities: Swimming pool, elevator, underground parking, fitted kitchen, wardrobes, ensuite rooms, reverse osmosis water system, 24/7 power & security, gym\r\n\r\nHouse Types & Pricing\r\n\r\n1-Bedroom Apartment ΓÇö Γéª100,000,000\r\nInitial deposit: 30% ΓÇó Balance: spread over 12 months\r\n\r\n2-Bedroom Apartment ΓÇö Γéª150,000,000\r\nInitial deposit: 30% ΓÇó Balance: spread over 12 months\r\n\r\nWhy This Investment\r\n\r\nStrong short-let demand in Lekki ΓåÆ excellent occupancy & cash flow\r\n\r\nModern finishes & lifestyle amenities ΓåÆ instant guest appeal\r\n\r\nPrime asset with long-term appreciation\r\n\r\nLocation\r\n\r\nIkate, Lekki, Lagos.\r\n\r\nAct fastΓÇöunits are limited and demand is high.\r\nBook an inspection / Request payment plan today.\r\n\r\nContact Kam Luxury Nigeria\r\n≡ƒôì 59, Murtala Mohammed Way, Ebute-Metta, Lagos\r\n≡ƒô₧ 08053309281 ΓÇó ≡ƒîÉ kamluxurynigeria.com\r\n≡ƒô▓ Instagram | Twitter | Facebook: @kamluxuryng",
+    "price": "100000000.00",
+    "initial_deposit": "30000000.00",
+    "installment_plan": "",
+    "bedrooms": 0,
+    "bathrooms": 0,
+    "parking": 0,
+    "square_meters": 0,
+    "is_featured": true,
+    "cover": "properties/de_lekki.png",
+    "gallery1": "properties/dw_lekki2.png",
+    "gallery2": "properties/de_lekki_3.png",
+    "created_at": "2025-10-06T15:35:57.466Z"
+  }
+},
+{
+  "model": "listings.property",
+  "pk": 9,
+  "fields": {
+    "title": "Premium Comfort, Prime Location ΓÇô Autograph Lagos Awaits You",
+    "slug": "premium-comfort-prime-location-autograph-lagos-awa",
+    "category": "RESIDENT",
+    "location": "11 Baale Street, Ilasan-Ikate, Lekki, Lagos",
+    "description": "≡ƒÅÖ∩╕Å Autograph Lagos ΓÇô Modern Living, Smart Investment\r\nAddress: 11 Baale Street, Ilasan-Ikate, Lekki, Lagos\r\nDeveloper: Xymbolic Development Ltd\r\nProperty Type: Luxury 1 & 2-Bedroom Apartments (with BQ)\r\n\r\n≡ƒîƒ Overview\r\nAutograph Lagos is not just another property development ΓÇö itΓÇÖs a strategically designed investment opportunity for forward-thinking investors. Located in one of LagosΓÇÖ most sought-after neighborhoods, IlasanΓÇôIkate, Lekki, it offers proximity to key business and entertainment districts including Lekki Phase 1, Victoria Island, and Ikoyi.\r\nWhether youΓÇÖre buying for personal use, long-term leasing, or short-term rental, Autograph Lagos is built to ensure maximum returns and hassle-free ownership through a suite of management and concierge services.\r\n\r\n≡ƒÅù∩╕Å Project Highlights\r\nΓÇó\t12 Units of 2-Bedroom Apartments with BQ\r\nΓÇó\t4 Units of 1-Bedroom Apartments\r\nΓÇó\tProject Duration: 18 Months\r\nΓÇó\tLand Title: GovernorΓÇÖs Consent\r\nΓÇó\tDelivery: Beginning from mid-2025\r\n\r\n≡ƒÆí Why Choose Autograph Lagos\r\nΓÇó\tPrime Location: Easily accessible from major hubs and landmarks including Nike Art Gallery, The Palms Mall, Elegushi Beach, and Lekki Conservation Centre.\r\nΓÇó\tCapital Growth: Positioned for strong appreciation thanks to its location and premium build quality.\r\nΓÇó\tHands-Free Income: Optional property management and concierge services handle bookings, guests, and maintenance for you.\r\nΓÇó\tLow Operating Costs: Solar-powered central areas, energy-efficient systems, and centralized utilities reduce expenses.\r\nΓÇó\tFlexible Ownership: Multiple payment and ownership plans tailored to individual and group investors.\r\n\r\n≡ƒÅó Features & Amenities\r\nΓÇó\tElevator\r\nΓÇó\tSwimming Pool\r\nΓÇó\tFully Equipped Gym\r\nΓÇó\t24/7 Power (Backup Diesel Generator)\r\nΓÇó\tSolar-Powered Central Areas\r\nΓÇó\tConcierge Service\r\nΓÇó\tCCTV Surveillance & 24-Hour Security\r\nΓÇó\tAmple Parking Space\r\nΓÇó\tGas Reticulation System\r\nΓÇó\tDedicated Transformer\r\nΓÇó\tBio-Digester System\r\nΓÇó\tFacility Management Office\r\n\r\n≡ƒÅí Apartment Details\r\n2-Bedroom Apartment + BQ\r\nΓÇó\tTotal Area: 107 sqm\r\nΓÇó\tLiving Room: 36 sqm\r\nΓÇó\tMaster Bedroom: 18 sqm\r\nΓÇó\tBedroom: 14 sqm\r\nΓÇó\tKitchen: 14 sqm\r\nΓÇó\tBathrooms, BQ, and Terraces included\r\n1-Bedroom Apartment\r\nΓÇó\tDesigned for modern professionals and investors seeking premium shortlet appeal\r\n\r\n≡ƒÆ░ Pricing & Payment Plan\r\n2-Bedroom Apartment + BQ ΓÇô Γéª170,000,000\r\nΓÇó\tInitial Deposit: Γéª20,000,000\r\nΓÇó\t6-Month Plan: Γéª19,800,000 per month\r\nΓÇó\tInfrastructure & Documentation Fee: 10% of purchase price\r\n1-Bedroom Apartment ΓÇô Γéª100,000,000\r\nΓÇó\tInitial Deposit: Γéª20,000,000\r\nΓÇó\t3-Month Plan: Γéª10,000,000 per month\r\nΓÇó\tInfrastructure & Documentation Fee: 10% of purchase price\r\n\r\n≡ƒÆ╡ Rental Income Potential\r\nRegular Rent:\r\nΓÇó\tAverage rent for similar 2-bed apartments in Ilasan: Γéª4MΓÇôΓéª6M/year\r\nΓÇó\tExpected rent at Autograph Lagos: Γéª5M+ per year\r\nShortlet Rentals:\r\nΓÇó\tΓéª90,000/day average booking rate\r\nΓÇó\t65% occupancy target\r\nΓÇó\t30% expenses\r\nΓÇó\tEstimated Net Rent: Γéª14,308,500 per year\r\nAutograph Lagos gives investors the flexibility to choose between steady long-term rent or high-yield shortlets.\r\n\r\n≡ƒº╛ Additional Information\r\nΓÇó\tInfrastructure & Documentation Fee: 10% of unit price (covers Deed of Assignment, Survey, and Handbook)\r\nΓÇó\tMaintenance: Handled by Facility Management; cost shared or borne by tenant depending on usage.\r\nΓÇó\tRefund Policy:\r\no\tWithin 3 months ΓÇô 70% refund (30% admin charge)\r\no\t4ΓÇô6 months ΓÇô 85% refund (15% admin charge)\r\no\tAfter 6 months ΓÇô No refund\r\nΓÇó\tPayment Default Penalties:\r\no\t5% interest after 2 months of default\r\no\tUpward price review after 3 months\r\no\tTermination and 30% deduction after 6 months\r\n\r\n\r\n≡ƒôê Investment Summary\r\nΓÇó\tLocation Advantage: Minutes from major business districts and leisure spots\r\nΓÇó\tQuality & Design: Energy-efficient, modern architecture\r\nΓÇó\tRental Versatility: High ROI potential via long or short-let models\r\nΓÇó\tDeveloper Reputation: Backed by Xymbolic Development Ltd ΓÇö experts in luxury real estate investments",
+    "price": "170000000.00",
+    "initial_deposit": "20000000.00",
+    "installment_plan": "",
+    "bedrooms": 0,
+    "bathrooms": 0,
+    "parking": 0,
+    "square_meters": 0,
+    "is_featured": true,
+    "cover": "properties/ChatGPT_Image_Oct_11_2025_06_55_43_AM.png",
+    "gallery1": "",
+    "gallery2": "",
+    "created_at": "2025-10-11T06:29:46.726Z"
+  }
+},
+{
+  "model": "listings.unitoption",
+  "pk": 1,
+  "fields": {
+    "property": 6,
+    "unit_type": "FARM",
+    "label": "1 Acre",
+    "price": "10800000.00",
+    "initial_deposit": "3000000.00",
+    "plan_0_3": "0.00",
+    "plan_3_6": "0.00",
+    "plan_6_12": "0.00",
+    "notes": ""
+  }
+},
+{
+  "model": "listings.unitoption",
+  "pk": 2,
+  "fields": {
+    "property": 6,
+    "unit_type": "FARM",
+    "label": "1 Hectare\t    Γéª 27 Million\t   Γéª 9 Million",
+    "price": "27000000.00",
+    "initial_deposit": "9000000.00",
+    "plan_0_3": "0.00",
+    "plan_3_6": "0.00",
+    "plan_6_12": "0.00",
+    "notes": ""
+  }
+},
+{
+  "model": "listings.unitoption",
+  "pk": 4,
+  "fields": {
+    "property": 5,
+    "unit_type": "1BR",
+    "label": "ΓÇó 1-Bedroom Unit ΓÇô Sleek, intimate, and perfect for singles or young couples seeking independence with style",
+    "price": "53000000.00",
+    "initial_deposit": "10000000.00",
+    "plan_0_3": null,
+    "plan_3_6": null,
+    "plan_6_12": null,
+    "notes": ""
+  }
+},
+{
+  "model": "listings.unitoption",
+  "pk": 5,
+  "fields": {
+    "property": 5,
+    "unit_type": "2BR",
+    "label": "ΓÇó 2-Bedroom Pro ΓÇô Designed for creative professionals who love dynamic spaces and open flow.",
+    "price": "73000000.00",
+    "initial_deposit": "10000000.00",
+    "plan_0_3": null,
+    "plan_3_6": null,
+    "plan_6_12": null,
+    "notes": ""
+  }
+},
+{
+  "model": "listings.unitoption",
+  "pk": 6,
+  "fields": {
+    "property": 5,
+    "unit_type": "2BR",
+    "label": "ΓÇó 2-Bedroom Max ΓÇô Spacious and structured for families who value comfort, connection, and functionality.",
+    "price": "73000000.00",
+    "initial_deposit": "10000000.00",
+    "plan_0_3": null,
+    "plan_3_6": null,
+    "plan_6_12": null,
+    "notes": ""
+  }
+},
+{
+  "model": "listings.lead",
+  "pk": 1,
+  "fields": {
+    "name": "Kehinde Akanbi",
+    "email": "muri@gmail.com",
+    "phone": "08053309281",
+    "message": "2 Bedroom",
+    "property": null,
+    "option": null,
+    "created_at": "2025-10-02T16:30:11.238Z"
+  }
+}
+]
+

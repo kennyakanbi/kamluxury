@@ -1,0 +1,10 @@
+[
+{
+  "model": "listings.property",
+  "pk": 1,
+  "fields": {
+    "title": "LUXURY LIVING AT ITS FINEST!",
+    "slug": "luxury-living-at-its-finest",
+    "category": "3BR",
+    "location": "Chevron Drive",
+    "description": 

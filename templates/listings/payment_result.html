@@ -1,0 +1,15 @@
+{% extends 'listings/base.html' %}
+{% block title %}Payment Result | Kam Luxury Nigeria{% endblock %}
+{% block content %}
+<div class="container text-center">
+  <div class="p-5 my-5 border rounded-3">
+    <h1 class="h4">Payment {{ status|title }}</h1>
+    {% if prop %}
+      <p class="mt-2">Thank you. We received your payment for <strong>{{ prop.title }}</strong>.</p>
+      <a href="{{ prop.get_absolute_url }}" class="btn btn-dark">Back to Property</a>
+    {% else %}
+      <a href="/properties/" class="btn btn-dark">Browse Properties</a>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}

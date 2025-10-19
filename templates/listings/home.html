@@ -1,0 +1,195 @@
+{% extends 'listings/base.html' %}
+{% load static humanize %}
+{% block title %}Home | Kam Luxury Nigeria{% endblock %}
+
+{% block content %}
+
+<!-- HERO CAROUSEL (Static + Featured Properties) -->
+<section class="hero-carousel position-relative">
+  <div id="kamHero" class="carousel slide carousel-fade" data-bs-ride="carousel" data-bs-interval="5000">
+
+    <!-- Carousel Indicators -->
+<div class="carousel-indicators">
+  {# Static slides indicators (indexes 0 .. static_slides|length-1) #}
+  {% for slide in static_slides %}
+    <button type="button"
+            data-bs-target="#kamHero"
+            data-bs-slide-to="{{ forloop.counter0 }}"
+            class="{% if forloop.first %}active{% endif %}"
+            aria-label="Slide {{ forloop.counter }}"></button>
+  {% endfor %}
+
+  {# Featured slides indicators (indexes start at static_slides|length) #}
+  {% for p in featured|slice:":4" %}
+    <button type="button"
+            data-bs-target="#kamHero"
+            data-bs-slide-to="{{ forloop.counter0|add:static_slides|length }}"
+            class="{% if not static_slides and forloop.first %}active{% endif %}"
+            aria-label="Slide {{ forloop.counter|add:static_slides|length }}"></button>
+  {% endfor %}
+</div>
+
+
+    <!-- Carousel Slides -->
+    <div class="carousel-inner text-white">
+
+      {# Static hero slides #}
+      {% for slide in static_slides %}
+        <div class="carousel-item {% if forloop.first %}active{% endif %} bg-cover" style="--bg:url('{% static slide.img %}')">
+          <div class="container py-5 py-lg-7 text-white">
+            <h1 class="display-5 fw-bold mb-3">{{ slide.title }}</h1>
+            <p class="lead mb-4">{{ slide.subtitle }}</p>
+            <a href="{{ slide.url }}" class="btn btn-warning btn-lg">Explore</a>
+          </div>
+        </div>
+      {% endfor %}
+
+      {# Featured properties #}
+      {% for p in featured %}
+        <div class="carousel-item {% if not static_slides and forloop.first %}active{% endif %}">
+          <div class="ratio ratio-21x9">
+            {% if p.cover %}
+              <img src="{{ p.cover.url }}" alt="{{ p.title }}" class="w-100 h-100" style="object-fit: cover;" loading="lazy">
+            {% else %}
+              <img src="{% static 'img/brand_1.png' %}" alt="Kam Luxury" class="w-100 h-100" style="object-fit: cover;" loading="lazy">
+            {% endif %}
+          </div>
+          <div class="carousel-caption text-start">
+            <span class="badge bg-dark mb-2">{{ p.get_category_display }}</span>
+            <h2 class="h3 fw-bold mb-1">{{ p.title }}</h2>
+            <p class="mb-2">{{ p.location }}</p>
+            <p class="fs-6 mb-3">₦{{ p.price|floatformat:0|intcomma }}</p>
+            <a href="{{ p.get_absolute_url }}" class="btn btn-light btn-sm me-2">View</a>
+            <a href="{% url 'listings:property_list' %}" class="btn btn-outline-light btn-sm">Browse All</a>
+          </div>
+        </div>
+      {% endfor %}
+
+    </div>
+
+    <!-- Carousel Controls -->
+    <button class="carousel-control-prev" type="button" data-bs-target="#kamHero" data-bs-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#kamHero" data-bs-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Next</span>
+    </button>
+
+    <!-- Overlay -->
+    <div class="hero-overlay position-absolute top-0 start-0 w-100 h-100"></div>
+  </div>
+</section>
+
+<style>
+.hero-carousel { min-height: 70vh; position: relative; overflow: hidden; }
+.hero-carousel .carousel-item { display: flex; align-items: center; }
+.bg-cover { background: linear-gradient(0deg, rgba(0,0,0,.35), rgba(0,0,0,.35)), var(--bg) center/cover no-repeat; }
+.hero-overlay { background: rgba(0,0,0,.45); z-index: 1; pointer-events: none; }
+.hero-carousel .container { position: relative; z-index: 2; }
+.carousel-indicators [data-bs-target] { width:10px; height:10px; border-radius:50%; background:#ffc107; opacity:.6; }
+.carousel-indicators .active { opacity:1; }
+@media (max-width: 575.98px){ .hero-carousel { min-height: 60vh; } }
+</style>
+
+<!-- SERVICES SECTION -->
+<section class="py-5 bg-light">
+  <div class="container text-center">
+    <h2 class="fw-bold mb-3">Our Services</h2>
+    <p class="lead text-muted mb-4 mb-md-5">
+      At <strong>Kam Luxury Nigeria</strong>, we go beyond real estate. From premium property sales
+      to professional media campaigns, digital solutions, and investment opportunities,
+      our services help you build wealth and create lasting value.
+    </p>
+
+    <div class="row g-4">
+      {% for service in services %}
+        <div class="col-12 col-md-6 col-lg-4">
+          <div class="card h-100 shadow-sm border-0">
+            <div class="card-body p-4 d-flex align-items-start">
+              <div class="me-3 fs-2 lh-1 text-primary">{{ service.icon }}</div>
+              <div>
+                <h5 class="fw-semibold mb-2">{{ service.title }}</h5>
+                <p class="text-muted mb-0">{{ service.desc }}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<!-- FEATURED LISTINGS GRID (Modern with Hover Overlay) -->
+<div class="container my-5">
+  <h2 class="h4 mb-4">Featured Listings</h2>
+  <div class="row g-4">
+    {% for p in featured %}
+      <div class="col-12 col-md-6 col-lg-4">
+        <div class="property-card position-relative overflow-hidden border rounded shadow-sm h-100">
+          
+          {% if p.cover %}
+            <img src="{{ p.cover.url }}" class="w-100 h-100 property-img" alt="{{ p.title }}" loading="lazy">
+          {% else %}
+            <img src="{% static 'img/brand_1.png' %}" class="w-100 h-100 property-img" alt="Kam Luxury" loading="lazy">
+          {% endif %}
+
+          <!-- Overlay on hover -->
+          <div class="property-overlay d-flex flex-column justify-content-end p-3">
+            <span class="badge bg-dark mb-1">{{ p.get_category_display }}</span>
+            <h5 class="mb-1 text-white">{{ p.title }}</h5>
+            <p class="mb-2 text-white small">{{ p.location }}</p>
+            <p class="fw-bold text-warning mb-2">₦{{ p.price|floatformat:0|intcomma }}</p>
+            <a href="{{ p.get_absolute_url }}" class="btn btn-light btn-sm">View</a>
+          </div>
+        </div>
+      </div>
+    {% empty %}
+      <p class="text-muted">No featured listings yet.</p>
+    {% endfor %}
+  </div>
+</div>
+
+<style>
+.property-card {
+  position: relative;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.property-card:hover {
+  transform: scale(1.03);
+}
+
+.property-img {
+  height: 250px;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.property-card:hover .property-img {
+  transform: scale(1.1);
+}
+
+.property-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background: linear-gradient(to top, rgba(0,0,0,0.7), rgba(0,0,0,0));
+  color: white;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.property-card:hover .property-overlay {
+  opacity: 1;
+}
+
+.property-overlay h5, .property-overlay p, .property-overlay .btn {
+  margin: 0;
+}
+</style>
+
+{% endblock %}

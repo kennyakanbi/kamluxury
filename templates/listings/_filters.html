@@ -1,0 +1,32 @@
+{# templates/listings/_filters.html #}
+{# Filters form used on property_list.html - GET form so results are shareable/bookmarkable #}
+<form class="row g-2 align-items-end mb-3" method="get" action="">
+  <div class="col-12 col-md-4">
+    <label class="form-label">Search</label>
+    <input type="text" name="q" value="{{ q|default:'' }}" class="form-control" placeholder="Title or location">
+  </div>
+
+  <div class="col-6 col-md-3">
+    <label class="form-label">Category</label>
+    <select name="cat" class="form-select">
+      <option value="">All</option>
+      {% for key, label in Category.choices %}
+        <option value="{{ key }}"{% if key|stringformat:"s" == cat|stringformat:"s" %} selected{% endif %}>{{ label }}</option>
+      {% endfor %}
+    </select>
+  </div>
+
+  <div class="col-6 col-md-2">
+    <label class="form-label">Min ₦</label>
+    <input type="number" name="minp" value="{{ minp|default:'' }}" class="form-control" min="0" step="1">
+  </div>
+
+  <div class="col-6 col-md-2">
+    <label class="form-label">Max ₦</label>
+    <input type="number" name="maxp" value="{{ maxp|default:'' }}" class="form-control" min="0" step="1">
+  </div>
+
+  <div class="col-12 col-md-1">
+    <button class="btn btn-dark w-100" type="submit">Go</button>
+  </div>
+</form>

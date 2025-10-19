@@ -1,0 +1,75 @@
+{% extends 'listings/base.html' %}
+{% load static %}
+{% block title %}About Us | Kam Luxury Nigeria{% endblock %}
+
+{% block content %}
+<section class="py-5 bg-light text-center">
+  <div class="container">
+    <h1 class="fw-bold mb-3">About Kam Luxury Nigeria</h1>
+    <p class="lead text-muted">Redefining Luxury Living and Smart Real Estate Investments</p>
+  </div>
+</section>
+
+<section class="py-5">
+  <div class="container">
+    <div class="row align-items-center g-5">
+      <div class="col-md-6">
+        <img src="{% static 'img/about-estate.png' %}" class="img-fluid rounded shadow" alt="Kam Luxury Nigeria">
+      </div>
+      <div class="col-md-6">
+        <h2 class="h4 fw-bold">Who We Are</h2>
+        <p>
+          Kam Luxury Nigeria is a forward-thinking real estate company committed to providing premium housing and
+          investment opportunities across Nigeria. We combine innovation, quality, and sustainability to deliver homes
+          that redefine luxury and long-term value.
+        </p>
+        <p>
+          Our expertise spans luxury apartments, smart estates, land sales, and farm-based real estate assets. Whether
+          you are an investor, homeowner, or developer, Kam Luxury Nigeria ensures transparency, reliability, and
+          high returns on every project.
+        </p>
+        <ul class="list-unstyled">
+          <li>✅ Trusted Real Estate Partner</li>
+          <li>✅ Verified Property Titles</li>
+          <li>✅ Seamless Payment Plans</li>
+          <li>✅ Nationwide Project Presence</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="py-5 bg-dark text-white text-center">
+  <div class="container">
+    <h2 class="fw-bold mb-4">Our Core Values</h2>
+    <div class="row g-4">
+      <div class="col-md-3">
+        <h5>Integrity</h5>
+        <p>We operate with honesty, professionalism, and full transparency in all dealings.</p>
+      </div>
+      <div class="col-md-3">
+        <h5>Innovation</h5>
+        <p>We constantly evolve our processes and designs to meet modern living standards.</p>
+      </div>
+      <div class="col-md-3">
+        <h5>Excellence</h5>
+        <p>We deliver world-class quality, from project conception to handover.</p>
+      </div>
+      <div class="col-md-3">
+        <h5>Customer Focus</h5>
+        <p>Your satisfaction and investment growth are our highest priorities.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="py-5 text-center">
+  <div class="container">
+    <h3 class="fw-bold mb-3">Our Mission</h3>
+    <p class="text-muted">
+      To build a legacy of trust, excellence, and innovation in the Nigerian real estate industry, delivering homes and
+      investment opportunities that enrich lives and communities.
+    </p>
+  </div>
+</section>
+{% endblock %}

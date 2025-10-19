@@ -1,0 +1,171 @@
+{% extends 'listings/base.html' %}
+{% load humanize %}
+{% block title %}{{ obj.title }} | Kam Luxury Nigeria{% endblock %}
+{% block content %}
+<div class="container">
+  <div class="row g-4">
+
+    <!-- Gallery -->
+    <div class="col-lg-7">
+      {% if obj.cover %}
+        <img class="img-fluid rounded mb-3" src="{{ obj.cover.url }}" alt="{{ obj.title }}">
+      {% endif %}
+      <div class="row g-2">
+        {% if obj.gallery1 %}<div class="col-6"><img class="img-fluid rounded" src="{{ obj.gallery1.url }}" alt=""></div>{% endif %}
+        {% if obj.gallery2 %}<div class="col-6"><img class="img-fluid rounded" src="{{ obj.gallery2.url }}" alt=""></div>{% endif %}
+      </div>
+    </div>
+
+    <!-- Sidebar -->
+    <div class="col-lg-5">
+      <span class="badge bg-secondary mb-2">{{ obj.get_category_display }}</span>
+      <h1 class="h4">{{ obj.title }}</h1>
+      <p class="text-muted mb-1">{{ obj.location }}</p>
+
+      {# ===== Unit options selector (if available) ===== #}
+      {% if options %}
+      <form id="optionPick" method="get" class="mb-3">
+        <div class="list-group">
+          {% for opt in options %}
+          <label class="list-group-item d-flex align-items-start gap-3">
+            <input
+              type="radio" name="option_id" value="{{ opt.id }}"
+              class="form-check-input mt-1"
+              {% if selected_option and selected_option.id == opt.id %}
+                checked
+              {% elif not selected_option and forloop.first %}
+                checked
+              {% endif %}
+            >
+            <div class="w-100">
+              <div class="d-flex justify-content-between">
+                <strong>
+                  {{ opt.get_unit_type_display }}
+                  {% if opt.label %} – {{ opt.label }}{% endif %}
+                </strong>
+                <span>₦{{ opt.price|floatformat:0|intcomma }}</span>
+              </div>
+              <div class="small text-muted mt-1">
+                {% if opt.initial_deposit %}
+                  Initial Deposit: ₦<span class="js-id-{{ opt.id }}">{{ opt.initial_deposit|floatformat:0|intcomma }}</span>
+                {% endif %}
+                {% if opt.plan_0_3 %} • 0–3m: ₦{{ opt.plan_0_3|floatformat:0|intcomma }}{% endif %}
+                {% if opt.plan_3_6 %} • 3–6m: ₦{{ opt.plan_3_6|floatformat:0|intcomma }}{% endif %}
+                {% if opt.plan_6_12 %} • 6–12m: ₦{{ opt.plan_6_12|floatformat:0|intcomma }}{% endif %}
+                {% if opt.notes %}<div class="text-body-secondary mt-1">{{ opt.notes }}</div>{% endif %}
+              </div>
+            </div>
+          </label>
+          {% endfor %}
+        </div>
+      </form>
+
+      {# Price line mirrors selected option #}
+      <p class="fs-5 fw-semibold mt-3 mb-2">
+        Selected Price:
+        {% if selected_option %}
+          <span id="jsPrice">₦{{ selected_option.price|floatformat:0|intcomma }}</span>
+        {% elif options %}
+          <span id="jsPrice">₦{{ options.0.price|floatformat:0|intcomma }}</span>
+        {% else %}
+          <span id="jsPrice">₦0</span>
+        {% endif %}
+      </p>
+
+      {% else %}
+      {# Legacy single-price properties #}
+      <p class="fs-5 fw-semibold">₦{{ obj.price|floatformat:0|intcomma }}</p>
+      {% endif %}
+
+      <ul class="small list-unstyled mb-3">
+        {% if obj.bedrooms %}<li>Bedrooms: {{ obj.bedrooms }}</li>{% endif %}
+        {% if obj.bathrooms %}<li>Bathrooms: {{ obj.bathrooms }}</li>{% endif %}
+        {% if obj.parking %}<li>Parking: {{ obj.parking }}</li>{% endif %}
+        {% if obj.square_meters %}<li>Size: {{ obj.square_meters }} m²</li>{% endif %}
+        {% if obj.installment_plan %}<li>Installment: {{ obj.installment_plan }}</li>{% endif %}
+        {% if obj.initial_deposit %}<li>Initial Deposit: ₦{{ obj.initial_deposit|floatformat:0|intcomma }}</li>{% endif %}
+      </ul>
+
+      <div class="d-flex gap-2 mb-3">
+        <a class="btn btn-success" id="jsWhatsApp" href="{{ whatsapp_link }}">Chat on WhatsApp</a>
+        <a class="btn btn-dark" id="jsPayBtn"
+           href="/checkout/init/{{ obj.slug }}/?amount={% if selected_option %}{{ selected_option.initial_deposit|default:selected_option.price }}{% elif options %}{{ options.0.initial_deposit|default:options.0.price }}{% else %}{{ obj.initial_deposit|default:obj.price }}{% endif %}{% if selected_option %}&option_id={{ selected_option.id }}{% elif options %}&option_id={{ options.0.id }}{% endif %}">
+          Pay Reservation
+        </a>
+      </div>
+
+      <div class="card">
+        <div class="card-body">
+          <h2 class="h6">Send an enquiry</h2>
+          <form method="post">{% csrf_token %}
+            {{ form.as_p }}
+            {% if selected_option %}
+              <input type="hidden" name="option_id" value="{{ selected_option.id }}">
+            {% endif %}
+            <button class="btn btn-outline-dark">Submit</button>
+          </form>
+        </div>
+      </div>
+
+      <div class="mt-3">
+        <h2 class="h6">Description</h2>
+        <p>{{ obj.description|linebreaks }}</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% if options %}
+<script>
+(function() {
+  const radios = document.querySelectorAll('input[name="option_id"]');
+  const priceEl = document.getElementById('jsPrice');
+  const payBtn  = document.getElementById('jsPayBtn');
+  const waBtn   = document.getElementById('jsWhatsApp');
+
+  // A tiny lookup table rendered server-side for prices & deposits
+  const OPTS = {
+    {% for opt in options %}
+      "{{ opt.id }}": {
+        price: {{ opt.price|default:0|floatformat:0 }},
+        initial_deposit: {{ opt.initial_deposit|default:0 }},
+        label: "{{ opt.get_unit_type_display|escapejs }}{% if opt.label %} – {{ opt.label|escapejs }}{% endif %}"
+      }{% if not forloop.last %},{% endif %}
+    {% endfor %}
+  };
+
+  function intcomma(n) {
+    return n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  }
+
+  function updateUI(id) {
+    const o = OPTS[id];
+    if (!o) return;
+
+    // Price text
+    priceEl.textContent = "₦" + intcomma(Math.round(o.price));
+
+    // Pay Reservation link amount
+    const base = "/checkout/init/{{ obj.slug }}/?amount=";
+    const amount = o.initial_deposit > 0 ? o.initial_deposit : o.price;
+    payBtn.href = base + encodeURIComponent(amount) + "&option_id=" + encodeURIComponent(id);
+
+    // WhatsApp message (keep server base; just add option_id)
+    try {
+      const url = new URL(waBtn.href);
+      url.searchParams.set("text",
+        `I'm interested in {{ obj.title|escapejs }} – ${o.label} ({{ absolute_url|escapejs }})`
+      );
+      waBtn.href = url.toString();
+    } catch (e) {}
+  }
+
+  radios.forEach(r => r.addEventListener('change', e => updateUI(e.target.value)));
+
+  // Initialize with checked radio
+  const checked = document.querySelector('input[name="option_id"]:checked');
+  if (checked) updateUI(checked.value);
+})();
+</script>
+{% endif %}
+{% endblock %}
