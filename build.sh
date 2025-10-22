@@ -5,11 +5,13 @@ set -e
 pip install -r requirements.txt
 
 # Run migrations
-/opt/render/project/src/.venv/bin/python manage.py migrate --noinput || true
+python manage.py migrate --noinput
 
-# Load the fixture (ignore errors so deploy continues if items already exist)
-# The '|| true' is valid in bash (Render runs builds in bash).
-/opt/render/project/src/.venv/bin/python manage.py loaddata listings_fixture.from_local.json || true
+# Ensure admin user (reads ADMIN_USER, ADMIN_EMAIL, ADMIN_PASS from env)
+python manage.py ensure_admin_user || true
 
-# Collect static
-/opt/render/project/src/.venv/bin/python manage.py collectstatic --noinput
+# Merge/update listings from fixture (safe: updates existing by slug, creates if missing)
+python manage.py import_listings_from_fixture --file listings_fixture.from_local.json || true
+
+# Collect static assets
+python manage.py collectstatic --noinput
