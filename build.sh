@@ -1,14 +1,15 @@
 #!/usr/bin/env bash
-set -o errexit  # exit on error
+set -e
 
+# Install dependencies
 pip install -r requirements.txt
 
-# Run migrations and load your data automatically
-python manage.py migrate --noinput
+# Run migrations
+/opt/render/project/src/.venv/bin/python manage.py migrate --noinput || true
 
-# Load your listings data (optional, remove if not needed every deploy)
-python manage.py loaddata listings_fixture.cleaned.json || true
+# Load the fixture (ignore errors so deploy continues if items already exist)
+# The '|| true' is valid in bash (Render runs builds in bash).
+/opt/render/project/src/.venv/bin/python manage.py loaddata listings_fixture.from_local.json || true
 
-python manage.py collectstatic --noinput
-
-sh -lc "/opt/render/project/src/.venv/bin/python /opt/render/project/src/manage.py migrate --noinput && /opt/render/project/src/.venv/bin/python /opt/render/project/src/manage.py loaddata listings_fixture.cleaned.json || true && /opt/render/project/src/.venv/bin/gunicorn config.wsgi:application"
+# Collect static
+/opt/render/project/src/.venv/bin/python manage.py collectstatic --noinput
