@@ -22,7 +22,7 @@
     <style>
       /* ---------- Layout helpers ---------- */
       :root {
-        --navbar-height: 64px; /* fallback - adjust if your navbar height differs */
+        --navbar-height: 84px; /* fallback - adjust if your navbar height differs */
       }
 
       /* Use full-height layout so footer sits at bottom on short pages */
@@ -102,7 +102,7 @@
           <ul class="navbar-nav ms-auto align-items-lg-center">
             <li class="nav-item"><a class="nav-link" href="{% url 'listings:home' %}">Home</a></li>
             <li class="nav-item"><a class="nav-link" href="{% url 'listings:about' %}">About</a></li>
-            <li class="nav-item"><a class="nav-link" href="{% url 'listings:activities' %}">Activities</a></li>
+            <li class="nav-item"><a class="nav-link" href="{% url 'listings:activities' %}">Gallary</a></li>
             <li class="nav-item"><a class="nav-link" href="/properties/">Properties</a></li>
             <li class="nav-item">
               <a class="nav-link" href="https://wa.me/{{ WHATSAPP_NUMBER|default:'2347036067548' }}" target="_blank" rel="noopener">WhatsApp</a>

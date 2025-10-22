@@ -88,10 +88,7 @@
 
       <div class="d-flex gap-2 mb-3">
         <a class="btn btn-success" id="jsWhatsApp" href="{{ whatsapp_link }}">Chat on WhatsApp</a>
-        <a class="btn btn-dark" id="jsPayBtn"
-           href="/checkout/init/{{ obj.slug }}/?amount={% if selected_option %}{{ selected_option.initial_deposit|default:selected_option.price }}{% elif options %}{{ options.0.initial_deposit|default:options.0.price }}{% else %}{{ obj.initial_deposit|default:obj.price }}{% endif %}{% if selected_option %}&option_id={{ selected_option.id }}{% elif options %}&option_id={{ options.0.id }}{% endif %}">
-          Pay Reservation
-        </a>
+      
       </div>
 
       <div class="card">
