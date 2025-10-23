@@ -1,24 +1,35 @@
-# config/settings.py — cleaned for Render deployment
-
+# config/settings.py  — clean settings tuned for Render
 import os
 from pathlib import Path
-import environ  # type: ignore
+from urllib.parse import urlparse
+
 import dj_database_url
 
-# Load environment variables from .env (development)
 BASE_DIR = Path(__file__).resolve().parent.parent
-env = environ.Env(DEBUG=(bool, True))
-environ.Env.read_env(BASE_DIR / ".env")
 
-# Security / secrets
-SECRET_KEY = env("SECRET_KEY", default="dev-secret-key")
-DEBUG = env.bool("DEBUG", default=True)
+# Simple env helpers
+def env_bool(name: str, default: bool) -> bool:
+    v = os.environ.get(name)
+    if v is None:
+        return default
+    return v.lower() in ("1", "true", "yes", "on")
 
-# ALLOWED_HOSTS: read from env or use sensible defaults (include Render wildcard)
-# Provide comma separated values in env if you want multiple hosts.
-default_hosts = ["localhost", "127.0.0.1", "kamluxng.onrender.com"]
-ALLOWED_HOSTS = env.list("ALLOWED_HOSTS", default=default_hosts)
+def env_list(name: str, default: list[str]) -> list[str]:
+    v = os.environ.get(name)
+    if not v:
+        return default
+    # comma separated
+    return [x.strip() for x in v.split(",") if x.strip()]
 
+# ---------------- Security / debug ----------------
+SECRET_KEY = os.environ.get("SECRET_KEY", "dev-secret-key")
+DEBUG = env_bool("DEBUG", True)
+
+# Default allowed hosts — override with ALLOWED_HOSTS env (comma separated)
+DEFAULT_HOSTS = ["localhost", "127.0.0.1", "kamluxng.onrender.com"]
+ALLOWED_HOSTS = env_list("ALLOWED_HOSTS", DEFAULT_HOSTS)
+
+# ---------------- Installed apps / middleware ----------------
 INSTALLED_APPS = [
     "django.contrib.humanize",
     "django.contrib.admin",
@@ -35,7 +46,6 @@ INSTALLED_APPS = [
     "checkout",
 ]
 
-# Crispy forms
 CRISPY_ALLOWED_TEMPLATE_PACKS = ["bootstrap5"]
 CRISPY_TEMPLATE_PACK = "bootstrap5"
 
@@ -70,43 +80,30 @@ TEMPLATES = [
 
 WSGI_APPLICATION = "config.wsgi.application"
 
-# --- DATABASE configuration (robust for Render) ---
-import os
-from urllib.parse import urlparse
+# ---------------- Database ----------------
+# Render will provide a DATABASE_URL for Postgres; otherwise fallback to sqlite for dev.
+DATABASE_URL = os.environ.get("DATABASE_URL", "").strip()
 
-DATABASE_URL = os.environ.get("DATABASE_URL", "") or ""
-
-def is_valid_db_url(url: str) -> bool:
-    # quick check: non-empty and contains a scheme (like 'postgres://' or 'sqlite:///')
-    if not url:
-        return False
-    parsed = urlparse(url)
-    return bool(parsed.scheme) and parsed.scheme != ""
-
-if is_valid_db_url(DATABASE_URL):
-    # dj_database_url.parse expects a normal URL like "postgres://..."
-    try:
-        DATABASES = {
-            "default": dj_database_url.parse(DATABASE_URL, conn_max_age=600, ssl_require=True)
-        }
-    except Exception:
-        # If parsing fails, fall back to sqlite instead of crashing
-        DATABASES = {
-            "default": {
-                "ENGINE": "django.db.backends.sqlite3",
-                "NAME": BASE_DIR / "db.sqlite3",
-            }
-        }
-else:
-    # Fallback to local sqlite for development or when DATABASE_URL not set / invalid
-    DATABASES = {
-        "default": {
-            "ENGINE": "django.db.backends.sqlite3",
-            "NAME": BASE_DIR / "db.sqlite3",
-        }
+def use_sqlite_fallback():
+    return {
+        "ENGINE": "django.db.backends.sqlite3",
+        "NAME": BASE_DIR / "db.sqlite3",
     }
-# --- end DATABASE block ---
 
+if DATABASE_URL:
+    try:
+        # require ssl when Postgres on managed hosts (let dj_database_url handle parsing)
+        # For local testing you might pass sqlite:///... which dj_database_url will parse too.
+        DATABASES = {"default": dj_database_url.parse(DATABASE_URL, conn_max_age=600)}
+        # If dj_database_url returned an engineless dict for bad value, fallback:
+        if not DATABASES["default"].get("ENGINE"):
+            DATABASES["default"] = use_sqlite_fallback()
+    except Exception:
+        DATABASES = {"default": use_sqlite_fallback()}
+else:
+    DATABASES = {"default": use_sqlite_fallback()}
+
+# ---------------- Password validation / i18n ----------------
 AUTH_PASSWORD_VALIDATORS = [
     {"NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator"},
     {"NAME": "django.contrib.auth.password_validation.MinimumLengthValidator"},
@@ -119,51 +116,51 @@ TIME_ZONE = "Africa/Lagos"
 USE_I18N = True
 USE_TZ = True
 
-# ---------------- MEDIA FILES ----------------
-# Use local filesystem in development, S3 in production
+# ---------------- Media ----------------
+# Local filesystem for DEBUG; when not DEBUG expect S3 settings to be present.
 if DEBUG:
     DEFAULT_FILE_STORAGE = "django.core.files.storage.FileSystemStorage"
     MEDIA_URL = "/media/"
     MEDIA_ROOT = BASE_DIR / "media"
 else:
-    DEFAULT_FILE_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
-    # Expect the following env var(s) to be set when using S3:
-    AWS_S3_CUSTOM_DOMAIN = env("AWS_S3_CUSTOM_DOMAIN", default="")
+    DEFAULT_FILE_STORAGE = os.environ.get(
+        "DEFAULT_FILE_STORAGE", "storages.backends.s3boto3.S3Boto3Storage"
+    )
+    AWS_S3_CUSTOM_DOMAIN = os.environ.get("AWS_S3_CUSTOM_DOMAIN", "")
     MEDIA_URL = f"https://{AWS_S3_CUSTOM_DOMAIN}/" if AWS_S3_CUSTOM_DOMAIN else "/media/"
     AWS_QUERYSTRING_AUTH = False
-# ------------------------------------------------
 
+# ---------------- Static files ----------------
 STATIC_URL = "/static/"
 STATICFILES_DIRS = [BASE_DIR / "static"]
 STATIC_ROOT = BASE_DIR / "staticfiles"
-STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
+# Whitenoise manifest storage for production (keeps hashed filenames)
+STATICFILES_STORAGE = os.environ.get(
+    "STATICFILES_STORAGE", "whitenoise.storage.CompressedManifestStaticFilesStorage"
+)
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-AWS_QUERYSTRING_AUTH = False  # So URLs are public without signed querystrings
+# ---------------- Third party / App config ----------------
+AWS_QUERYSTRING_AUTH = False
+PAYSTACK_PUBLIC_KEY = os.environ.get("PAYSTACK_PUBLIC_KEY", "")
+PAYSTACK_SECRET_KEY = os.environ.get("PAYSTACK_SECRET_KEY", "")
+CURRENCY = os.environ.get("CURRENCY", "NGN")
+WHATSAPP_NUMBER = os.environ.get("WHATSAPP_NUMBER", "2347036067548")
 
-# Payments & WhatsApp
-PAYSTACK_PUBLIC_KEY = env("PAYSTACK_PUBLIC_KEY", default="")
-PAYSTACK_SECRET_KEY = env("PAYSTACK_SECRET_KEY", default="")
-CURRENCY = "NGN"
-WHATSAPP_NUMBER = env("WHATSAPP_NUMBER", default="2347036067548")
-
-# ----- Proxy / security helpers -----
-# Trust the X-Forwarded-Proto header that platforms like Render set
+# ---------------- Security / proxy helpers ----------------
 SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
+SESSION_COOKIE_SECURE = env_bool("SESSION_COOKIE_SECURE", False)
+CSRF_COOKIE_SECURE = env_bool("CSRF_COOKIE_SECURE", False)
+SECURE_SSL_REDIRECT = env_bool("SECURE_SSL_REDIRECT", False)
 
-# Read security flags from env (set to True in production)
-SESSION_COOKIE_SECURE = env.bool("SESSION_COOKIE_SECURE", default=False)
-CSRF_COOKIE_SECURE = env.bool("CSRF_COOKIE_SECURE", default=False)
-SECURE_SSL_REDIRECT = env.bool("SECURE_SSL_REDIRECT", default=False)
-# -------------------------------------
-
-# Only call django_heroku.settings when DATABASE_URL exists (Heroku helper)
-# and wrap in try/except so a missing package or other error won't break startup.
+# ---------------- Optional helpers for deployment platforms ----------------
+# If you use django_heroku on Heroku-like platforms, keep invocation optional
 try:
-    if DATABASE_URL:
+    if DATABASE_URL and "heroku" in os.environ.get("PLATFORM", ""):
         import django_heroku  # type: ignore
         django_heroku.settings(locals())
 except Exception:
-    # Don't crash the app if django_heroku is not available or misbehaves.
     pass
+
+# --------------- End of file ---------------
