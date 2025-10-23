@@ -1,0 +1,19 @@
+﻿[
+{
+  "model": "auth.user",
+  "fields": {
+    "password": "pbkdf2_sha256$1000000$FI41P6j5vaeWtnnNkY9bB8$g1BgMuHZL99TcGkbd88VoPsf00eYDyDY3v4e4daI7s4=",
+    "last_login": null,
+    "is_superuser": true,
+    "username": "kenny",
+    "first_name": "",
+    "last_name": "",
+    "email": "kennyakanbi@gmail.com",
+    "is_staff": true,
+    "is_active": true,
+    "date_joined": "2025-10-23T12:49:32.260Z",
+    "groups": [],
+    "user_permissions": []
+  }
+}
+]
