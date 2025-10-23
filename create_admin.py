@@ -22,3 +22,5 @@ else:
     user.set_password(ADMIN_PASS)
     user.save()
     print("Superuser password updated!")
+
+
