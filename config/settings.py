@@ -27,7 +27,7 @@ def env_str(name: str, default: str = "") -> str:
 SECRET_KEY = env_str("SECRET_KEY", "dev-secret-key")
 
 # Default to False for safety; enable DEBUG explicitly with DEBUG=1 in your dev env
-DEBUG = env_bool("DEBUG", False)
+DEBUG = env_bool("DEBUG", True)
 
 # ---------------- Hosts ----------------
 DEFAULT_HOSTS = ["localhost", "127.0.0.1", "kamluxng.onrender.com"]
@@ -42,7 +42,7 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-
+      "django_extensions",
     # third-party
     "django_bootstrap5",
     "crispy_forms",

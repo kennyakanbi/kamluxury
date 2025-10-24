@@ -29,7 +29,11 @@
       html, body {
         height: 100%;
       }
-      body {
+
+/* Remove top space for homepage with hero */
+body.homepage {
+  padding-top: 0 !important;
+
         display: flex;
         flex-direction: column;
         min-height: 100vh;
