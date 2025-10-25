@@ -1,7 +1,10 @@
+from logging import config
 import os
 from pathlib import Path
 from datetime import timedelta
 from django.core.management.utils import get_random_secret_key
+import dj_database_url
+
 
 # -------------------------------------------------------------------
 # BASE SETTINGS
@@ -96,7 +99,14 @@ DATABASES = {
         "PASSWORD": env("DB_PASSWORD", default=""),
         "HOST": env("DB_HOST", default="localhost"),
         "PORT": env("DB_PORT", default="5432"),
+        
     }
+}
+
+DATABASES = {
+    'default': dj_database_url.config(
+        default=config('DATABASE_URL')
+    )
 }
 
 # -------------------------------------------------------------------
