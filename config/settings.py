@@ -3,7 +3,7 @@ from pathlib import Path
 from datetime import timedelta
 from django.core.management.utils import get_random_secret_key
 import dj_database_url
-from decouple import config  # ✅ correct import
+from decouple import config  # type: ignore # ✅ correct import
 
 
 
