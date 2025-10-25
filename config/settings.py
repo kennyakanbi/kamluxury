@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     "cloudinary_storage",
     "listings",
     "checkout",
+    'django.contrib.humanize',  
 ]
 
 CRISPY_ALLOWED_TEMPLATE_PACKS = ["bootstrap5"]
