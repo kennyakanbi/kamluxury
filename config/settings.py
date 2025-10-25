@@ -1,9 +1,10 @@
-from logging import config
 import os
 from pathlib import Path
 from datetime import timedelta
 from django.core.management.utils import get_random_secret_key
 import dj_database_url
+from decouple import config  # ✅ correct import
+
 
 
 # -------------------------------------------------------------------
@@ -91,17 +92,6 @@ WSGI_APPLICATION = "config.wsgi.application"
 # DATABASE
 # -------------------------------------------------------------------
 # Render provides DATABASE_URL automatically
-DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.postgresql",
-        "NAME": env("DB_NAME", default="postgres"),
-        "USER": env("DB_USER", default="postgres"),
-        "PASSWORD": env("DB_PASSWORD", default=""),
-        "HOST": env("DB_HOST", default="localhost"),
-        "PORT": env("DB_PORT", default="5432"),
-        
-    }
-}
 
 DATABASES = {
     'default': dj_database_url.config(
