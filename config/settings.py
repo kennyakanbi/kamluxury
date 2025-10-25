@@ -187,3 +187,24 @@ LOGGING = {
     },
     "root": {"handlers": ["console"], "level": "INFO"},
 }
+
+
+# -------------------------------------------------------------------
+# AUTO-CREATE ADMIN USER ON FIRST DEPLOY (for Render free plan)
+# -------------------------------------------------------------------
+import django
+from django.contrib.auth import get_user_model
+from django.db.utils import OperationalError, ProgrammingError
+
+try:
+    User = get_user_model()
+    if ADMIN_USER and not User.objects.filter(username=ADMIN_USER).exists():
+        User.objects.create_superuser(
+            username=ADMIN_USER,
+            email=ADMIN_EMAIL,
+            password=ADMIN_PASS
+        )
+        print(f"✅ Admin user '{ADMIN_USER}' created successfully.")
+except (OperationalError, ProgrammingError):
+    # Database not ready yet during first deploy
+    pass
