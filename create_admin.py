@@ -1,26 +1,19 @@
-# save this as create_admin.py at your project root
-
 import os
 import django
 
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "config.settings")
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'yourproject.settings')  # change 'yourproject' to your actual project folder name
 django.setup()
 
 from django.contrib.auth import get_user_model
 
 User = get_user_model()
 
-ADMIN_USER = os.environ.get("ADMIN_USER")
-ADMIN_EMAIL = os.environ.get("ADMIN_EMAIL")
-ADMIN_PASS = os.environ.get("ADMIN_PASS")
+username = "admin"
+email = "admin@example.com"
+password = "Admin12345"
 
-if not User.objects.filter(username=ADMIN_USER).exists():
-    User.objects.create_superuser(username=ADMIN_USER, email=ADMIN_EMAIL, password=ADMIN_PASS)
-    print("Superuser created!")
+if not User.objects.filter(username=username).exists():
+    User.objects.create_superuser(username=username, email=email, password=password)
+    print("✅ Superuser created successfully!")
 else:
-    user = User.objects.get(username=ADMIN_USER)
-    user.set_password(ADMIN_PASS)
-    user.save()
-    print("Superuser password updated!")
-
-
+    print("⚠️ Superuser already exists.")

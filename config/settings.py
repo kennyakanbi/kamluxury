@@ -1,54 +1,39 @@
-# config/settings.py — tuned for Render (production-safe defaults + helpful comments)
 import os
 from pathlib import Path
-from typing import Any
-import dj_database_url
+from datetime import timedelta
+from django.core.management.utils import get_random_secret_key
 
+# -------------------------------------------------------------------
+# BASE SETTINGS
+# -------------------------------------------------------------------
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# ------------------- helpers -------------------
-def env_bool(name: str, default: bool) -> bool:
-    v = os.environ.get(name)
-    if v is None:
-        return default
-    return v.lower() in ("1", "true", "yes", "on")
+# -------------------------------------------------------------------
+# ENVIRONMENT VARIABLES
+# -------------------------------------------------------------------
+from decouple import config as env # pyright: ignore[reportMissingImports]
 
-def env_list(name: str, default: list[str]) -> list[str]:
-    v = os.environ.get(name)
-    if not v:
-        return default
-    return [x.strip() for x in v.split(",") if x.strip()]
+SECRET_KEY = env("SECRET_KEY", default=get_random_secret_key())
+DEBUG = env("DEBUG", default=True, cast=bool)
+ALLOWED_HOSTS = env("ALLOWED_HOSTS", default="*").split(",")
 
-def env_str(name: str, default: str = "") -> str:
-    return os.environ.get(name, default)
-
-# ---------------- Security / debug ----------------
-# IMPORTANT: ensure SECRET_KEY is set as an environment variable in Render for production.
-SECRET_KEY = env_str("SECRET_KEY", "dev-secret-key")
-
-# Default to False for safety; enable DEBUG explicitly with DEBUG=1 in your dev env
-DEBUG = env_bool("DEBUG", True)
-
-# ---------------- Hosts ----------------
-DEFAULT_HOSTS = ["localhost", "127.0.0.1", "kamluxng.onrender.com"]
-ALLOWED_HOSTS = env_list("ALLOWED_HOSTS", DEFAULT_HOSTS)
-
-# ---------------- Installed apps / middleware ----------------
+# -------------------------------------------------------------------
+# APPLICATIONS
+# -------------------------------------------------------------------
 INSTALLED_APPS = [
-    "django.contrib.humanize",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    # third-party
+    "whitenoise.runserver_nostatic",
     "django_bootstrap5",
     "crispy_forms",
     "crispy_bootstrap5",
     "django_filters",
-
-    # local apps
+    "cloudinary", 
+    "cloudinary_storage",
     "listings",
     "checkout",
 ]
@@ -56,9 +41,12 @@ INSTALLED_APPS = [
 CRISPY_ALLOWED_TEMPLATE_PACKS = ["bootstrap5"]
 CRISPY_TEMPLATE_PACK = "bootstrap5"
 
+# -------------------------------------------------------------------
+# MIDDLEWARE
+# -------------------------------------------------------------------
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
-    "whitenoise.middleware.WhiteNoiseMiddleware",  # serve static files efficiently
+    "whitenoise.middleware.WhiteNoiseMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
@@ -67,8 +55,14 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 
+# -------------------------------------------------------------------
+# URL CONFIGURATION
+# -------------------------------------------------------------------
 ROOT_URLCONF = "config.urls"
 
+# -------------------------------------------------------------------
+# TEMPLATES
+# -------------------------------------------------------------------
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
@@ -85,30 +79,29 @@ TEMPLATES = [
     },
 ]
 
+# -------------------------------------------------------------------
+# WSGI
+# -------------------------------------------------------------------
 WSGI_APPLICATION = "config.wsgi.application"
 
-# ---------------- Database ----------------
-# Use Render's DATABASE_URL if provided; fallback to sqlite for dev/test.
-DATABASE_URL = env_str("DATABASE_URL", "").strip()
-
-def use_sqlite_fallback() -> dict[str, Any]:
-    return {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": str(BASE_DIR / "db.sqlite3"),
+# -------------------------------------------------------------------
+# DATABASE
+# -------------------------------------------------------------------
+# Render provides DATABASE_URL automatically
+DATABASES = {
+    "default": {
+        "ENGINE": "django.db.backends.postgresql",
+        "NAME": env("DB_NAME", default="postgres"),
+        "USER": env("DB_USER", default="postgres"),
+        "PASSWORD": env("DB_PASSWORD", default=""),
+        "HOST": env("DB_HOST", default="localhost"),
+        "PORT": env("DB_PORT", default="5432"),
     }
+}
 
-if DATABASE_URL:
-    try:
-        # parse with a sensible conn_max_age for connection reuse
-        DATABASES = {"default": dj_database_url.parse(DATABASE_URL, conn_max_age=600)}
-        if not DATABASES["default"].get("ENGINE"):
-            DATABASES["default"] = use_sqlite_fallback()
-    except Exception:
-        DATABASES = {"default": use_sqlite_fallback()}
-else:
-    DATABASES = {"default": use_sqlite_fallback()}
-
-# ---------------- Password validation / i18n ----------------
+# -------------------------------------------------------------------
+# PASSWORD VALIDATION
+# -------------------------------------------------------------------
 AUTH_PASSWORD_VALIDATORS = [
     {"NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator"},
     {"NAME": "django.contrib.auth.password_validation.MinimumLengthValidator"},
@@ -116,83 +109,79 @@ AUTH_PASSWORD_VALIDATORS = [
     {"NAME": "django.contrib.auth.password_validation.NumericPasswordValidator"},
 ]
 
+# -------------------------------------------------------------------
+# INTERNATIONALIZATION
+# -------------------------------------------------------------------
 LANGUAGE_CODE = "en-us"
 TIME_ZONE = "Africa/Lagos"
 USE_I18N = True
 USE_TZ = True
 
-# ---------------- Media ----------------
-# Local filesystem for DEBUG; in production expect S3/backed storage
-if DEBUG:
+# -------------------------------------------------------------------
+# STATIC & MEDIA FILES
+# -------------------------------------------------------------------
+# Local filesystem by default (Render free-friendly)
+USE_S3 = env("USE_S3", default=False, cast=bool)
+
+if USE_S3:
+    # If you later enable S3
+    DEFAULT_FILE_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
+    AWS_S3_CUSTOM_DOMAIN = env("AWS_S3_CUSTOM_DOMAIN", default="")
+    MEDIA_URL = f"https://{AWS_S3_CUSTOM_DOMAIN}/" if AWS_S3_CUSTOM_DOMAIN else "/media/"
+    AWS_QUERYSTRING_AUTH = False
+else:
+    # Local file uploads (default)
     DEFAULT_FILE_STORAGE = "django.core.files.storage.FileSystemStorage"
     MEDIA_URL = "/media/"
     MEDIA_ROOT = BASE_DIR / "media"
-else:
-    DEFAULT_FILE_STORAGE = env_str("DEFAULT_FILE_STORAGE", "storages.backends.s3boto3.S3Boto3Storage")
-    AWS_S3_CUSTOM_DOMAIN = env_str("AWS_S3_CUSTOM_DOMAIN", "")
-    MEDIA_URL = f"https://{AWS_S3_CUSTOM_DOMAIN}/" if AWS_S3_CUSTOM_DOMAIN else "/media/"
-    AWS_QUERYSTRING_AUTH = False
 
-# ---------------- Static files ----------------
 STATIC_URL = "/static/"
 STATICFILES_DIRS = [BASE_DIR / "static"]
 STATIC_ROOT = BASE_DIR / "staticfiles"
 
-# Use whitenoise compressed manifest storage by default in production (keeps hashed filenames)
-STATICFILES_STORAGE = env_str(
+# Whitenoise handles static files nicely for Render
+STATICFILES_STORAGE = env(
     "STATICFILES_STORAGE",
-    "whitenoise.storage.CompressedManifestStaticFilesStorage"
+    default="whitenoise.storage.CompressedManifestStaticFilesStorage"
 )
 
+# -------------------------------------------------------------------
+# DEFAULT PRIMARY KEY FIELD TYPE
+# -------------------------------------------------------------------
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-# ---------------- App / third-party config ----------------
-AWS_QUERYSTRING_AUTH = False
-PAYSTACK_PUBLIC_KEY = env_str("PAYSTACK_PUBLIC_KEY", "")
-PAYSTACK_SECRET_KEY = env_str("PAYSTACK_SECRET_KEY", "")
-CURRENCY = env_str("CURRENCY", "NGN")
-WHATSAPP_NUMBER = env_str("WHATSAPP_NUMBER", "2347036067548")
+# -------------------------------------------------------------------
+# EMAIL CONFIG (optional)
+# -------------------------------------------------------------------
+EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
+DEFAULT_FROM_EMAIL = env("ADMIN_EMAIL", default="admin@example.com")
 
-# ---------------- Security / cookie settings ----------------
-# Enforce cookie security in production
-SESSION_COOKIE_HTTPONLY = True
-CSRF_COOKIE_HTTPONLY = False  # Django's CSRF cookie is accessed by client-side JS in some integrations; leave False unless you know otherwise
-SESSION_COOKIE_SECURE = env_bool("SESSION_COOKIE_SECURE", not DEBUG)
-CSRF_COOKIE_SECURE = env_bool("CSRF_COOKIE_SECURE", not DEBUG)
-SECURE_SSL_REDIRECT = env_bool("SECURE_SSL_REDIRECT", not DEBUG)
+# -------------------------------------------------------------------
+# ADMIN CONFIG
+# -------------------------------------------------------------------
+ADMIN_USER = env("ADMIN_USER", default="")
+ADMIN_PASS = env("ADMIN_PASS", default="")
+ADMIN_EMAIL = env("ADMIN_EMAIL", default="")
 
-# HSTS — only enable when you're sure the site is served over HTTPS
-if not DEBUG and env_bool("SECURE_HSTS_ENABLED", True):
-    SECURE_HSTS_SECONDS = int(env_str("SECURE_HSTS_SECONDS", "31536000"))  # 1 year by default
-    SECURE_HSTS_INCLUDE_SUBDOMAINS = env_bool("SECURE_HSTS_INCLUDE_SUBDOMAINS", True)
-    SECURE_HSTS_PRELOAD = env_bool("SECURE_HSTS_PRELOAD", True)
+# -------------------------------------------------------------------
+# SECURITY SETTINGS
+# -------------------------------------------------------------------
+CSRF_TRUSTED_ORIGINS = [
+    "https://*.onrender.com",
+    "http://127.0.0.1",
+    "http://localhost",
+]
 
 SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
 
-# ---------------- Logging (minimal) ----------------
-# Send errors to stdout so Render captures them
+# -------------------------------------------------------------------
+# LOGGING (Optional but helpful)
+# -------------------------------------------------------------------
 LOGGING = {
     "version": 1,
     "disable_existing_loggers": False,
-    "formatters": {
-        "standard": {"format": "%(asctime)s [%(levelname)s] %(name)s: %(message)s"},
-    },
     "handlers": {
-        "console": {"class": "logging.StreamHandler", "formatter": "standard"},
+        "console": {"class": "logging.StreamHandler"},
     },
     "root": {"handlers": ["console"], "level": "INFO"},
-    "loggers": {
-        "django": {"handlers": ["console"], "level": "INFO", "propagate": False},
-    },
 }
-
-# ---------------- Optional helpers for deployment platforms ----------------
-# Support optional django_heroku integration only when PLATFORM env explicitly sets it
-try:
-    if DATABASE_URL and "heroku" in os.environ.get("PLATFORM", ""):
-        import django_heroku  # type: ignore
-        django_heroku.settings(locals())
-except Exception:
-    pass
-
-# --------------- End of file ---------------
