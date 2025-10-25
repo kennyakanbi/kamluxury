@@ -4,6 +4,9 @@ from datetime import timedelta
 from django.core.management.utils import get_random_secret_key
 import dj_database_url
 from decouple import config  # type: ignore # ✅ correct import
+import django
+from django.contrib.auth import get_user_model
+from django.db.utils import OperationalError, ProgrammingError
 
 
 
@@ -192,9 +195,7 @@ LOGGING = {
 # -------------------------------------------------------------------
 # AUTO-CREATE ADMIN USER ON FIRST DEPLOY (for Render free plan)
 # -------------------------------------------------------------------
-import django
-from django.contrib.auth import get_user_model
-from django.db.utils import OperationalError, ProgrammingError
+
 
 try:
     User = get_user_model()
@@ -208,3 +209,4 @@ try:
 except (OperationalError, ProgrammingError):
     # Database not ready yet during first deploy
     pass
+
