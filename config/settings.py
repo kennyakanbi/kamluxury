@@ -88,11 +88,20 @@ WSGI_APPLICATION = "config.wsgi.application"
 # -------------------------------------------------------------------
 # DATABASE
 # -------------------------------------------------------------------
-DATABASES = {
-    "default": dj_database_url.config(
-        default="postgresql://kamluxng_db_user:jznfj0Gi3uWXwti0DkAEj3SmKRUnxOyj@dpg-d3udajogjchc73a8f0ag-a/kamluxng_db"
-    )
-}
+if DEBUG:
+    DATABASES = {
+        "default": {
+            "ENGINE": "django.db.backends.sqlite3",
+            "NAME": BASE_DIR / "db.sqlite3",
+        }
+    }
+else:
+    DATABASES = {
+        "default": dj_database_url.config(
+            default="postgresql://kamluxng_db_user:jznfj0Gi3uWXwti0DkAEj3SmKRUnxOyj@dpg-d3udajogjchc73a8f0ag-a/kamluxng_db"
+        )
+    }
+
 
 # -------------------------------------------------------------------
 # PASSWORD VALIDATION
