@@ -15,7 +15,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # -------------------------------------------------------------------
 SECRET_KEY = env("SECRET_KEY", default=get_random_secret_key())
 DEBUG = env("DEBUG", default=True, cast=bool)
-ALLOWED_HOSTS = env("ALLOWED_HOSTS", default="kamluxury.onrender.com', 'localhost', '127.0.0.1").split(",")
+ALLOWED_HOSTS = env("ALLOWED_HOSTS", default="kamluxury.onrender.com,localhost,127.0.0.1").split(",")
 
 # -------------------------------------------------------------------
 # APPLICATIONS
@@ -127,13 +127,18 @@ else:
     MEDIA_URL = "/media/"
     MEDIA_ROOT = BASE_DIR / "media"
 
+# -------------------------------------------------------------------
+# STATIC & MEDIA FILES (CLOUDINARY)
+# -------------------------------------------------------------------
+
 STATIC_URL = "/static/"
 STATICFILES_DIRS = [BASE_DIR / "static"]
 STATIC_ROOT = BASE_DIR / "staticfiles"
-STATICFILES_STORAGE = env(
-    "STATICFILES_STORAGE",
-    default="whitenoise.storage.CompressedManifestStaticFilesStorage",
-)
+STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
+
+# Cloudinary Media Storage
+DEFAULT_FILE_STORAGE = "cloudinary_storage.storage.MediaCloudinaryStorage"
+MEDIA_URL = "/media/"
 
 # -------------------------------------------------------------------
 # CLOUDINARY CONFIGURATION
@@ -142,20 +147,22 @@ import cloudinary  # type: ignore
 import cloudinary.uploader  # type: ignore
 import cloudinary.api  # type: ignore
 
-CLOUDINARY_URL = env("CLOUDINARY_URL", default=None)
+# Cloudinary configuration
+cloudinary.config(
+    cloud_name=os.getenv('CLOUDINARY_CLOUD_NAME', 'dzfzcm1nt'),
+    api_key=os.getenv('CLOUDINARY_API_KEY', '498946834664268'),
+    api_secret=os.getenv('CLOUDINARY_API_SECRET', ''),
+)
 
-if CLOUDINARY_URL:
-    DEFAULT_FILE_STORAGE = "cloudinary_storage.storage.MediaCloudinaryStorage"
-    CLOUDINARY_STORAGE = {
-        "CLOUD_NAME": env("CLOUDINARY_CLOUD_NAME", default=""),
-        "API_KEY": env("CLOUDINARY_API_KEY", default=""),
-        "API_SECRET": env("CLOUDINARY_API_SECRET", default=""),
-    }
-    MEDIA_URL = f"https://res.cloudinary.com/{CLOUDINARY_STORAGE['CLOUD_NAME']}/"
-else:
-    DEFAULT_FILE_STORAGE = "django.core.files.storage.FileSystemStorage"
-    MEDIA_URL = "/media/"
-    MEDIA_ROOT = BASE_DIR / "media"
+CLOUDINARY_STORAGE = {
+    'CLOUD_NAME': 'dzfzcm1nt',
+    'API_KEY': '498946834664268',
+    'API_SECRET': os.getenv('CLOUDINARY_API_SECRET', ''),
+}
+
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+
+MEDIA_URL = '/media/'
 
 # -------------------------------------------------------------------
 # DEFAULT PRIMARY KEY FIELD TYPE
