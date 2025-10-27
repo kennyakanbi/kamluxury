@@ -142,15 +142,9 @@ cloudinary.config(
     api_secret=os.getenv("CLOUDINARY_API_SECRET", ""),
 )
 
-if not DEBUG:
-    # ✅ Use Cloudinary in production (Render)
-    DEFAULT_FILE_STORAGE = "cloudinary_storage.storage.MediaCloudinaryStorage"
-    MEDIA_URL = "https://res.cloudinary.com/dzfzcm1nt/"
-else:
-    # ✅ Use local file storage during development
-    DEFAULT_FILE_STORAGE = "django.core.files.storage.FileSystemStorage"
-    MEDIA_URL = "/media/"
-    MEDIA_ROOT = BASE_DIR / "media"
+# ✅ Always use Cloudinary for uploaded files
+DEFAULT_FILE_STORAGE = "cloudinary_storage.storage.MediaCloudinaryStorage"
+MEDIA_URL = "https://res.cloudinary.com/dzfzcm1nt/"
 
 # DEFAULT PRIMARY KEY FIELD TYPE
 # -------------------------------------------------------------------
