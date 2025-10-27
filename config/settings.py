@@ -128,41 +128,37 @@ else:
     MEDIA_ROOT = BASE_DIR / "media"
 
 # -------------------------------------------------------------------
-# STATIC & MEDIA FILES (CLOUDINARY)
+# STATIC & MEDIA FILES
 # -------------------------------------------------------------------
-
 STATIC_URL = "/static/"
 STATICFILES_DIRS = [BASE_DIR / "static"]
 STATIC_ROOT = BASE_DIR / "staticfiles"
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
-# Cloudinary Media Storage
-DEFAULT_FILE_STORAGE = "cloudinary_storage.storage.MediaCloudinaryStorage"
-MEDIA_URL = "/media/"
-
 # -------------------------------------------------------------------
 # CLOUDINARY CONFIGURATION
 # -------------------------------------------------------------------
-import cloudinary  # type: ignore
-import cloudinary.uploader  # type: ignore
-import cloudinary.api  # type: ignore
+import cloudinary
+import cloudinary.uploader
+import cloudinary.api
 
-# Cloudinary configuration
 cloudinary.config(
-    cloud_name=os.getenv('CLOUDINARY_CLOUD_NAME', 'dzfzcm1nt'),
-    api_key=os.getenv('CLOUDINARY_API_KEY', '498946834664268'),
-    api_secret=os.getenv('CLOUDINARY_API_SECRET', ''),
+    cloud_name=os.getenv("CLOUDINARY_CLOUD_NAME", "dzfzcm1nt"),
+    api_key=os.getenv("CLOUDINARY_API_KEY", "498946834664268"),
+    api_secret=os.getenv("CLOUDINARY_API_SECRET", ""),
 )
 
 CLOUDINARY_STORAGE = {
-    'CLOUD_NAME': 'dzfzcm1nt',
-    'API_KEY': '498946834664268',
-    'API_SECRET': os.getenv('CLOUDINARY_API_SECRET', ''),
+    "CLOUD_NAME": "dzfzcm1nt",
+    "API_KEY": "498946834664268",
+    "API_SECRET": os.getenv("CLOUDINARY_API_SECRET", ""),
 }
 
-DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+# Use Cloudinary for all uploaded media
+DEFAULT_FILE_STORAGE = "cloudinary_storage.storage.MediaCloudinaryStorage"
 
-MEDIA_URL = '/media/'
+# MEDIA_URL is only symbolic — Cloudinary handles real URLs
+MEDIA_URL = "/media/"
 
 # -------------------------------------------------------------------
 # DEFAULT PRIMARY KEY FIELD TYPE
