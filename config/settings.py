@@ -124,28 +124,13 @@ USE_TZ = True
 # -------------------------------------------------------------------
 # STATIC & MEDIA FILES
 # -------------------------------------------------------------------
-USE_S3 = env("USE_S3", default=False, cast=bool)
-
-if USE_S3:
-    DEFAULT_FILE_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
-    AWS_S3_CUSTOM_DOMAIN = env("AWS_S3_CUSTOM_DOMAIN", default="")
-    MEDIA_URL = f"https://{AWS_S3_CUSTOM_DOMAIN}/" if AWS_S3_CUSTOM_DOMAIN else "/media/"
-    AWS_QUERYSTRING_AUTH = False
-else:
-    DEFAULT_FILE_STORAGE = "django.core.files.storage.FileSystemStorage"
-    MEDIA_URL = "/media/"
-    MEDIA_ROOT = BASE_DIR / "media"
-
-# -------------------------------------------------------------------
-# STATIC & MEDIA FILES
-# -------------------------------------------------------------------
 STATIC_URL = "/static/"
 STATICFILES_DIRS = [BASE_DIR / "static"]
 STATIC_ROOT = BASE_DIR / "staticfiles"
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
 # -------------------------------------------------------------------
-# CLOUDINARY CONFIGURATION
+# MEDIA / CLOUDINARY CONFIGURATION
 # -------------------------------------------------------------------
 import cloudinary
 import cloudinary.uploader
@@ -157,20 +142,16 @@ cloudinary.config(
     api_secret=os.getenv("CLOUDINARY_API_SECRET", ""),
 )
 
-CLOUDINARY_STORAGE = {
-    "CLOUD_NAME": "dzfzcm1nt",
-    "API_KEY": "498946834664268",
-    "API_SECRET": os.getenv("CLOUDINARY_API_SECRET", ""),
-}
+if not DEBUG:
+    # ✅ Use Cloudinary in production (Render)
+    DEFAULT_FILE_STORAGE = "cloudinary_storage.storage.MediaCloudinaryStorage"
+    MEDIA_URL = "https://res.cloudinary.com/dzfzcm1nt/"
+else:
+    # ✅ Use local file storage during development
+    DEFAULT_FILE_STORAGE = "django.core.files.storage.FileSystemStorage"
+    MEDIA_URL = "/media/"
+    MEDIA_ROOT = BASE_DIR / "media"
 
-# Use Cloudinary for all uploaded media
-DEFAULT_FILE_STORAGE = "cloudinary_storage.storage.MediaCloudinaryStorage"
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
-
-# MEDIA_URL is only symbolic — Cloudinary handles real URLs
-MEDIA_URL = "/media/"
-
-# -------------------------------------------------------------------
 # DEFAULT PRIMARY KEY FIELD TYPE
 # -------------------------------------------------------------------
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
