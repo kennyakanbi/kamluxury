@@ -165,6 +165,7 @@ CLOUDINARY_STORAGE = {
 
 # Use Cloudinary for all uploaded media
 DEFAULT_FILE_STORAGE = "cloudinary_storage.storage.MediaCloudinaryStorage"
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 # MEDIA_URL is only symbolic — Cloudinary handles real URLs
 MEDIA_URL = "/media/"
