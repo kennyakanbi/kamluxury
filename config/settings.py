@@ -3,9 +3,7 @@ from pathlib import Path
 from datetime import timedelta
 from django.core.management.utils import get_random_secret_key
 import dj_database_url
-from decouple import config  # type: ignore # ✅ correct import
-
-
+from decouple import config as env  # type: ignore
 
 # -------------------------------------------------------------------
 # BASE SETTINGS
@@ -15,37 +13,14 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # -------------------------------------------------------------------
 # ENVIRONMENT VARIABLES
 # -------------------------------------------------------------------
-from decouple import config as env # pyright: ignore[reportMissingImports]
-
 SECRET_KEY = env("SECRET_KEY", default=get_random_secret_key())
 DEBUG = env("DEBUG", default=True, cast=bool)
 ALLOWED_HOSTS = env("ALLOWED_HOSTS", default="*").split(",")
 
-import cloudinary # type: ignore
-import cloudinary.uploader # type: ignore
-import cloudinary.api # type: ignore
-from cloudinary.storage import RawMediaCloudinaryStorage # type: ignore
-from cloudinary_storage.storage import MediaCloudinaryStorage # type: ignore
-from cloudinary_storage.storage import VideoMediaCloudinaryStorage # type: ignore
-from cloudinary_storage.storage import RawMediaCloudinaryStorage # type: ignore
-from cloudinary_storage.storage import StaticHashedCloudinaryStorage # type: ignore
-from cloudinary_storage.storage import MediaCloudinaryStorage # type: ignore
-from cloudinary_storage.storage import VideoMediaCloudinaryStorage # type: ignore
-
-# Cloudinary config
-CLOUDINARY_STORAGE = {
-    'CLOUD_NAME': '',
-    'API_KEY': '498946834664268',
-    'API_SECRET': 'your_api_secret',
-}
-
-DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 # -------------------------------------------------------------------
-
 # APPLICATIONS
 # -------------------------------------------------------------------
 INSTALLED_APPS = [
-    'django.contrib.staticfiles',
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -57,11 +32,11 @@ INSTALLED_APPS = [
     "crispy_forms",
     "crispy_bootstrap5",
     "django_filters",
-    "cloudinary", 
+    "cloudinary",
     "cloudinary_storage",
     "listings",
     "checkout",
-    'django.contrib.humanize',  
+    "django.contrib.humanize",
 ]
 
 CRISPY_ALLOWED_TEMPLATE_PACKS = ["bootstrap5"]
@@ -113,14 +88,11 @@ WSGI_APPLICATION = "config.wsgi.application"
 # -------------------------------------------------------------------
 # DATABASE
 # -------------------------------------------------------------------
-# Render provides DATABASE_URL automatically
-
 DATABASES = {
-    'default': dj_database_url.config(
-        default='postgresql://kamluxng_db_user:jznfj0Gi3uWXwti0DkAEj3SmKRUnxOyj@dpg-d3udajogjchc73a8f0ag-a/kamluxng_db'
+    "default": dj_database_url.config(
+        default="postgresql://kamluxng_db_user:jznfj0Gi3uWXwti0DkAEj3SmKRUnxOyj@dpg-d3udajogjchc73a8f0ag-a/kamluxng_db"
     )
 }
-
 
 # -------------------------------------------------------------------
 # PASSWORD VALIDATION
@@ -143,17 +115,14 @@ USE_TZ = True
 # -------------------------------------------------------------------
 # STATIC & MEDIA FILES
 # -------------------------------------------------------------------
-# Local filesystem by default (Render free-friendly)
 USE_S3 = env("USE_S3", default=False, cast=bool)
 
 if USE_S3:
-    # If you later enable S3
     DEFAULT_FILE_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
     AWS_S3_CUSTOM_DOMAIN = env("AWS_S3_CUSTOM_DOMAIN", default="")
     MEDIA_URL = f"https://{AWS_S3_CUSTOM_DOMAIN}/" if AWS_S3_CUSTOM_DOMAIN else "/media/"
     AWS_QUERYSTRING_AUTH = False
 else:
-    # Local file uploads (default)
     DEFAULT_FILE_STORAGE = "django.core.files.storage.FileSystemStorage"
     MEDIA_URL = "/media/"
     MEDIA_ROOT = BASE_DIR / "media"
@@ -161,56 +130,32 @@ else:
 STATIC_URL = "/static/"
 STATICFILES_DIRS = [BASE_DIR / "static"]
 STATIC_ROOT = BASE_DIR / "staticfiles"
-
-# Whitenoise handles static files nicely for Render
 STATICFILES_STORAGE = env(
     "STATICFILES_STORAGE",
-    default="whitenoise.storage.CompressedManifestStaticFilesStorage"
+    default="whitenoise.storage.CompressedManifestStaticFilesStorage",
 )
 
 # -------------------------------------------------------------------
-# CLOUDINARY CONFIGURATION (MEDIA STORAGE)
+# CLOUDINARY CONFIGURATION
 # -------------------------------------------------------------------
-import cloudinary # type: ignore
-import cloudinary.uploader # type: ignore
-import cloudinary.api # type: ignore
-from decouple import config as env
+import cloudinary  # type: ignore
+import cloudinary.uploader  # type: ignore
+import cloudinary.api  # type: ignore
 
-INSTALLED_APPS += [
-    "cloudinary",
-    "cloudinary_storage",
-]
-
-# Cloudinary connection (securely pulled from environment variables)
 CLOUDINARY_URL = env("CLOUDINARY_URL", default=None)
 
 if CLOUDINARY_URL:
-    # Use Cloudinary for media storage
     DEFAULT_FILE_STORAGE = "cloudinary_storage.storage.MediaCloudinaryStorage"
     CLOUDINARY_STORAGE = {
         "CLOUD_NAME": env("CLOUDINARY_CLOUD_NAME", default=""),
         "API_KEY": env("CLOUDINARY_API_KEY", default=""),
         "API_SECRET": env("CLOUDINARY_API_SECRET", default=""),
     }
-    MEDIA_URL = "https://res.cloudinary.com/{}/".format(
-        CLOUDINARY_STORAGE["CLOUD_NAME"]
-    )
+    MEDIA_URL = f"https://res.cloudinary.com/{CLOUDINARY_STORAGE['CLOUD_NAME']}/"
 else:
-    # Fall back to local media storage
     DEFAULT_FILE_STORAGE = "django.core.files.storage.FileSystemStorage"
     MEDIA_URL = "/media/"
     MEDIA_ROOT = BASE_DIR / "media"
-
-# -------------------------------------------------------------------
-# STATIC FILES CONFIG (Render / Whitenoise)
-# -------------------------------------------------------------------
-STATIC_URL = "/static/"
-STATICFILES_DIRS = [BASE_DIR / "static"]
-STATIC_ROOT = BASE_DIR / "staticfiles"
-STATICFILES_STORAGE = env(
-    "STATICFILES_STORAGE",
-    default="whitenoise.storage.CompressedManifestStaticFilesStorage"
-)
 
 # -------------------------------------------------------------------
 # DEFAULT PRIMARY KEY FIELD TYPE
@@ -218,7 +163,7 @@ STATICFILES_STORAGE = env(
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 # -------------------------------------------------------------------
-# EMAIL CONFIG (optional)
+# EMAIL CONFIG
 # -------------------------------------------------------------------
 EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
 DEFAULT_FROM_EMAIL = env("ADMIN_EMAIL", default="admin@example.com")
@@ -242,21 +187,11 @@ CSRF_TRUSTED_ORIGINS = [
 SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
 
 # -------------------------------------------------------------------
-# LOGGING (Optional but helpful)
+# LOGGING
 # -------------------------------------------------------------------
 LOGGING = {
     "version": 1,
     "disable_existing_loggers": False,
-    "handlers": {
-        "console": {"class": "logging.StreamHandler"},
-    },
+    "handlers": {"console": {"class": "logging.StreamHandler"}},
     "root": {"handlers": ["console"], "level": "INFO"},
 }
-
-
-# -------------------------------------------------------------------
-# AUTO-CREATE ADMIN USER ON FIRST DEPLOY (for Render free plan)
-# -------------------------------------------------------------------
-
-
-
