@@ -132,26 +132,27 @@ STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 # -------------------------------------------------------------------
 # MEDIA / CLOUDINARY CONFIGURATION
 # -------------------------------------------------------------------
-# Cloudinary setup
 import cloudinary
 import cloudinary.uploader
 import cloudinary.api
-from cloudinary_storage.storage import MediaCloudinaryStorage
-from cloudinary_storage.storage import RawMediaCloudinaryStorage
 
-INSTALLED_APPS += [
-    'cloudinary',
-    'cloudinary_storage',
-]
+cloudinary.config(
+    cloud_name=os.getenv("CLOUDINARY_CLOUD_NAME", "dzfzcm1nt"),
+    api_key=os.getenv("CLOUDINARY_API_KEY", "498946834664268"),
+    api_secret=os.getenv("CLOUDINARY_API_SECRET", ""),
+)
 
+# ✅ Always use Cloudinary for uploaded files
 CLOUDINARY_STORAGE = {
     'CLOUD_NAME': 'dzfzcm1nt',
     'API_KEY': '498946834664268',
-    'API_SECRET': '8FQf9O9kdjDJFZQxol8woOJr4Ww',
+    'API_SECRET': '8FQf9O9kdjDJFZQxol8woOJr4Ww'
 }
 
 DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 MEDIA_URL = '/media/'
+
+
 
 
 # DEFAULT PRIMARY KEY FIELD TYPE
