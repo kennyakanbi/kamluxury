@@ -15,7 +15,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # -------------------------------------------------------------------
 SECRET_KEY = env("SECRET_KEY", default=get_random_secret_key())
 DEBUG = env("DEBUG", default=True, cast=bool)
-ALLOWED_HOSTS = env("ALLOWED_HOSTS", default="*").split(",")
+ALLOWED_HOSTS = env("ALLOWED_HOSTS", default="kamluxury.onrender.com', 'localhost', '127.0.0.1").split(",")
 
 # -------------------------------------------------------------------
 # APPLICATIONS
