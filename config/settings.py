@@ -32,10 +32,20 @@ from cloudinary_storage.storage import StaticHashedCloudinaryStorage # type: ign
 from cloudinary_storage.storage import MediaCloudinaryStorage # type: ignore
 from cloudinary_storage.storage import VideoMediaCloudinaryStorage # type: ignore
 
+# Cloudinary config
+CLOUDINARY_STORAGE = {
+    'CLOUD_NAME': '',
+    'API_KEY': '498946834664268',
+    'API_SECRET': 'your_api_secret',
+}
+
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 # -------------------------------------------------------------------
+
 # APPLICATIONS
 # -------------------------------------------------------------------
 INSTALLED_APPS = [
+    'django.contrib.staticfiles',
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -153,6 +163,50 @@ STATICFILES_DIRS = [BASE_DIR / "static"]
 STATIC_ROOT = BASE_DIR / "staticfiles"
 
 # Whitenoise handles static files nicely for Render
+STATICFILES_STORAGE = env(
+    "STATICFILES_STORAGE",
+    default="whitenoise.storage.CompressedManifestStaticFilesStorage"
+)
+
+# -------------------------------------------------------------------
+# CLOUDINARY CONFIGURATION (MEDIA STORAGE)
+# -------------------------------------------------------------------
+import cloudinary # type: ignore
+import cloudinary.uploader # type: ignore
+import cloudinary.api # type: ignore
+from decouple import config as env
+
+INSTALLED_APPS += [
+    "cloudinary",
+    "cloudinary_storage",
+]
+
+# Cloudinary connection (securely pulled from environment variables)
+CLOUDINARY_URL = env("CLOUDINARY_URL", default=None)
+
+if CLOUDINARY_URL:
+    # Use Cloudinary for media storage
+    DEFAULT_FILE_STORAGE = "cloudinary_storage.storage.MediaCloudinaryStorage"
+    CLOUDINARY_STORAGE = {
+        "CLOUD_NAME": env("CLOUDINARY_CLOUD_NAME", default=""),
+        "API_KEY": env("CLOUDINARY_API_KEY", default=""),
+        "API_SECRET": env("CLOUDINARY_API_SECRET", default=""),
+    }
+    MEDIA_URL = "https://res.cloudinary.com/{}/".format(
+        CLOUDINARY_STORAGE["CLOUD_NAME"]
+    )
+else:
+    # Fall back to local media storage
+    DEFAULT_FILE_STORAGE = "django.core.files.storage.FileSystemStorage"
+    MEDIA_URL = "/media/"
+    MEDIA_ROOT = BASE_DIR / "media"
+
+# -------------------------------------------------------------------
+# STATIC FILES CONFIG (Render / Whitenoise)
+# -------------------------------------------------------------------
+STATIC_URL = "/static/"
+STATICFILES_DIRS = [BASE_DIR / "static"]
+STATIC_ROOT = BASE_DIR / "staticfiles"
 STATICFILES_STORAGE = env(
     "STATICFILES_STORAGE",
     default="whitenoise.storage.CompressedManifestStaticFilesStorage"
