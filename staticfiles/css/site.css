@@ -1,0 +1,4 @@
+/* static/css/site.css — minimal test */
+body { font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial; }
+.header-brand { max-width: 220px; }
+.carousel-item img { object-fit: cover; }

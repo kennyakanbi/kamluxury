@@ -21,6 +21,17 @@ SECRET_KEY = env("SECRET_KEY", default=get_random_secret_key())
 DEBUG = env("DEBUG", default=True, cast=bool)
 ALLOWED_HOSTS = env("ALLOWED_HOSTS", default="*").split(",")
 
+import cloudinary # type: ignore
+import cloudinary.uploader # type: ignore
+import cloudinary.api # type: ignore
+from cloudinary.storage import RawMediaCloudinaryStorage # type: ignore
+from cloudinary_storage.storage import MediaCloudinaryStorage # type: ignore
+from cloudinary_storage.storage import VideoMediaCloudinaryStorage # type: ignore
+from cloudinary_storage.storage import RawMediaCloudinaryStorage # type: ignore
+from cloudinary_storage.storage import StaticHashedCloudinaryStorage # type: ignore
+from cloudinary_storage.storage import MediaCloudinaryStorage # type: ignore
+from cloudinary_storage.storage import VideoMediaCloudinaryStorage # type: ignore
+
 # -------------------------------------------------------------------
 # APPLICATIONS
 # -------------------------------------------------------------------
