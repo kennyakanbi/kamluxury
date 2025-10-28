@@ -134,23 +134,23 @@ ADMIN_EMAIL = env("ADMIN_EMAIL", default="")
 # -------------------------------------------------------------------
 # MEDIA / CLOUDINARY CONFIGURATION
 # -------------------------------------------------------------------
+# -------------------------------------------------------------------
+# MEDIA / CLOUDINARY CONFIGURATION
+# -------------------------------------------------------------------
 import cloudinary
 import cloudinary.uploader
 import cloudinary.api
-from cloudinary_storage.storage import RawMediaCloudinaryStorage
 from cloudinary_storage.storage import MediaCloudinaryStorage
-from decouple import config as env
 
-cloudinary.config(
-    cloud_name=env("CLOUDINARY_CLOUD_NAME", default="dzfzcm1nt"),
-    api_key=env("CLOUDINARY_API_KEY", default="443161458289487"),
-    api_secret=env("CLOUDINARY_API_SECRET", default="pmeZTsFlKS91Xb4rOstmfExC1n4"),
-)
+CLOUDINARY_STORAGE = {
+    'CLOUD_NAME': env('CLOUDINARY_CLOUD_NAME', default='dzfzcm1nt'),
+    'API_KEY': env('CLOUDINARY_API_KEY', default='443161458289487'),
+    'API_SECRET': env('CLOUDINARY_API_SECRET', default='pmeZTsFlKS91Xb4rOstmfExC1n4'),
+}
 
-# Always store uploaded files on Cloudinary
-DEFAULT_FILE_STORAGE = "cloudinary_storage.storage.MediaCloudinaryStorage"
-MEDIA_URL = "/media/"
-
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / 'media'
 
 
 # DEFAULT PRIMARY KEY FIELD TYPE
