@@ -127,18 +127,24 @@ STATICFILES_DIRS = [BASE_DIR / "static"]
 STATIC_ROOT = BASE_DIR / "staticfiles"
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
+ADMIN_USER = env("ADMIN_USER", default="")
+ADMIN_PASS = env("ADMIN_PASS", default="")
+ADMIN_EMAIL = env("ADMIN_EMAIL", default="")
+
 # -------------------------------------------------------------------
 # MEDIA / CLOUDINARY CONFIGURATION
 # -------------------------------------------------------------------
 import cloudinary
 import cloudinary.uploader
 import cloudinary.api
+from cloudinary_storage.storage import RawMediaCloudinaryStorage
+from cloudinary_storage.storage import MediaCloudinaryStorage
 
 # Configure Cloudinary using environment variables from Render
 cloudinary.config(
-    cloud_name=env("CLOUDINARY_CLOUD_NAME"),
-    api_key=env("CLOUDINARY_API_KEY"),
-    api_secret=env("CLOUDINARY_API_SECRET"),
+    cloud_name=env("dzfzcm1nt"),
+    api_key=env("443161458289487"),
+    api_secret=env("pmeZTsFlKS91Xb4rOstmfExC1n4"),
 )
 
 # Always store uploaded files on Cloudinary
