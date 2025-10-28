@@ -134,20 +134,16 @@ import cloudinary
 import cloudinary.uploader
 import cloudinary.api
 
+# Configure Cloudinary using environment variables from Render
 cloudinary.config(
-    cloud_name=os.getenv("CLOUDINARY_CLOUD_NAME", "dzfzcm1nt"),
-    api_key=os.getenv("CLOUDINARY_API_KEY", "498946834664268"),
-    api_secret=os.getenv("CLOUDINARY_API_SECRET", ""),
+    cloud_name=env("CLOUDINARY_CLOUD_NAME"),
+    api_key=env("CLOUDINARY_API_KEY"),
+    api_secret=env("CLOUDINARY_API_SECRET"),
 )
 
-CLOUDINARY_STORAGE = {
-    'CLOUD_NAME': 'dzfzcm1nt',
-    'API_KEY': '498946834664268',
-    'API_SECRET': '8FQf9O9kdjDJFZQxol8woOJr4Ww'
-}
-
-DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
-MEDIA_URL = '/media/'
+# Always store uploaded files on Cloudinary
+DEFAULT_FILE_STORAGE = "cloudinary_storage.storage.MediaCloudinaryStorage"
+MEDIA_URL = "/media/"
 
 
 
@@ -179,6 +175,7 @@ CSRF_TRUSTED_ORIGINS = [
 
 SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
 
+
 # -------------------------------------------------------------------
 # LOGGING
 # -------------------------------------------------------------------
@@ -188,3 +185,5 @@ LOGGING = {
     "handlers": {"console": {"class": "logging.StreamHandler"}},
     "root": {"handlers": ["console"], "level": "INFO"},
 }
+
+print("Cloudinary Cloud:", env("CLOUDINARY_CLOUD_NAME"))
