@@ -140,7 +140,6 @@ cloudinary.config(
     api_secret=os.getenv("CLOUDINARY_API_SECRET", ""),
 )
 
-# ✅ Always use Cloudinary for uploaded files
 CLOUDINARY_STORAGE = {
     'CLOUD_NAME': 'dzfzcm1nt',
     'API_KEY': '498946834664268',
@@ -149,7 +148,6 @@ CLOUDINARY_STORAGE = {
 
 DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 MEDIA_URL = '/media/'
-
 
 
 
