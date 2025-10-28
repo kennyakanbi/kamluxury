@@ -139,12 +139,12 @@ import cloudinary.uploader
 import cloudinary.api
 from cloudinary_storage.storage import RawMediaCloudinaryStorage
 from cloudinary_storage.storage import MediaCloudinaryStorage
+from decouple import config as env
 
-# Configure Cloudinary using environment variables from Render
 cloudinary.config(
-    cloud_name=env("dzfzcm1nt"),
-    api_key=env("443161458289487"),
-    api_secret=env("pmeZTsFlKS91Xb4rOstmfExC1n4"),
+    cloud_name=env("CLOUDINARY_CLOUD_NAME", default="dzfzcm1nt"),
+    api_key=env("CLOUDINARY_API_KEY", default="443161458289487"),
+    api_secret=env("CLOUDINARY_API_SECRET", default="pmeZTsFlKS91Xb4rOstmfExC1n4"),
 )
 
 # Always store uploaded files on Cloudinary
