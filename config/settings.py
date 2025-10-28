@@ -97,9 +97,7 @@ if DEBUG:
     }
 else:
     DATABASES = {
-        "default": dj_database_url.config(
-            default="postgresql://kamluxng_db_user:jznfj0Gi3uWXwti0DkAEj3SmKRUnxOyj@dpg-d3udajogjchc73a8f0ag-a/kamluxng_db"
-        )
+        "default": dj_database_url.config(default=env("DATABASE_URL"))
     }
 
 
