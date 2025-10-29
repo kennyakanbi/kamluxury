@@ -30,8 +30,6 @@ INSTALLED_APPS = [
     "crispy_forms",
     "crispy_bootstrap5",
     "django_filters",
-    "cloudinary",
-    "cloudinary_storage",
     "listings",
     "checkout",
     "django.contrib.humanize",
@@ -172,10 +170,23 @@ LOGGING = {
 
 print("Cloudinary Cloud:", env("CLOUDINARY_CLOUD_NAME"))
 
-CLOUDINARY_STORAGE = {
-    'CLOUD_NAME': 'dzfzcm1nt',
-    'API_KEY': '443161458289487',
-    'API_SECRET': 'pmeZTsFlKS91Xb4rOstmfExC1n4',
-}
+# -------------------------------------------------------------------
+# CLOUDINARY CONFIGURATION
+# -------------------------------------------------------------------
+import cloudinary # type: ignore
+import cloudinary.uploader # type: ignore
+import cloudinary.api # type: ignore
 
-DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+cloudinary.config(
+    cloud_name=env("CLOUDINARY_CLOUD_NAME"),
+    api_key=env("CLOUDINARY_API_KEY"),
+    api_secret=env("CLOUDINARY_API_SECRET"),
+)
+
+INSTALLED_APPS += [
+    "cloudinary",
+    "cloudinary_storage",
+]
+
+DEFAULT_FILE_STORAGE = "cloudinary_storage.storage.MediaCloudinaryStorage"
+MEDIA_URL = "/media/"

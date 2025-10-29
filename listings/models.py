@@ -1,6 +1,6 @@
-# listings/models.py
 from django.db import models
 from django.urls import reverse
+from cloudinary.models import CloudinaryField  # ✅ add this import
 
 class Category(models.TextChoices):
     STUDIO = 'STUDIO', 'Studio Apartment'
@@ -30,16 +30,19 @@ class Property(models.Model):
     parking = models.PositiveIntegerField(default=0)
     square_meters = models.PositiveIntegerField(default=0)
     is_featured = models.BooleanField(default=False)
-    cover = models.ImageField(upload_to='properties/', blank=True, null=True)
-    gallery1 = models.ImageField(upload_to='properties/', blank=True, null=True)
-    gallery2 = models.ImageField(upload_to='properties/', blank=True, null=True)
+
+    # ✅ Use CloudinaryField (falls back gracefully if Cloudinary not configured)
+    cover = CloudinaryField("cover", folder="properties", blank=True, null=True)
+    gallery1 = CloudinaryField("gallery1", folder="properties", blank=True, null=True)
+    gallery2 = CloudinaryField("gallery2", folder="properties", blank=True, null=True)
+
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return self.title
 
     def get_absolute_url(self):
-        return reverse('listings:detail', args=[self.slug])
+        return reverse("listings:detail", args=[self.slug])
 
 class UnitOption(models.Model):
     """
