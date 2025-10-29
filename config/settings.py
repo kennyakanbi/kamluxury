@@ -32,6 +32,8 @@ INSTALLED_APPS = [
     "django_filters",
     "listings",
     "checkout",
+     "cloudinary",
+    "cloudinary_storage",
     "django.contrib.humanize",
 ]
 
@@ -177,16 +179,17 @@ import cloudinary # type: ignore
 import cloudinary.uploader # type: ignore
 import cloudinary.api # type: ignore
 
-cloudinary.config(
-    cloud_name=env("CLOUDINARY_CLOUD_NAME"),
-    api_key=env("CLOUDINARY_API_KEY"),
-    api_secret=env("CLOUDINARY_API_SECRET"),
-)
 
-INSTALLED_APPS += [
-    "cloudinary",
-    "cloudinary_storage",
-]
+import cloudinary
+from decouple import config
+
+cloudinary.config(
+    cloud_name=config("CLOUDINARY_CLOUD_NAME"),
+    api_key=config("CLOUDINARY_API_KEY"),
+    api_secret=config("CLOUDINARY_API_SECRET"),
+    secure=True
+)
 
 DEFAULT_FILE_STORAGE = "cloudinary_storage.storage.MediaCloudinaryStorage"
 MEDIA_URL = "/media/"
+
