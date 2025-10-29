@@ -1,6 +1,4 @@
-import os
 from pathlib import Path
-from datetime import timedelta
 from django.core.management.utils import get_random_secret_key
 import dj_database_url
 from decouple import config as env  # type: ignore
@@ -131,26 +129,6 @@ ADMIN_USER = env("ADMIN_USER", default="")
 ADMIN_PASS = env("ADMIN_PASS", default="")
 ADMIN_EMAIL = env("ADMIN_EMAIL", default="")
 
-# -------------------------------------------------------------------
-# MEDIA / CLOUDINARY CONFIGURATION
-# -------------------------------------------------------------------
-# -------------------------------------------------------------------
-# MEDIA / CLOUDINARY CONFIGURATION
-# -------------------------------------------------------------------
-import cloudinary
-import cloudinary.uploader
-import cloudinary.api
-from cloudinary_storage.storage import MediaCloudinaryStorage
-
-CLOUDINARY_STORAGE = {
-    'CLOUD_NAME': env('CLOUDINARY_CLOUD_NAME', default='dzfzcm1nt'),
-    'API_KEY': env('CLOUDINARY_API_KEY', default='443161458289487'),
-    'API_SECRET': env('CLOUDINARY_API_SECRET', default='pmeZTsFlKS91Xb4rOstmfExC1n4'),
-}
-
-DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
-MEDIA_URL = '/media/'
-MEDIA_ROOT = BASE_DIR / 'media'
 
 
 # DEFAULT PRIMARY KEY FIELD TYPE
@@ -194,3 +172,10 @@ LOGGING = {
 
 print("Cloudinary Cloud:", env("CLOUDINARY_CLOUD_NAME"))
 
+CLOUDINARY_STORAGE = {
+    'CLOUD_NAME': 'dzfzcm1nt',
+    'API_KEY': '443161458289487',
+    'API_SECRET': 'pmeZTsFlKS91Xb4rOstmfExC1n4',
+}
+
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
