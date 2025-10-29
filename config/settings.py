@@ -193,3 +193,4 @@ LOGGING = {
 }
 
 print("Cloudinary Cloud:", env("CLOUDINARY_CLOUD_NAME"))
+
