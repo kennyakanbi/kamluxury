@@ -1,7 +1,10 @@
 from pathlib import Path
 from django.core.management.utils import get_random_secret_key
 import dj_database_url
-from decouple import config as env  # type: ignore
+from decouple import config as env
+import cloudinary
+import cloudinary.uploader
+import cloudinary.api
 
 # -------------------------------------------------------------------
 # BASE SETTINGS
@@ -14,6 +17,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = env("SECRET_KEY", default=get_random_secret_key())
 DEBUG = env("DEBUG", default=True, cast=bool)
 ALLOWED_HOSTS = env("ALLOWED_HOSTS", default="kamluxury.onrender.com,localhost,127.0.0.1").split(",")
+
+
+DEFAULT_FILE_STORAGE = "cloudinary_storage.storage.MediaCloudinaryStorage"
+MEDIA_URL = "/media/"  # (not used by Cloudinary but required by Django)
+
+print("✅ Cloudinary configured for:", env("CLOUDINARY_CLOUD_NAME"))
 
 # -------------------------------------------------------------------
 # APPLICATIONS
@@ -172,24 +181,6 @@ LOGGING = {
 
 print("Cloudinary Cloud:", env("CLOUDINARY_CLOUD_NAME"))
 
-# -------------------------------------------------------------------
-# CLOUDINARY CONFIGURATION
-# -------------------------------------------------------------------
-import cloudinary # type: ignore
-import cloudinary.uploader # type: ignore
-import cloudinary.api # type: ignore
 
 
-import cloudinary
-from decouple import config
-
-cloudinary.config(
-    cloud_name=config("CLOUDINARY_CLOUD_NAME"),
-    api_key=config("CLOUDINARY_API_KEY"),
-    api_secret=config("CLOUDINARY_API_SECRET"),
-    secure=True
-)
-
-DEFAULT_FILE_STORAGE = "cloudinary_storage.storage.MediaCloudinaryStorage"
-MEDIA_URL = "/media/"
 
