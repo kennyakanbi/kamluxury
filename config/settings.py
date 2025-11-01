@@ -5,6 +5,14 @@ from decouple import config as env
 import cloudinary
 import cloudinary.uploader
 import cloudinary.api
+import os
+
+cloudinary.config(
+    cloud_name = os.getenv("CLOUDINARY_CLOUD_NAME", "dzfzcm1nt"),
+    api_key = os.getenv("CLOUDINARY_API_KEY", "781366468711188"),
+    api_secret = os.getenv("CLOUDINARY_API_SECRET", "cqh3xT3ZL2w5I7wLGQpDxWhxsb0"),
+    secure = True
+)
 
 # -------------------------------------------------------------------
 # BASE SETTINGS
