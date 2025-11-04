@@ -6,9 +6,9 @@ from django.core.paginator import Paginator
 from django.db.models import Q
 from django.shortcuts import get_object_or_404, redirect, render
 from .models import Property, Category
-
-# Import LeadForm (single, canonical import)
 from .forms import LeadForm
+from django.contrib.admin.views.decorators import staff_member_required
+from django.http import HttpResponse
 
 # Optionally support UnitOption if present
 try:
@@ -19,6 +19,23 @@ except Exception:
 
 def about(request):
     return render(request, 'listings/about.html')
+
+# temporary debug view — remove after use
+@staff_member_required
+def debug_cloudinary(request):
+    """
+    Shows which storage/cloudinary settings the running process actually sees.
+    Only accessible by logged-in staff users.
+    """
+    out = []
+    out.append(f"DEFAULT_FILE_STORAGE={getattr(settings, 'DEFAULT_FILE_STORAGE', 'MISSING')}")
+    out.append(f"CLOUDINARY_URL_SET={'YES' if getattr(settings, 'CLOUDINARY_URL', '') else 'NO'}")
+    # read CLOUDINARY_STORAGE dict if present
+    cloud_name = getattr(settings, 'CLOUDINARY_STORAGE', {}).get('CLOUD_NAME', None)
+    out.append(f"CLOUDINARY_STORAGE.CLOUD_NAME={cloud_name or 'MISSING'}")
+    out.append(f"MEDIA_ROOT={getattr(settings, 'MEDIA_ROOT', None)}")
+    out.append(f"MEDIA_URL={getattr(settings, 'MEDIA_URL', None)}")
+    return HttpResponse('<br>'.join(out))
 
 def activities(request):
     return render(request, 'listings/activities.html')

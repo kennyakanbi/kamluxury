@@ -4,16 +4,6 @@ import dj_database_url
 from decouple import config as env
 import os
 
-
-# Paste this block into your Django settings.py
-# Replace the existing Cloudinary / MEDIA / DEFAULT_FILE_STORAGE sections.
-# Place this near the top (after imports) and BEFORE any use of BASE_DIR.
-# After pasting: set CLOUDINARY_URL on Render and redeploy, then re-upload images in deployed admin.
-
-from pathlib import Path
-import os
-from decouple import config as env
-
 # Base directory
 BASE_DIR = Path(__file__).resolve().parent.parent
 
