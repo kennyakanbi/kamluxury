@@ -2,35 +2,51 @@ from pathlib import Path
 from django.core.management.utils import get_random_secret_key
 import dj_database_url
 from decouple import config as env
-import cloudinary
-import cloudinary.uploader
-import cloudinary.api
 import os
 
-cloudinary.config(
-    cloud_name = os.getenv("CLOUDINARY_CLOUD_NAME", "dzfzcm1nt"),
-    api_key = os.getenv("CLOUDINARY_API_KEY", "781366468711188"),
-    api_secret = os.getenv("CLOUDINARY_API_SECRET", "cqh3xT3ZL2w5I7wLGQpDxWhxsb0"),
-    secure = True
-)
 
-# -------------------------------------------------------------------
-# BASE SETTINGS
-# -------------------------------------------------------------------
+# Paste this block into your Django settings.py
+# Replace the existing Cloudinary / MEDIA / DEFAULT_FILE_STORAGE sections.
+# Place this near the top (after imports) and BEFORE any use of BASE_DIR.
+# After pasting: set CLOUDINARY_URL on Render and redeploy, then re-upload images in deployed admin.
+
+from pathlib import Path
+import os
+from decouple import config as env
+
+# Base directory
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# -------------------------------------------------------------------
-# ENVIRONMENT VARIABLES
-# -------------------------------------------------------------------
+# Read Cloudinary env (preferred single var). decouple env fallback keeps local dev safe.
+CLOUDINARY_URL = os.environ.get("CLOUDINARY_URL") or env("CLOUDINARY_URL", default="")
+CLOUDINARY_CLOUD_NAME = os.environ.get("CLOUDINARY_CLOUD_NAME") or env("CLOUDINARY_CLOUD_NAME", default="")
+CLOUDINARY_API_KEY = os.environ.get("CLOUDINARY_API_KEY") or env("CLOUDINARY_API_KEY", default="")
+CLOUDINARY_API_SECRET = os.environ.get("CLOUDINARY_API_SECRET") or env("CLOUDINARY_API_SECRET", default="")
+
+# Configure Django storage to use Cloudinary if credentials exist
+if CLOUDINARY_URL or (CLOUDINARY_CLOUD_NAME and CLOUDINARY_API_KEY and CLOUDINARY_API_SECRET):
+    DEFAULT_FILE_STORAGE = "cloudinary_storage.storage.MediaCloudinaryStorage"
+    CLOUDINARY_STORAGE = {
+        "CLOUD_NAME": CLOUDINARY_CLOUD_NAME or (CLOUDINARY_URL.split('@')[-1] if CLOUDINARY_URL else ""),
+        "API_KEY": CLOUDINARY_API_KEY,
+        "API_SECRET": CLOUDINARY_API_SECRET,
+    }
+    # MEDIA_URL is kept for Django templates; Cloudinary returns full https URLs
+    MEDIA_URL = "/media/"
+else:
+    DEFAULT_FILE_STORAGE = "django.core.files.storage.FileSystemStorage"
+    MEDIA_ROOT = BASE_DIR / "media"
+    MEDIA_URL = "/media/"
+
+# (Optional) remove any other unconditional DEFAULT_FILE_STORAGE / cloudinary.config calls
+# that appear elsewhere in settings.py to avoid conflicts.
+
+# Security reminder (after deploying): rotate any API secrets you accidentally committed.
+
+# security / env
 SECRET_KEY = env("SECRET_KEY", default=get_random_secret_key())
-DEBUG = env("DEBUG", default=True, cast=bool)
-ALLOWED_HOSTS = env("ALLOWED_HOSTS", default="kamluxury.onrender.com,localhost,127.0.0.1").split(",")
-
-
-DEFAULT_FILE_STORAGE = "cloudinary_storage.storage.MediaCloudinaryStorage"
-MEDIA_URL = "/media/"  # (not used by Cloudinary but required by Django)
-
-print("✅ Cloudinary configured for:", env("CLOUDINARY_CLOUD_NAME"))
+DEBUG = env("DEBUG", default=False, cast=bool)
+ALLOWED_HOSTS = env("ALLOWED_HOSTS", default="kamluxng.onrender.com,localhost,127.0.0.1").split(",")
 
 # -------------------------------------------------------------------
 # APPLICATIONS
@@ -103,7 +119,7 @@ WSGI_APPLICATION = "config.wsgi.application"
 # -------------------------------------------------------------------
 # DATABASE
 # -------------------------------------------------------------------
-if DEBUG:
+if DEBUG: 
     DATABASES = {
         "default": {
             "ENGINE": "django.db.backends.sqlite3",
@@ -187,7 +203,6 @@ LOGGING = {
     "root": {"handlers": ["console"], "level": "INFO"},
 }
 
-print("Cloudinary Cloud:", env("CLOUDINARY_CLOUD_NAME"))
 
 
 
