@@ -4,6 +4,16 @@ from decouple import config as env
 import dj_database_url
 from django.core.management.utils import get_random_secret_key
 
+BASE_DIR = Path(__file__).resolve().parent.parent
+
+MEDIA_URL = "/media/"
+
+# Use MEDIA_ROOT from environment if provided (useful on Render),
+# otherwise default to "<project root>/media"
+MEDIA_ROOT = Path(os.environ.get("MEDIA_ROOT", str(BASE_DIR / "media")))
+
+# If you use Cloudinary for media storage (ok to keep)
+DEFAULT_FILE_STORAGE = "cloudinary_storage.storage.MediaCloudinaryStorage"
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
