@@ -1,41 +1,40 @@
-# --- Cloudinary / MEDIA configuration (paste near top of settings.py) ---
 from pathlib import Path
 import os
 from decouple import config as env
 import dj_database_url
 from django.core.management.utils import get_random_secret_key
 
-BASE_DIR = Path(__file__).resolve().parent.parent
-
-# --- Cloudinary & MEDIA configuration (paste near top, after imports, BEFORE BASE_DIR use) ---
-import os
-from pathlib import Path
-from decouple import config as env  # if you use python-decouple; otherwise use os.environ
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# Prefer single CLOUDINARY_URL (recommended). Fallback to separate vars.
-CLOUDINARY_URL = os.environ.get("CLOUDINARY_URL") or env("CLOUDINARY_URL", default="")
-CLOUDINARY_CLOUD_NAME = os.environ.get("CLOUDINARY_CLOUD_NAME") or env("CLOUDINARY_CLOUD_NAME", default="")
-CLOUDINARY_API_KEY = os.environ.get("CLOUDINARY_API_KEY") or env("CLOUDINARY_API_KEY", default="")
-CLOUDINARY_API_SECRET = os.environ.get("CLOUDINARY_API_SECRET") or env("CLOUDINARY_API_SECRET", default="")
+# ------------------------
+# MEDIA FILES CONFIGURATION
+# ------------------------
 
-# If any Cloudinary credentials exist, enable Cloudinary storage.
-if CLOUDINARY_URL or (CLOUDINARY_CLOUD_NAME and CLOUDINARY_API_KEY and CLOUDINARY_API_SECRET):
+# Check if CLOUDINARY_URL environment variable is set (production)
+if os.getenv("CLOUDINARY_URL"):
+    # Use Cloudinary for all media storage in production
     DEFAULT_FILE_STORAGE = "cloudinary_storage.storage.MediaCloudinaryStorage"
     CLOUDINARY_STORAGE = {
-        "CLOUD_NAME": CLOUDINARY_CLOUD_NAME or (CLOUDINARY_URL.split('@')[-1] if CLOUDINARY_URL else ""),
-        "API_KEY": CLOUDINARY_API_KEY,
-        "API_SECRET": CLOUDINARY_API_SECRET,
+        'CLOUD_NAME': os.getenv("CLOUDINARY_CLOUD_NAME") or "<your_cloud_name>",
+        'API_KEY': os.getenv("CLOUDINARY_API_KEY") or "<your_api_key>",
+        'API_SECRET': os.getenv("CLOUDINARY_API_SECRET") or "<your_api_secret>",
     }
-    # Django templates still expect MEDIA_URL defined; Cloudinary provides full https URLs.
-    MEDIA_URL = "/media/"
 else:
-    # Local fallback for development
-    DEFAULT_FILE_STORAGE = "django.core.files.storage.FileSystemStorage"
-    MEDIA_ROOT = BASE_DIR / "media"
+    # Local development storage
     MEDIA_URL = "/media/"
-# --- end Cloudinary / MEDIA block ---
+    MEDIA_ROOT = BASE_DIR / "media"
+
+# ------------------------
+# STATIC FILES CONFIGURATION
+# ------------------------
+STATIC_URL = "/static/"
+STATIC_ROOT = BASE_DIR / "staticfiles"
+
+# Optional: for local dev
+STATICFILES_DIRS = [
+    BASE_DIR / "static",
+]
 
 # security / env
 SECRET_KEY = env("SECRET_KEY", default=get_random_secret_key())
