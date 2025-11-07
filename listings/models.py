@@ -1,6 +1,9 @@
 from django.db import models
 from django.urls import reverse
-from cloudinary.models import CloudinaryField  # ✅ add this import
+from cloudinary.models import CloudinaryField
+
+# Your Category, Property, UnitOption, Lead models here
+
 
 class Category(models.TextChoices):
     STUDIO = 'STUDIO', 'Studio Apartment'
@@ -19,23 +22,17 @@ class Property(models.Model):
     category = models.CharField(max_length=10, choices=Category.choices, blank=True)
     location = models.CharField(max_length=200)
     description = models.TextField(blank=True)
-
-    # Keep legacy fields nullable for backward compatibility
     price = models.DecimalField(max_digits=12, decimal_places=2, blank=True, null=True)
     initial_deposit = models.DecimalField(max_digits=12, decimal_places=2, blank=True, null=True)
     installment_plan = models.CharField(max_length=200, blank=True)
-
     bedrooms = models.PositiveIntegerField(default=0)
     bathrooms = models.PositiveIntegerField(default=0)
     parking = models.PositiveIntegerField(default=0)
     square_meters = models.PositiveIntegerField(default=0)
     is_featured = models.BooleanField(default=False)
-
-    # ✅ Use CloudinaryField (falls back gracefully if Cloudinary not configured)
     cover = CloudinaryField("cover", folder="properties", blank=True, null=True)
     gallery1 = CloudinaryField("gallery1", folder="properties", blank=True, null=True)
     gallery2 = CloudinaryField("gallery2", folder="properties", blank=True, null=True)
-
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
@@ -43,6 +40,8 @@ class Property(models.Model):
 
     def get_absolute_url(self):
         return reverse("listings:detail", args=[self.slug])
+
+    
 
 class UnitOption(models.Model):
     """
@@ -72,3 +71,6 @@ class Lead(models.Model):
 
     def __str__(self):
         return f"{self.name} – {self.phone}"
+    
+
+
