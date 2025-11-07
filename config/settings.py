@@ -3,35 +3,52 @@ import os
 from decouple import config as env
 import dj_database_url
 from django.core.management.utils import get_random_secret_key
+from urllib.parse import urlparse
+
 
 BASE_DIR = Path(__file__).resolve().parent.parent
+
+# ------------------------
+# MEDIA / CLOUDINARY setup
+# ------------------------
+
 
 MEDIA_URL = "/media/"
-
-# Use MEDIA_ROOT from environment if provided (useful on Render),
-# otherwise default to "<project root>/media"
 MEDIA_ROOT = Path(os.environ.get("MEDIA_ROOT", str(BASE_DIR / "media")))
 
-# If you use Cloudinary for media storage (ok to keep)
-DEFAULT_FILE_STORAGE = "cloudinary_storage.storage.MediaCloudinaryStorage"
+# default to local storage
+DEFAULT_FILE_STORAGE = "django.core.files.storage.FileSystemStorage"
 
-BASE_DIR = Path(__file__).resolve().parent.parent
+CLOUDINARY_URL = os.getenv("CLOUDINARY_URL") or None
+CLOUDINARY_CLOUD_NAME = os.getenv("CLOUDINARY_CLOUD_NAME") or None
+CLOUDINARY_API_KEY = os.getenv("CLOUDINARY_API_KEY") or None
+CLOUDINARY_API_SECRET = os.getenv("CLOUDINARY_API_SECRET") or None
 
-# ------------------------
-# MEDIA FILES CONFIGURATION
-# ------------------------
+if CLOUDINARY_URL:
+    # parse CLOUDINARY_URL like: cloudinary://API_KEY:API_SECRET@CLOUD_NAME
+    parsed = urlparse(CLOUDINARY_URL)
+    # parsed.hostname is the cloud name for cloudinary://...@CLOUD_NAME
+    parsed_cloud = parsed.hostname or CLOUDINARY_CLOUD_NAME
 
-# Check if CLOUDINARY_URL environment variable is set (production)
-if os.getenv("CLOUDINARY_URL"):
-    # Use Cloudinary for all media storage in production
+    CLOUDINARY_CLOUD_NAME = CLOUDINARY_CLOUD_NAME or parsed_cloud
+    # try to fill api key/secret from URL if not provided separately
+    if parsed.username and not CLOUDINARY_API_KEY:
+        CLOUDINARY_API_KEY = parsed.username
+    if parsed.password and not CLOUDINARY_API_SECRET:
+        CLOUDINARY_API_SECRET = parsed.password
+
+if CLOUDINARY_CLOUD_NAME and CLOUDINARY_API_KEY and CLOUDINARY_API_SECRET:
+    # Enable Cloudinary storage
     DEFAULT_FILE_STORAGE = "cloudinary_storage.storage.MediaCloudinaryStorage"
     CLOUDINARY_STORAGE = {
-        'CLOUD_NAME': os.getenv("CLOUDINARY_CLOUD_NAME") or "<your_cloud_name>",
-        'API_KEY': os.getenv("CLOUDINARY_API_KEY") or "<your_api_key>",
-        'API_SECRET': os.getenv("CLOUDINARY_API_SECRET") or "<your_api_secret>",
+        "CLOUD_NAME": CLOUDINARY_CLOUD_NAME,
+        "API_KEY": CLOUDINARY_API_KEY,
+        "API_SECRET": CLOUDINARY_API_SECRET,
     }
+    # Helpful MEDIA_URL pointing to Cloudinary upload base (templates typically use field.url though)
+    MEDIA_URL = f"https://res.cloudinary.com/{CLOUDINARY_CLOUD_NAME}/image/upload/"
 else:
-    # Local development storage
+    # local development fallback
     MEDIA_URL = "/media/"
     MEDIA_ROOT = BASE_DIR / "media"
 
