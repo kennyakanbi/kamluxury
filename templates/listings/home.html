@@ -1,6 +1,6 @@
 {# templates/listings/home.html #}
 {% extends 'listings/base.html' %}
-{% load static humanize %}
+{% load static humanize cover_tags %}
 
 {% block title %}Home | Kam Luxury Nigeria{% endblock %}
 
@@ -140,7 +140,7 @@
         <div class="carousel-item {% if forloop.first and not static_slides %}active{% endif %}">
           <div class="hero-slide">
             {% if p.cover %}
-              <img src="{{ p.cover.url }}" alt="{{ p.title }}" loading="lazy">
+              <img src="{{ p|cover_url:'cover' }}" alt="{{ p.title }}" loading="lazy">
             {% else %}
               <img src="{% static 'img/brand_1.png' %}" alt="Kam Luxury" loading="lazy">
             {% endif %}
@@ -297,7 +297,8 @@
       <div class="col-12 col-md-6 col-lg-4">
         <div class="property-card shadow-sm h-100">
           {% if p.cover %}
-            <img src="{{ p.cover.url }}" alt="{{ p.title }}" class="property-img">
+            <img src="{{ p|cover_url:'cover' }}" alt="{{ p.title }}" loading="lazy">
+
           {% else %}
             <img src="{% static 'img/brand_1.png' %}" alt="Kam Luxury" class="property-img">
           {% endif %}

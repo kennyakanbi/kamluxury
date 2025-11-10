@@ -1,20 +1,23 @@
 {% extends 'listings/base.html' %}
-{% load humanize %}
+{% load humanize cover_tags %}
 {% block title %}{{ obj.title }} | Kam Luxury Nigeria{% endblock %}
 {% block content %}
 <div class="container">
   <div class="row g-4">
 
     <!-- Gallery -->
-    <div class="col-lg-7">
-      {% if obj.cover %}
-        <img class="img-fluid rounded mb-3" src="{{ obj.cover.url }}" alt="{{ obj.title }}">
-      {% endif %}
-      <div class="row g-2">
-        {% if obj.gallery1 %}<div class="col-6"><img class="img-fluid rounded" src="{{ obj.gallery1.url }}" alt=""></div>{% endif %}
-        {% if obj.gallery2 %}<div class="col-6"><img class="img-fluid rounded" src="{{ obj.gallery2.url }}" alt=""></div>{% endif %}
-      </div>
-    </div>
+  <!-- cover: use cover_url filter which gracefully falls back to static -->
+<img class="img-fluid rounded mb-3" src="{{ obj|cover_url:'cover' }}" alt="{{ obj.title }}">
+
+<div class="row g-2">
+  <div class="col-6">
+    <img class="img-fluid rounded" src="{{ obj|cover_url:'gallery1' }}" alt="">
+  </div>
+  <div class="col-6">
+    <img class="img-fluid rounded" src="{{ obj|cover_url:'gallery2' }}" alt="">
+  </div>
+</div>
+
 
     <!-- Sidebar -->
     <div class="col-lg-5">
