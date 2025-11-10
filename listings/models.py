@@ -30,9 +30,10 @@ class Property(models.Model):
     parking = models.PositiveIntegerField(default=0)
     square_meters = models.PositiveIntegerField(default=0)
     is_featured = models.BooleanField(default=False)
-    cover = CloudinaryField("cover", folder="properties", blank=True, null=True)
-    gallery1 = CloudinaryField("gallery1", folder="properties", blank=True, null=True)
-    gallery2 = CloudinaryField("gallery2", folder="properties", blank=True, null=True)
+    cover = models.ImageField(upload_to='properties/', blank=True, null=True)
+    gallery1 = models.ImageField(upload_to='properties/', blank=True, null=True)
+    gallery2 = models.ImageField(upload_to='properties/', blank=True, null=True)
+
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
