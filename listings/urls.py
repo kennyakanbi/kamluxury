@@ -12,7 +12,9 @@ urlpatterns = [
     path("activities/", views.activities, name="activities"),
     path("properties/", views.property_list, name="property_list"),
     path("properties/<slug:slug>/", views.property_detail, name="detail"),
+    path("contact/<int:pk>/", views.contact_agent, name="contact_agent"),
     path('__debug_cloudinary__/', debug_cloudinary),
 ]
+
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

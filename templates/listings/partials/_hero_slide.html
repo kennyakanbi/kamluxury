@@ -1,0 +1,36 @@
+{% load static humanize cover_tags %}
+{# Partial: hero slide
+   vars: img, title, subtitle (opt), url (opt), absolute_url (opt),
+         category (opt), location (opt), price (opt), whatsapp_link (opt), active (opt)
+#}
+<div class="carousel-item {% if active %}active{% endif %}">
+  <div class="hero-slide">
+    <img src="{{ img }}" alt="{{ title|default:'Slide' }}" loading="lazy" class="d-block w-100">
+  </div>
+
+  <div class="hero-overlay" aria-hidden="true"></div>
+
+  <div class="carousel-caption text-start">
+    {% if category %}<span class="badge bg-dark">{{ category }}</span>{% endif %}
+    <h2 class="h3 fw-bold mb-1">{{ title }}</h2>
+    {% if location %}<p class="mb-2 small text-white-50">{{ location }}</p>{% endif %}
+    {% if price %}<p class="fs-6 fw-semibold mb-3 text-warning">₦{{ price|floatformat:0|intcomma }}</p>{% endif %}
+    {% if subtitle %}<p class="lead mb-3">{{ subtitle }}</p>{% endif %}
+
+    <div>
+      {% if absolute_url %}
+        <a href="{{ absolute_url }}" class="btn btn-light btn-sm me-2">View</a>
+      {% elif url %}
+        <a href="{{ url }}" class="btn btn-warning btn-lg">Explore</a>
+      {% endif %}
+
+      {% if whatsapp_link %}
+        <a href="{{ whatsapp_link }}" class="btn btn-outline-light btn-sm">Enquire</a>
+      {% endif %}
+
+      {% if not absolute_url and not url %}
+        <a href="{% url 'listings:property_list' %}" class="btn btn-outline-light btn-sm">Browse All</a>
+      {% endif %}
+    </div>
+  </div>
+</div>

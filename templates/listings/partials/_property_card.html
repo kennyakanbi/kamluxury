@@ -1,0 +1,31 @@
+{% load static humanize cover_tags %}
+
+<div class="property-card shadow-sm h-100">
+  {% with property|cover_url:'cover' as img_url %}
+    <img src="{% if img_url %}{{ img_url }}{% else %}{% static 'img/default_property.jpg' %}{% endif %}"
+         alt="{{ property.title }}"
+         class="property-img"
+         loading="lazy">
+  {% endwith %}
+
+  <div class="property-overlay">
+    <div class="d-flex justify-content-between align-items-start">
+      <span class="badge bg-dark">{{ property.get_category_display }}</span>
+      {% if property.price %}
+        <strong class="text-warning">₦{{ property.price|floatformat:0|intcomma }}</strong>
+      {% endif %}
+    </div>
+
+    <h5 class="mb-1 mt-2">{{ property.title }}</h5>
+    <p class="mb-2 small text-white-50">{{ property.location }}</p>
+
+    <div class="mt-2">
+      <a href="{{ property.get_absolute_url }}" class="btn btn-light btn-sm me-2">View</a>
+      {% if whatsapp_link %}
+        <a href="{{ whatsapp_link }}" class="btn btn-outline-light btn-sm">Enquire</a>
+      {% else %}
+        <a href="{% url 'listings:contact' %}" class="btn btn-outline-light btn-sm">Contact</a>
+      {% endif %}
+    </div>
+  </div>
+</div>

@@ -1,320 +1,295 @@
-{# templates/listings/home.html #}
 {% extends 'listings/base.html' %}
 {% load static humanize cover_tags %}
 
 {% block title %}Home | Kam Luxury Nigeria{% endblock %}
 
 {% block content %}
-<!-- ===== HERO CAROUSEL =====
-     Expects context:
-       - static_slides: list of {img, title, subtitle, url} (optional)
-       - featured: queryset/list of Property objects (optional)
--->
-
-<style>
-/* --- Hero sizing & layout (reduced height version) --- */
-:root {
-  --hero-h: 600px;         /* normal banner height on large screens */
-  --hero-h-mobile: 260px;  /* smaller on mobile */
-  --hero-overlay: rgba(0,0,0,0.45);
-}
-
-/* hero container */
-.hero-carousel {
-  min-height: var(--hero-h);
-  position: relative;
-  overflow: hidden;
-  background: #000;
-}
-@media (max-width: 575.98px) {
-  .hero-carousel { min-height: var(--hero-h-mobile); }
-}
-
-/* fill the carousel area */
-.hero-carousel .carousel-inner,
-.hero-carousel .carousel-item {
-  height: var(--hero-h);
-}
-@media (max-width: 575.98px) {
-  .hero-carousel .carousel-inner,
-  .hero-carousel .carousel-item {
-    height: var(--hero-h-mobile);
-  }
-}
-
-/* slide image */
-.hero-slide img {
-  display: block;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center;
-}
-
-/* overlay */
-.hero-overlay {
-  position: absolute;
-  inset: 0;
-  background: var(--hero-overlay);
-  z-index: 2;
-}
-
-/* caption positioning */
-.carousel-caption.text-start {
-  z-index: 3;
-  left: 5%;
-  right: auto;
-  bottom: 15%;
-  text-shadow: 0 2px 8px rgba(0,0,0,0.6);
-}
-@media (max-width: 767.98px) {
-  .carousel-caption.text-start {
-    bottom: 10%;
-    left: 1.5rem;
-    right: 1.5rem;
-    text-align: left;
-  }
-}
-
-/* indicators */
-.carousel-indicators [data-bs-target] {
-  width: 10px; height: 10px; border-radius: 50%;
-  background: #ffc107; opacity: .6;
-}
-.carousel-indicators .active { opacity: 1; }
-
-/* property cards section (unchanged) */
-.property-card { position: relative; overflow: hidden; border-radius: .5rem; }
-.property-img { width: 100%; height: 250px; object-fit: cover; transition: transform .35s ease; }
-.property-card:hover .property-img { transform: scale(1.06); }
-.property-overlay {
-  position: absolute; left:0; right:0; bottom:0;
-  background: linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(0,0,0,0.75) 100%);
-  color: white; padding: 1rem;
-}
-</style>
-
-
-<section class="hero-carousel">
+<section class="hero-carousel mb-4">
   <div id="kamHero" class="carousel slide carousel-fade" data-bs-ride="carousel" data-bs-interval="6000" aria-label="Hero carousel">
-
-    <!-- indicators: static slides first, then featured -->
     <div class="carousel-indicators">
-      {% for slide in static_slides %}
-        <button type="button" data-bs-target="#kamHero" data-bs-slide-to="{{ forloop.counter0 }}"
-                class="{% if forloop.first and not featured %}active{% endif %}"
-                aria-label="Slide {{ forloop.counter }}"></button>
-      {% endfor %}
-      {% for p in featured|slice:":4" %}
-        <button type="button"
-                data-bs-target="#kamHero"
-                data-bs-slide-to="{{ forloop.counter0|add:static_slides|length }}"
-                class="{% if not static_slides and forloop.first %}active{% endif %}"
-                aria-label="Featured {{ forloop.counter }}"></button>
-      {% endfor %}
-    </div>
-
-    <div class="carousel-inner">
-
-      {# Static hero slides (if any) #}
-      {% for slide in static_slides %}
-        <div class="carousel-item {% if forloop.first and static_slides %}active{% endif %}">
-          <div class="hero-slide">
-            <img src="{% static slide.img %}" alt="{{ slide.title }}" loading="lazy">
-          </div>
-
-          <div class="hero-overlay" aria-hidden="true"></div>
-
-          <div class="carousel-caption text-start">
-            <h1 class="display-5 fw-bold mb-2">{{ slide.title }}</h1>
-            {% if slide.subtitle %}<p class="lead mb-3">{{ slide.subtitle }}</p>{% endif %}
-            {% if slide.url %}
-              <a class="btn btn-warning btn-lg" href="{{ slide.url }}">Explore</a>
-            {% endif %}
-          </div>
-        </div>
-      {% endfor %}
-
-      {# Featured property slides #}
-      {% for p in featured %}
-        <div class="carousel-item {% if forloop.first and not static_slides %}active{% endif %}">
-          <div class="hero-slide">
-            {% if p.cover %}
-              <img src="{{ p|cover_url:'cover' }}" alt="{{ p.title }}" loading="lazy">
-            {% else %}
-              <img src="{% static 'img/brand_1.png' %}" alt="Kam Luxury" loading="lazy">
-            {% endif %}
-          </div>
-
-          <div class="hero-overlay" aria-hidden="true"></div>
-
-          <div class="carousel-caption text-start">
-            <span class="badge bg-dark mb-2">{{ p.get_category_display }}</span>
-            <h2 class="h3 fw-bold mb-1">{{ p.title }}</h2>
-            <p class="mb-2 small text-white-50">{{ p.location }}</p>
-            {% if p.price %}
-              <p class="fs-6 fw-semibold mb-3 text-warning">₦{{ p.price|floatformat:0|intcomma }}</p>
-            {% endif %}
-            <a href="{{ p.get_absolute_url }}" class="btn btn-light btn-sm me-2">View</a>
-            <a href="{% url 'listings:property_list' %}" class="btn btn-outline-light btn-sm">Browse All</a>
-          </div>
-        </div>
-      {% endfor %}
-
-      {# If no slides at all, show a simple fallback slide #}
-      {% if not static_slides and not featured %}
-        <div class="carousel-item active">
-          <div class="hero-slide">
-            <img src="{% static 'img/brand_1.png' %}" alt="Kam Luxury" loading="lazy">
-          </div>
-          <div class="hero-overlay" aria-hidden="true"></div>
-          <div class="carousel-caption text-start">
-            <h1 class="display-5 fw-bold">Welcome to Kam Luxury Nigeria</h1>
-            <p class="lead">Premium properties and investment opportunities across Nigeria.</p>
-            <a class="btn btn-warning btn-lg" href="{% url 'listings:property_list' %}">Browse Properties</a>
-          </div>
-        </div>
+      {% if static_slides %}
+        {% for slide in static_slides %}
+          <button type="button" data-bs-target="#kamHero" data-bs-slide-to="{{ forloop.counter0 }}" class="{% if forloop.first %}active{% endif %}" aria-label="Slide {{ forloop.counter }}"></button>
+        {% endfor %}
+        {% for p in featured|slice:":4" %}
+          <button type="button" data-bs-target="#kamHero" data-bs-slide-to="{{ static_slides|length|add:forloop.counter0 }}" aria-label="Featured {{ forloop.counter }}"></button>
+        {% endfor %}
+      {% elif featured %}
+        {% for p in featured %}
+          <button type="button" data-bs-target="#kamHero" data-bs-slide-to="{{ forloop.counter0 }}" class="{% if forloop.first %}active{% endif %}" aria-label="Featured {{ forloop.counter }}"></button>
+        {% endfor %}
+      {% else %}
+        <button type="button" data-bs-target="#kamHero" data-bs-slide-to="0" class="active" aria-label="Default slide"></button>
       {% endif %}
     </div>
 
-    <!-- controls -->
-    <button class="carousel-control-prev" type="button" data-bs-target="#kamHero" data-bs-slide="prev">
-      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-      <span class="visually-hidden">Previous</span>
-    </button>
-    <button class="carousel-control-next" type="button" data-bs-target="#kamHero" data-bs-slide="next">
-      <span class="carousel-control-next-icon" aria-hidden="true"></span>
-      <span class="visually-hidden">Next</span>
-    </button>
-  </div>
-</section>
+    <div class="carousel-inner">
+      {% if static_slides %}
+        {% for slide in static_slides %}
+          <div class="carousel-item {% if forloop.first %}active{% endif %}">
+            <div class="hero-slide">
+              <img src="{% static slide.img %}" class="img-fluid w-100" alt="{{ slide.title }}">
+            </div>
+            <div class="hero-overlay" aria-hidden="true"></div>
+            <div class="carousel-caption text-start">
+              <h1 class="display-5 fw-bold">{{ slide.title }}</h1>
+              <p class="lead">{{ slide.subtitle }}</p>
+              {% if slide.url %}
+                <a class="btn btn-warning btn-lg" href="{{ slide.url }}">Learn More</a>
+              {% endif %}
+            </div>
+          </div>
+        {% endfor %}
 
-<!-- ===== Our Services (4 items only) ===== -->
-<section class="services-section py-5 bg-light">
-  <div class="container text-center">
-    <h2 class="fw-bold mb-3">Our Services</h2>
-    <p class="lead text-muted mb-4">
-      We provide premium real estate solutions and smart investment opportunities tailored for your success.
-    </p>
+     {# ----------------------- 
+FEATURED PROPERTIES 
+----------------------- #} 
+{% for p in featured|slice:":4" %} 
+<div class="carousel-item"> 
+<div class="hero-slide"> 
+{% with p|cover_url:'cover' as img_url %} 
+<img src="{% if img_url %}{{ img_url }}{% else %}{% static 'img/default_property.jpg' %}{% endif %}" 
+class="img-fluid w-100" 
+alt="{{ p.title }}"> 
+{% endwith %} 
+</div> 
+<div class="hero-overlay"></div> 
+<div class="carousel-caption text-start"> 
+<h1 class="display-5 fw-bold">{{ p.title }}</h1> 
+<p class="lead"> 
+{{ p.get_category_display }} – {{ p.location }} 
+{% if p.price %} – ₦{{ p.price|intcomma }}{% endif %} 
+</p> 
+<a class="btn btn-warning btn-lg" href="{{ p.get_absolute_url }}">View Property</a> 
+</div> 
+</div> 
+{% endfor %} 
+{% elif featured %} 
+{# ----------------------- 
+ONLY FEATURED PROPERTIES 
+----------------------- #} 
+{% for p in featured %} 
+<p class="small text-muted">DEBUG: featured count = {{ featured|length }}</p>
+<div class="carousel-item {% if forloop.first %}active{% endif %}"> 
+<div class="hero-slide"> 
+{% with p|cover_url:'cover' as img_url %} 
+<img src="{% if img_url %}{{ img_url }}{% else %}{% static 'img/default_property.jpg' %}{% endif %}" 
+class="img-fluid w-100" 
+alt="{{ p.title }}"> 
+{% endwith %} 
+</div> 
+<div class="hero-overlay"></div> 
+<div class="carousel-caption text-start"> 
+<h1 class="display-5 fw-bold">{{ p.title }}</h1> 
+<p class="lead"> 
+{{ p.get_category_display }} – {{ p.location }} 
+{% if p.price %} – ₦{{ p.price|intcomma }}{% endif %} 
+</p> 
+<a class="btn btn-warning btn-lg" href="{{ p.get_absolute_url }}">View Property</a> 
+</div> 
+</div> 
+{% endfor %} 
+{% else %} 
+{# ----------------------- 
+FALLBACK SLIDE 
+----------------------- #} 
+<div class="carousel-item active"> 
+<div class="hero-slide"> 
+<img src="{% static 'img/brand_1.png' %}" class="img-fluid w-100" alt="Welcome"> 
+</div> 
+<div class="hero-overlay"></div> 
+<div class="carousel-caption text-start"> 
+<h1 class="display-5 fw-bold">Welcome to Kam Luxury Nigeria</h1> 
+<p class="lead">Premium properties and smart investments across Nigeria.</p> 
+<a class="btn btn-warning btn-lg" href="{% url 'listings:property_list' %}"> 
+Browse Properties 
+</a> 
+</div> 
+</div> 
+{% endif %} 
+</div> 
+<button class="carousel-control-prev" type="button" data-bs-target="#kamHero" data-bs-slide="prev"> 
+<span class="carousel-control-prev-icon" aria-hidden="true"></span> 
+<span class="visually-hidden">Previous</span> 
+</button> 
+<button class="carousel-control-next" type="button" data-bs-target="#kamHero" data-bs-slide="next"> 
+<span class="carousel-control-next-icon" aria-hidden="true"></span> 
+<span class="visually-hidden">Next</span> 
+</button> 
+</div> 
+</section> 
+<!-- SERVICES --> 
+<section class="services-section py-5 bg-light"> 
+<div class="container text-center"> 
+<h2 class="fw-bold mb-3">Our Services</h2> 
+<p class="lead text-muted mb-4">We provide premium real estate solutions and smart investment opportunities tailored to your success.</p> 
+<div class="row g-4 justify-content-center"> 
+<div class="col-12 col-md-6 col-lg-3"> 
+<div class="card h-100 shadow-sm border-0 service-card"> 
+<div class="card-body d-flex flex-column align-items-center justify-content-center text-center p-4"> 
+<div class="service-icon-wrapper mb-3">🏠</div> 
+<h5 class="fw-semibold mb-2">Real Estate Sales</h5> 
+<p class="text-muted mb-0">Luxury homes and lands in prime locations across Nigeria.</p> 
+</div> 
+</div> 
+</div> 
+<div class="col-12 col-md-6 col-lg-3"> 
+<div class="card h-100 shadow-sm border-0 service-card"> 
+<div class="card-body d-flex flex-column align-items-center justify-content-center text-center p-4"> 
+<div class="service-icon-wrapper mb-3">📸</div> 
+<h5 class="fw-semibold mb-2">Property Marketing</h5> 
+<p class="text-muted mb-0">Strategic digital campaigns that boost your property’s visibility and reach.</p> 
+</div> 
+</div> 
+</div> 
+<div class="col-12 col-md-6 col-lg-3"> 
+<div class="card h-100 shadow-sm border-0 service-card"> 
+<div class="card-body d-flex flex-column align-items-center justify-content-center text-center p-4"> 
+<div class="service-icon-wrapper mb-3">🤝</div> 
+<h5 class="fw-semibold mb-2">Consulting & Support</h5> 
+<p class="text-muted mb-0">Expert guidance for buyers, sellers, and investors every step of the way.</p> 
+</div> 
+</div> 
+</div> 
+<div class="col-12 col-md-6 col-lg-3"> 
+<div class="card h-100 shadow-sm border-0 service-card"> 
+<div class="card-body d-flex flex-column align-items-center justify-content-center text-center p-4"> 
+<div class="service-icon-wrapper mb-3">💼</div> 
+<h5 class="fw-semibold mb-2">Investment Plans</h5> 
+<p class="text-muted mb-0">Smart real estate investment options that deliver long-term value.</p> 
+</div> 
+</div> 
+</div> 
+</div> 
+</div> 
+</section> 
 
-    <div class="row g-4 justify-content-center">
-      <!-- Real Estate Sales -->
-      <div class="col-12 col-md-6 col-lg-3">
-        <div class="card h-100 shadow-sm border-0 service-card">
-          <div class="card-body d-flex flex-column align-items-center justify-content-center text-center p-4">
-            <div class="service-icon-wrapper mb-3">🏠</div>
-            <h5 class="fw-semibold mb-2">Real Estate Sales</h5>
-            <p class="text-muted mb-0">Luxury homes and lands across prime locations in Nigeria.</p>
+{# --- Featured Listings (clean, self-contained replacement) --- #}
+<section class="py-5">
+  <div class="container">
+    <div class="d-flex align-items-center justify-content-between mb-3">
+      <h2 class="h4 mb-0">Featured Listings</h2>
+      <a class="btn btn-sm btn-outline-secondary" href="{% url 'listings:property_list' %}">Browse all</a>
+    </div>
+
+    <div class="row g-4">
+      {% for p in featured %}
+        <div class="col-12 col-md-6 col-lg-4">
+          <div class="card h-100 shadow-sm border-0">
+
+            <!-- image area -->
+            <div class="ratio ratio-4x3 image-wrap rounded-top overflow-hidden position-relative">
+              {% if p.cover %}
+                <img src="{{ p.cover.url }}" alt="{{ p.title }}" class="ratio-img">
+              {% elif p.gallery1 %}
+                <img src="{{ p.gallery1.url }}" alt="{{ p.title }}" class="ratio-img">
+              {% elif p.gallery2 %}
+                <img src="{{ p.gallery2.url }}" alt="{{ p.title }}" class="ratio-img">
+              {% else %}
+                <img src="{% static 'img/brand_1.png' %}" alt="placeholder" class="ratio-img">
+              {% endif %}
+
+              {# Category badge top-right (pill) #}
+              {% if p.category %}
+                <span class="badge category-badge-pill position-absolute top-0 end-0 m-2 text-uppercase">
+                  {{ p.get_category_display }}
+                </span>
+              {% endif %}
+
+              {# Buttons side-by-side on larger screens; stacked on mobile #}
+              <div class="image-overlay d-flex justify-content-center align-items-end px-2 py-2">
+                <div class="btn-group d-flex" role="group" aria-label="Actions">
+                  <a href="{{ p.get_absolute_url }}" class="btn btn-light btn-sm fw-semibold">View</a>
+
+                  {# use whatsapp_link from context if present; otherwise fallback url #}
+                  {% with whatsapp_link|default:"https://wa.me/2348123456789?text=" as base_whatsapp %}
+                    <a href="{{ base_whatsapp }}{{ p.title|urlencode }}" target="_blank" rel="noopener noreferrer"
+                       class="btn whatsapp-btn btn-sm fw-semibold">
+                      <span aria-hidden="true">💬</span> WhatsApp
+                    </a>
+                  {% endwith %}
+                </div>
+              </div>
+            </div>
+
+            <!-- card body -->
+            <div class="card-body text-center d-flex flex-column">
+              <h5 class="card-title mb-1 text-truncate">{{ p.title }}</h5>
+              <p class="card-text text-muted mb-1 small text-truncate">{{ p.location }}</p>
+
+              {% if p.price %}
+                <p class="card-text fw-bold mb-2">₦{{ p.price|floatformat:0|intcomma }}</p>
+              {% endif %}
+
+              <div class="mt-auto">
+                {% if p.is_featured %}
+                  <span class="small text-success">★ Featured</span>
+                {% endif %}
+              </div>
+            </div>
+
           </div>
         </div>
-      </div>
-
-      <!-- Property Marketing -->
-      <div class="col-12 col-md-6 col-lg-3">
-        <div class="card h-100 shadow-sm border-0 service-card">
-          <div class="card-body d-flex flex-column align-items-center justify-content-center text-center p-4">
-            <div class="service-icon-wrapper mb-3">📸</div>
-            <h5 class="fw-semibold mb-2">Property Marketing</h5>
-            <p class="text-muted mb-0">Strategic media and digital campaigns to boost your property visibility.</p>
-          </div>
-        </div>
-      </div>
-
-      <!-- Consulting & Support -->
-      <div class="col-12 col-md-6 col-lg-3">
-        <div class="card h-100 shadow-sm border-0 service-card">
-          <div class="card-body d-flex flex-column align-items-center justify-content-center text-center p-4">
-            <div class="service-icon-wrapper mb-3">🤝</div>
-            <h5 class="fw-semibold mb-2">Consulting & Support</h5>
-            <p class="text-muted mb-0">Expert guidance for buyers, sellers, and investors at every stage.</p>
-          </div>
-        </div>
-      </div>
-
-      <!-- Investment Plans -->
-      <div class="col-12 col-md-6 col-lg-3">
-        <div class="card h-100 shadow-sm border-0 service-card">
-          <div class="card-body d-flex flex-column align-items-center justify-content-center text-center p-4">
-            <div class="service-icon-wrapper mb-3">💼</div>
-            <h5 class="fw-semibold mb-2">Investment Plans</h5>
-            <p class="text-muted mb-0">Smart property investment options with guaranteed long-term value.</p>
-          </div>
-        </div>
-      </div>
+      {% empty %}
+        <div class="col-12"><p class="text-muted">No featured listings currently available.</p></div>
+      {% endfor %}
     </div>
   </div>
 </section>
 
 
+
+{# --- Styles specific to these cards (put once in this template or central CSS) --- #}
 <style>
-/* Services: centered icons & consistent sizing */
-.service-card {
-  transition: transform 0.25s ease, box-shadow 0.25s ease;
-  border-radius: .5rem;
-  overflow: hidden;
+  .image-wrap { position: relative; height: 100%; }
+  .image-wrap .ratio-img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .image-overlay {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 6;                 /* make sure overlay sits above image */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: .5rem;
+    padding: .5rem;
+    background: linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(0,0,0,0.55) 100%);
+    pointer-events: auto;       /* allow clicks */
+  }
+
+  /* ensure buttons are visible / clickable and not overlapped */
+  .image-overlay a.btn {
+    pointer-events: auto;
+    z-index: 7;
+    white-space: nowrap;
+  }
+
+  .whatsapp-btn {
+  background-color: #25D366 !important;   /* WhatsApp green */
+  color: #fff !important;                 /* white text */
+  border: none !important;
 }
 
-.service-card:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+.whatsapp-btn:hover {
+  background-color: #1da851 !important;
+  color: #fff !important;
 }
 
-/* Icon/emoji wrapper (for font icons or emojis) */
-.service-icon-wrapper {
-  font-size: 2.25rem;        /* icon size */
-  line-height: 1;
-  width: 80px;
-  height: 80px;
-  display: grid;
-  place-items: center;
-  border-radius: 12px;
-  background: rgba(13,110,253,0.06); /* subtle bluish bg */
-  color: #0d6efd; /* bootstrap primary */
-}
-
-/* Image icon variant — keeps images consistent */
-.service-icon {
-  width: 80px;
-  height: 80px;
-  object-fit: contain;
-  border-radius: 12px;
-  background: rgba(0,0,0,0.03);
-  display: inline-block;
-}
-
-/* Ensure small screens have good spacing */
-@media (max-width: 575.98px) {
-  .service-icon-wrapper, .service-icon { width: 64px; height: 64px; font-size: 1.75rem; }
-  .services-section .lead { font-size: 0.95rem; }
-}
+  /* responsive stacking of overlay buttons on very small screens */
+  @media (max-width: 575.98px) {
+    .image-overlay { flex-direction: column; align-items: stretch; gap: .4rem; padding: .6rem; }
+    .image-overlay a.btn { width: 100%; text-align: center; }
+  }
 </style>
 
-<!-- ===== Featured Listings Grid ===== -->
-<div class="container my-5">
-  <h2 class="h4 mb-4">Featured Listings</h2>
-  <div class="row g-4">
-    {% for p in featured %}
-      <div class="col-12 col-md-6 col-lg-4">
-        <div class="property-card shadow-sm h-100">
-          {% if p.cover %}
-            <img src="{{ p|cover_url:'cover' }}" alt="{{ p.title }}" loading="lazy">
+{% endblock %} 
 
-          {% else %}
-            <img src="{% static 'img/brand_1.png' %}" alt="Kam Luxury" class="property-img">
-          {% endif %}
-          <div class="property-overlay">
-            <span class="badge bg-dark mb-1">{{ p.get_category_display }}</span>
-            <h5 class="mb-1 text-white">{{ p.title }}</h5>
-            <p class="mb-2 small text-white-50">{{ p.location }}</p>
-            {% if p.price %}<p class="fw-bold text-warning mb-2">₦{{ p.price|floatformat:0|intcomma }}</p>{% endif %}
-            <a href="{{ p.get_absolute_url }}" class="btn btn-light btn-sm">View</a>
-          </div>
-        </div>
-      </div>
-    {% empty %}
-      <p class="text-muted">No featured listings currently available.</p>
-    {% endfor %}
-  </div>
-</div>
-
-{% endblock %}

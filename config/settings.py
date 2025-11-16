@@ -20,31 +20,32 @@ ALLOWED_HOSTS = env("ALLOWED_HOSTS", default="kamluxng.onrender.com,localhost,12
 # ------------------------
 # STATIC FILES
 # ------------------------
-STATIC_URL = "/static/"
-STATIC_ROOT = BASE_DIR / "staticfiles"
-STATICFILES_DIRS = [BASE_DIR / "static"]
-STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
+
+
+STATIC_URL = '/static/'
+STATICFILES_DIRS = [BASE_DIR / 'static']
+STATIC_ROOT = BASE_DIR / 'staticfiles'
+
 
 # ------------------------
 # MEDIA / CLOUDINARY
 # ------------------------
 MEDIA_URL = "/media/"
-MEDIA_ROOT = env("MEDIA_ROOT", default=str(BASE_DIR / "media"))
+MEDIA_ROOT = BASE_DIR / "media"
 
-# Cloudinary environment
 CLOUDINARY_URL = env("CLOUDINARY_URL", default=None)
 CLOUDINARY_CLOUD_NAME = env("CLOUDINARY_CLOUD_NAME", default=None)
 CLOUDINARY_API_KEY = env("CLOUDINARY_API_KEY", default=None)
 CLOUDINARY_API_SECRET = env("CLOUDINARY_API_SECRET", default=None)
 
 # Parse CLOUDINARY_URL if provided
-if CLOUDINARY_URL:
+if CLOUDINARY_URL and not (CLOUDINARY_CLOUD_NAME and CLOUDINARY_API_KEY and CLOUDINARY_API_SECRET):
     parsed = urlparse(CLOUDINARY_URL)
     CLOUDINARY_CLOUD_NAME = CLOUDINARY_CLOUD_NAME or parsed.hostname
     CLOUDINARY_API_KEY = CLOUDINARY_API_KEY or parsed.username
     CLOUDINARY_API_SECRET = CLOUDINARY_API_SECRET or parsed.password
 
-# Enable Cloudinary if all credentials are present
+# Enable Cloudinary only if all credentials are present
 if CLOUDINARY_CLOUD_NAME and CLOUDINARY_API_KEY and CLOUDINARY_API_SECRET:
     DEFAULT_FILE_STORAGE = "cloudinary_storage.storage.MediaCloudinaryStorage"
     CLOUDINARY_STORAGE = {
@@ -54,7 +55,9 @@ if CLOUDINARY_CLOUD_NAME and CLOUDINARY_API_KEY and CLOUDINARY_API_SECRET:
     }
     MEDIA_URL = f"https://res.cloudinary.com/{CLOUDINARY_CLOUD_NAME}/image/upload/"
 else:
-    DEFAULT_FILE_STORAGE = "cloudinary_storage.storage.MediaCloudinaryStorage"
+    # Use local filesystem storage in development / when Cloudinary is not configured
+    DEFAULT_FILE_STORAGE = "django.core.files.storage.FileSystemStorage"
+    # MEDIA_URL / MEDIA_ROOT already point to /media/ and BASE_DIR / 'media'
 
 # ------------------------
 # INSTALLED APPS
