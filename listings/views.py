@@ -12,6 +12,8 @@ from .forms import LeadForm
 from django.shortcuts import get_object_or_404, render, redirect
 
 
+
+
 logger = logging.getLogger(__name__)
 
 # Optionally support UnitOption if present
@@ -129,3 +131,9 @@ def contact_agent(request, pk):
     else:
         form = LeadForm()
     return render(request, "listings/contact_agent.html", {"property": property, "form": form})
+
+
+def debug_featured(request):
+    featured = Property.objects.filter(is_featured=True)
+    titles = [p.title for p in featured]
+    return HttpResponse(f"Featured: {titles}")

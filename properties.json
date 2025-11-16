@@ -1,0 +1,71 @@
+[
+{
+  "model": "listings.property",
+  "pk": 9,
+  "fields": {
+    "title": "🏙 Autograph Lagos – Modern Living, Smart Investment",
+    "slug": "autograph-lagos-modern-living-smart-investment",
+    "category": "",
+    "location": "Ikate, Lekki, Lagos",
+    "description": "🏙 Autograph Lagos – Modern Living, Smart Investment\r\n\r\nAddress: 11 Baale Street, Ilasan-Ikate, Lekki, Lagos\r\nDeveloper: Xymbolic Development Ltd\r\nProperty Type: Luxury 1 & 2-Bedroom Apartments (with BQ)\r\n\r\n🌟 Overview\r\nAutograph Lagos is not just another property development — it’s a strategically designed investment opportunity for forward-thinking investors. Located in one of Lagos’ most sought-after neighborhoods, Ilasan–Ikate, Lekki, it offers proximity to key business and entertainment districts including Lekki Phase 1, Victoria Island, and Ikoyi.\r\n\r\nWhether you’re buying for personal use, long-term leasing, or short-term rental, Autograph Lagos is built to ensure maximum returns and hassle-free ownership through a suite of management and concierge services.\r\n\r\n🏗 Project Highlights\r\n•\t12 Units of 2-Bedroom Apartments with BQ\r\n•\t4 Units of 1-Bedroom Apartments\r\n•\tProject Duration: 18 Months\r\n•\tLand Title: Governor’s Consent\r\n•\tDelivery: Beginning from mid-2025\r\n\r\n💡 Why Choose Autograph Lagos\r\n•\tPrime Location: Easily accessible from major hubs and landmarks including Nike Art Gallery, The Palms Mall, Elegushi Beach, and Lekki Conservation Centre.\r\n•\tCapital Growth: Positioned for strong appreciation thanks to its location and premium build quality.\r\n•\tHands-Free Income: Optional property management and concierge services handle bookings, guests, and maintenance for you.\r\n•\tLow Operating Costs: Solar-powered central areas, energy-efficient systems, and centralized utilities reduce expenses.\r\n•\tFlexible Ownership: Multiple payment and ownership plans tailored to individual and group investors.\r\n\r\n🏢 Features & Amenities\r\n•\tElevator\r\n•\tSwimming Pool\r\n•\tFully Equipped Gym\r\n•\t24/7 Power (Backup Diesel Generator)\r\n•\tSolar-Powered Central Areas\r\n•\tConcierge Service\r\n•\tCCTV Surveillance & 24-Hour Security\r\n•\tAmple Parking Space\r\n•\tGas Reticulation System\r\n•\tDedicated Transformer\r\n•\tBio-Digester System\r\n•\tFacility Management Office\r\n\r\n🏡 Apartment Details\r\n2-Bedroom Apartment + BQ\r\n•\tTotal Area: 107 sqm\r\n•\tLiving Room: 36 sqm\r\n•\tMaster Bedroom: 18 sqm\r\n•\tBedroom: 14 sqm\r\n•\tKitchen: 14 sqm\r\n•\tBathrooms, BQ, and Terraces included\r\n1-Bedroom Apartment\r\n•\tDesigned for modern professionals and investors seeking premium shortlet appeal\r\n\r\n💰 Pricing & Payment Plan\r\n2-Bedroom Apartment + BQ – ₦170,000,000\r\n•\tInitial Deposit: ₦20,000,000\r\n•\t6-Month Plan: ₦19,800,000 per month\r\n•\tInfrastructure & Documentation Fee: 10% of purchase price\r\n1-Bedroom Apartment – ₦100,000,000\r\n•\tInitial Deposit: ₦20,000,000\r\n•\t3-Month Plan: ₦10,000,000 per month\r\n•\tInfrastructure & Documentation Fee: 10% of purchase price\r\n\r\n💵 Rental Income Potential\r\nRegular Rent:\r\n•\tAverage rent for similar 2-bed apartments in Ilasan: ₦4M–₦6M/year\r\n•\tExpected rent at Autograph Lagos: ₦5M+ per year\r\nShortlet Rentals:\r\n•\t₦90,000/day average booking rate\r\n•\t65% occupancy target\r\n•\t30% expenses\r\n•\tEstimated Net Rent: ₦14,308,500 per year\r\nAutograph Lagos gives investors the flexibility to choose between steady long-term rent or high-yield shortlets.\r\n\r\nAdditional Information\r\n•\tInfrastructure & Documentation Fee: 10% of unit price (covers Deed of Assignment, Survey, and Handbook)\r\n•\tMaintenance: Handled by Facility Management; cost shared or borne by tenant depending on usage.\r\n•\tRefund Policy:\r\no\tWithin 3 months – 70% refund (30% admin charge)\r\no\t4–6 months – 85% refund (15% admin charge)\r\no\tAfter 6 months – No refund\r\n•\tPayment Default Penalties:\r\no\t5% interest after 2 months of default\r\no\tUpward price review after 3 months\r\no\tTermination and 30% deduction after 6 months\r\n\r\n🏦 Payment Details\r\nAccount Name: Xymbolic Development Ltd\r\nBank: Providus Bank\r\nAccount Number: 5401389288\r\n\r\n📈 Investment Summary\r\n•\tLocation Advantage: Minutes from major business districts and leisure spots\r\n•\tQuality & Design: Energy-efficient, modern architecture\r\n•\tRental Versatility: High ROI potential via long or short-let models\r\n•\tDeveloper Reputation: Backed by Xymbolic Development Ltd — experts in luxury real estate investments",
+    "price": "100000000.00",
+    "initial_deposit": "50000000.00",
+    "installment_plan": "",
+    "bedrooms": 0,
+    "bathrooms": 0,
+    "parking": 0,
+    "square_meters": 0,
+    "is_featured": true,
+    "cover": "image/upload/v1763222853/dhdygy4sik6jkgjm0rk2.png",
+    "gallery1": "image/upload/v1763235051/irsvrqkecazb1rteduia.jpg",
+    "gallery2": "image/upload/v1763235052/gjzhsuukkd3klo2ho8my.jpg",
+    "created_at": "2025-11-15T16:06:37.701Z"
+  }
+},
+{
+  "model": "listings.property",
+  "pk": 10,
+  "fields": {
+    "title": "LUXURY LIVING AT ITS FINEST!",
+    "slug": "luxury-living-at-its-finest",
+    "category": "3BR",
+    "location": "Lekki, Lagos",
+    "description": "LUXURY LIVING AT ITS FINEST!\r\n\r\nIntroducing Chevy Castle Apartments, strategically located in the heart of Lekki, Lagos, on the prestigious Chevron Drive. This prime estate offers a limited opportunity to own a piece of luxury, with 3 bedroom apartment units available for sale:\r\n\r\n3 Bedroom Apartment: ₦160,000,000\r\nInitial Deposit: ₦40,000,000\r\nPayment Plan: 0-3 months\r\nUnits Available: 3\r\n\r\nDon't miss this incredible opportunity to invest in your dream home! Chevy Castle Apartments offers a unique blend of luxury, comfort, and convenience, making it the perfect choice for discerning homeowners.\r\n\r\nContact us today to schedule a viewing and make your dream a reality!\r\n\r\nHurry! Units are selling fast!",
+    "price": "160000000.00",
+    "initial_deposit": "40000000.00",
+    "installment_plan": "",
+    "bedrooms": 0,
+    "bathrooms": 0,
+    "parking": 0,
+    "square_meters": 0,
+    "is_featured": true,
+    "cover": "image/upload/v1763236313/tm65ckdfwzhzifpam6mv.jpg",
+    "gallery1": "image/upload/v1763236315/kmjdeucvbnvmfd0t1hoc.png",
+    "gallery2": null,
+    "created_at": "2025-11-15T19:51:00.853Z"
+  }
+},
+{
+  "model": "listings.property",
+  "pk": 11,
+  "fields": {
+    "title": "De Lekki Apartment, Ikate – Prime Short-Let Investment",
+    "slug": "de-lekki-apartment-ikate-prime-short-let-investmen",
+    "category": "RESIDENT",
+    "location": "Ikate, Lekki, Lagos",
+    "description": "De Lekki Apartment, Ikate – Prime Short-Let Investment\r\n\r\n1 & 2-Bedroom Luxury Apartments in Lekki\r\nHigh-yield short-let potential in a secure, high-demand location.\r\n\r\nHighlights\r\nIkate, Lekki — walkable, central, premium neighborhood\r\n\r\nTitle: C of O & Governor’s Consent\r\n\r\nAmenities: Swimming pool, elevator, underground parking, fitted kitchen, wardrobes, ensuite rooms, reverse osmosis water system, 24/7 power & security, gym\r\n\r\nHouse Types & Pricing\r\n\r\n1-Bedroom Apartment — ₦100,000,000\r\nInitial deposit: 30% • Balance: spread over 12 months\r\n\r\n2-Bedroom Apartment — ₦150,000,000\r\nInitial deposit: 30% • Balance: spread over 12 months\r\n\r\nWhy This Investment\r\n\r\nStrong short-let demand in Lekki → excellent occupancy & cash flow\r\n\r\nModern finishes & lifestyle amenities → instant guest appeal\r\n\r\nPrime asset with long-term appreciation\r\n\r\nLocation\r\n\r\nIkate, Lekki, Lagos.\r\n\r\nAct fast—units are limited and demand is high.\r\nBook an inspection / Request payment plan today.\r\n\r\nContact Kam Luxury Nigeria\r\n📍 59, Murtala Mohammed Way, Ebute-Metta, Lagos\r\n📞 08053309281 • 🌐 kamluxurynigeria.com\r\n📲 Instagram | Twitter | Facebook: @kamluxuryng\r\n\r\n(Optional) Admin entries for Unit Options\r\n\r\nCreate two UnitOption rows under this Property:\r\n\r\nunit_type=1BR, label=\"Ikate, Lekki\", price=100000000, initial_deposit=30000000, plan_6_12=100000000, notes=\"30% deposit, 12-month plan\"\r\n\r\nunit_type=2BR, label=\"Ikate, Lekki\", price=150000000, initial_deposit=45000000, \r\n\r\nplan_6_12=150000000, notes=\"30% deposit, 12-month plan\"\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n🔹 Option 1 — Luxury & Investment Focus\r\n“De Lekki Apartments, Ikate – Luxury Living Meets Profitable Investment”\r\nSecure premium 1 & 2-Bedroom apartments in the heart of Lekki and earn steady short-let income.\r\n\r\n🔹 Option 2 — Short-Let Income Emphasis\r\n“Earn Big from the Booming Lekki Short-Let Market – Own a Unit at De Lekki Apartments Today!”\r\nYour key to consistent returns and luxury lifestyle in Ikate Lekki.\r\n\r\n🔹 Option 3 — Modern Lifestyle Appeal\r\n“Experience Modern Comfort & Smart Investment at De Lekki Apartments, Ikate”\r\nStylish 1 & 2-Bedroom apartments with premium finishes, pool, gym & 24/7 security.\r\n\r\n🔹 Option 4 — Urgency + Investor Tone\r\n“Limited Units Available – Invest Now in De Lekki Apartments for High Short-Let Returns”\r\n30% Initial Deposit | Flexible 12-Month Payment | Governor’s Consent Title.\r\n\r\n🔹 Option 5 — Premium Elegance (for banners & hero sections)\r\n“De Lekki Apartments – Where Luxury Meets Opportunity”\r\nA prestigious Ikate address designed for comfort, class & profitability.",
+    "price": "100000000.00",
+    "initial_deposit": "30000000.00",
+    "installment_plan": "",
+    "bedrooms": 1,
+    "bathrooms": 0,
+    "parking": 0,
+    "square_meters": 0,
+    "is_featured": true,
+    "cover": "image/upload/v1763308504/posdcsosvms09pu1qk7k.png",
+    "gallery1": "image/upload/v1763308506/cpnknocyttvj3ec9hwjx.png",
+    "gallery2": "image/upload/v1763308509/m7qxrajrawfgjnsd1yhh.png",
+    "created_at": "2025-11-16T15:54:12.306Z"
+  }
+}
+]
