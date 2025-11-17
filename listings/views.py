@@ -134,9 +134,14 @@ def contact_agent(request, pk):
 
 
 def debug_featured(request):
-    featured = Property.objects.filter(is_featured=True).order_by('-created_at')
+    """
+    Temporary: returns JSON with featured count, slugs, and titles.
+    Remove after debugging.
+    """
+    featured_qs = Property.objects.filter(is_featured=True).order_by('-created_at')
     return JsonResponse({
-        "featured_count": featured.count(),
-        "slugs": [p.slug for p in featured],
-        "titles": [p.title for p in featured],
+        "featured_count": featured_qs.count(),
+        "slugs": [p.slug for p in featured_qs],
+        "titles": [p.title for p in featured_qs],
     })
+
