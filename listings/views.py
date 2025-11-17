@@ -119,7 +119,7 @@ def property_list(request):
     })
 
 
-def contact_agent(request, pk):
+def contact_us(request, pk):
     property = get_object_or_404(Property, pk=pk)
     if request.method == "POST":
         form = LeadForm(request.POST)

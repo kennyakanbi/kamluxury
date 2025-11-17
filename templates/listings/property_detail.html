@@ -103,10 +103,10 @@
     <aside class="col-lg-4">
       <div class="card shadow-sm mb-4">
         <div class="card-body">
-          <h5 class="card-title mb-3">Contact Agent</h5>
+          <h5 class="card-title mb-3">Contact Us</h5>
 
           {# Post to the contact view you already have in urls.py: 'listings:contact_agent' #}
-          <form method="post" action="{% url 'listings:contact_agent' obj.id %}">
+          <form method="post" action="{% url 'listings:contact_us' obj.id %}">
             {% csrf_token %}
             <input type="hidden" name="property" value="{{ obj.id }}">
 
