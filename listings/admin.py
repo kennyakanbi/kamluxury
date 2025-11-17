@@ -16,13 +16,16 @@ class UnitOptionInline(admin.TabularInline):
 @admin.register(Property)
 class PropertyAdmin(admin.ModelAdmin):
     prepopulated_fields = {"slug": ("title",)}
-    list_display = ("title", "location", "is_featured_badge", "created_at", "thumbnail_display")
+    list_display = (
+        "title", "location", "price_display", "initial_deposit_display",
+        "is_featured_badge", "created_at", "thumbnail_display"
+    )
     search_fields = ("title", "location")
     inlines = [UnitOptionInline]
 
     readonly_fields = ("cover_thumb", "gallery1_thumb", "gallery2_thumb")
 
-
+    # --- Thumbnails ---
     def thumbnail_display(self, obj):
         if obj.cover and hasattr(obj.cover, "url"):
             return format_html(
@@ -31,12 +34,6 @@ class PropertyAdmin(admin.ModelAdmin):
             )
         return "-"
     thumbnail_display.short_description = "Thumbnail"
-
-    def is_featured_badge(self, obj):
-        if obj.is_featured:
-            return format_html('<span style="color: green; font-weight: bold;">Yes</span>')
-        return "No"
-    is_featured_badge.short_description = "Featured"
 
     def cover_thumb(self, obj):
         if obj.cover and hasattr(obj.cover, "url"):
@@ -55,6 +52,26 @@ class PropertyAdmin(admin.ModelAdmin):
             return format_html('<img src="{}" width="80" style="object-fit: cover; border-radius: 4px;">', obj.gallery2.url)
         return "-"
     gallery2_thumb.short_description = "Gallery 2"
+
+    # --- Featured Badge ---
+    def is_featured_badge(self, obj):
+        if obj.is_featured:
+            return format_html('<span style="color: green; font-weight: bold;">Yes</span>')
+        return "No"
+    is_featured_badge.short_description = "Featured"
+
+    # --- Safe Numeric Displays ---
+    def price_display(self, obj):
+        if obj.price is None:
+            return "N/A"
+        return f"${obj.price:,.2f}"
+    price_display.short_description = "Price"
+
+    def initial_deposit_display(self, obj):
+        if obj.initial_deposit is None:
+            return "N/A"
+        return f"${obj.initial_deposit:,.2f}"
+    initial_deposit_display.short_description = "Initial Deposit"
 
 # --- Lead Admin ---
 @admin.register(Lead)

@@ -8,10 +8,11 @@
 {% block content %}
 <div class="container my-5">
   <div class="row">
+    
     <!-- MAIN COLUMN -->
     <div class="col-lg-8">
 
-      <!-- Image carousel (uses the view-provided 'images' list: list of URL strings) -->
+      <!-- Image carousel -->
       <div id="propertyCarousel" class="carousel slide mb-4" data-bs-ride="carousel">
         <div class="carousel-inner">
           {% if images %}
@@ -52,18 +53,54 @@
         {% endif %}
       </div>
 
-      <!-- Property Description -->
+      <!-- Unit Options -->
+      {% with obj.options.all as options %}
+        {% if options %}
+          <h4 class="h6 mb-3">Unit Options</h4>
+          <div class="table-responsive">
+            <table class="table table-sm table-bordered">
+              <thead class="table-light">
+                <tr>
+                  <th>Type</th>
+                  <th>Label</th>
+                  <th class="text-end">Price</th>
+                  <th class="text-end">Initial Deposit</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for opt in options %}
+                  <tr>
+                    <td>{{ opt.get_unit_type_display }}</td>
+                    <td>{{ opt.label }}</td>
+                    <td class="text-end">₦{{ opt.price|floatformat:0|intcomma }}</td>
+                    <td class="text-end">
+                      {% if opt.initial_deposit %}
+                        ₦{{ opt.initial_deposit|floatformat:0|intcomma }}
+                      {% else %}
+                        -
+                      {% endif %}
+                    </td>
+                  </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        {% endif %}
+      {% endwith %}
+
+      <!-- Property Title & Key Facts -->
       <h1 class="h3 mb-2">{{ obj.title }}</h1>
       <p class="text-muted mb-3">
         {{ obj.get_category_display }} — {{ obj.location }}
         {% if obj.price %} • <strong>₦{{ obj.price|floatformat:0|intcomma }}</strong>{% endif %}
       </p>
 
+      <!-- Description -->
       <div class="mb-4">
         {{ obj.description|linebreaks }}
       </div>
 
-      <!-- Key facts -->
+      <!-- Additional Key Facts -->
       <ul class="list-unstyled mb-4">
         {% if obj.bedrooms %}<li><strong>Bedrooms:</strong> {{ obj.bedrooms }}</li>{% endif %}
         {% if obj.bathrooms %}<li><strong>Bathrooms:</strong> {{ obj.bathrooms }}</li>{% endif %}
@@ -72,69 +109,36 @@
         {% if obj.installment_plan %}<li><strong>Installment plan:</strong> {{ obj.installment_plan }}</li>{% endif %}
       </ul>
 
-      <!-- Unit options (if you have UnitOption related_name 'options') -->
-      {% with obj.options.all as options %}
-        {% if options %}
-          <h4 class="h6 mb-2">Unit Options</h4>
-          <table class="table table-sm">
-            <thead>
-              <tr>
-                <th>Type</th>
-                <th>Label</th>
-                <th class="text-end">Price</th>
-              </tr>
-            </thead>
-            <tbody>
-              {% for opt in options %}
-                <tr>
-                  <td>{{ opt.get_unit_type_display }}</td>
-                  <td>{{ opt.label }}</td>
-                  <td class="text-end">₦{{ opt.price|floatformat:0|intcomma }}</td>
-                </tr>
-              {% endfor %}
-            </tbody>
-          </table>
-        {% endif %}
-      {% endwith %}
-
     </div>
 
-    <!-- SIDEBAR: Contact form -->
+    <!-- SIDEBAR -->
     <aside class="col-lg-4">
+      <!-- Contact Form -->
       <div class="card shadow-sm mb-4">
         <div class="card-body">
           <h5 class="card-title mb-3">Contact Us</h5>
-
-          {# Post to the contact view you already have in urls.py: 'listings:contact_agent' #}
           <form method="post" action="{% url 'listings:contact_us' obj.id %}">
             {% csrf_token %}
             <input type="hidden" name="property" value="{{ obj.id }}">
-
             <div class="mb-3">
               <label for="id_name" class="form-label">Name</label>
               <input id="id_name" name="name" class="form-control" required>
             </div>
-
             <div class="mb-3">
               <label for="id_email" class="form-label">Email</label>
               <input id="id_email" name="email" type="email" class="form-control">
             </div>
-
             <div class="mb-3">
               <label for="id_phone" class="form-label">Phone</label>
               <input id="id_phone" name="phone" class="form-control" required>
             </div>
-
             <div class="mb-3">
               <label for="id_message" class="form-label">Message</label>
               <textarea id="id_message" name="message" rows="4" class="form-control"></textarea>
             </div>
-
             <button type="submit" class="btn btn-primary w-100">Send Enquiry</button>
           </form>
-
           <hr class="my-3">
-
           <p class="mb-0 small text-muted">
             Or contact us on WhatsApp:
             <a href="{{ whatsapp_link|default:'#' }}" target="_blank" rel="noopener">Open chat</a>
@@ -142,21 +146,23 @@
         </div>
       </div>
 
-      <!-- Quick facts card -->
+      <!-- Quick Facts Card -->
       <div class="card shadow-sm">
         <div class="card-body">
           <h6 class="mb-2">Listing details</h6>
           <p class="mb-1"><strong>Posted:</strong> {{ obj.created_at|date:"F j, Y" }}</p>
           {% if obj.initial_deposit %}<p class="mb-1"><strong>Initial deposit:</strong> ₦{{ obj.initial_deposit|floatformat:0|intcomma }}</p>{% endif %}
+          {% if obj.price %}<p class="mb-1"><strong>Price:</strong> ₦{{ obj.price|floatformat:0|intcomma }}</p>{% endif %}
         </div>
       </div>
     </aside>
+
   </div>
 </div>
 
 <style>
-/* small thumbnail hover effect */
-.carousel-item img { max-height: 560px; object-fit: cover; width:100%; }
+.carousel-item img { max-height: 560px; object-fit: cover; width: 100%; }
 .row.gx-2 img { height: 90px; object-fit: cover; }
+.table-responsive { overflow-x: auto; }
 </style>
 {% endblock %}
