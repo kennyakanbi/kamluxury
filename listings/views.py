@@ -10,7 +10,7 @@ from cloudinary.utils import cloudinary_url
 from .models import Property, Category
 from .forms import LeadForm
 from django.shortcuts import get_object_or_404, render, redirect
-
+from django.http import JsonResponse
 
 
 
@@ -133,7 +133,13 @@ def contact_agent(request, pk):
     return render(request, "listings/contact_agent.html", {"property": property, "form": form})
 
 
+
+
 def debug_featured(request):
+    """Temporary debug endpoint: returns featured count and slugs."""
     featured = Property.objects.filter(is_featured=True)
-    titles = [p.title for p in featured]
-    return HttpResponse(f"Featured: {titles}")
+    return JsonResponse({
+        "featured_count": featured.count(),
+        "slugs": [p.slug for p in featured],
+        "titles": [p.title for p in featured],
+    })
