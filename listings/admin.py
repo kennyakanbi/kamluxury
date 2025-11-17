@@ -22,6 +22,7 @@ class PropertyAdmin(admin.ModelAdmin):
 
     readonly_fields = ("cover_thumb", "gallery1_thumb", "gallery2_thumb")
 
+
     def thumbnail_display(self, obj):
         if obj.cover and hasattr(obj.cover, "url"):
             return format_html(
