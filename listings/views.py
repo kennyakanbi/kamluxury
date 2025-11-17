@@ -133,11 +133,8 @@ def contact_agent(request, pk):
     return render(request, "listings/contact_agent.html", {"property": property, "form": form})
 
 
-
-
 def debug_featured(request):
-    """Temporary debug endpoint: returns featured count and slugs."""
-    featured = Property.objects.filter(is_featured=True)
+    featured = Property.objects.filter(is_featured=True).order_by('-created_at')
     return JsonResponse({
         "featured_count": featured.count(),
         "slugs": [p.slug for p in featured],

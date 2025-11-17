@@ -14,7 +14,7 @@ urlpatterns = [
     path("properties/<slug:slug>/", views.property_detail, name="detail"),
     path("contact/<int:pk>/", views.contact_agent, name="contact_agent"),
     path('__debug_cloudinary__/', debug_cloudinary),
-    path('debug-featured/', views.debug_featured, name='debug-featured')
+    path('debug-featured/', views.debug_featured, name='debug-featured'),
 ]
 
 if settings.DEBUG:
