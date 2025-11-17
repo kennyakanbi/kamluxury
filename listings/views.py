@@ -145,3 +145,15 @@ def debug_featured(request):
         "titles": [p.title for p in featured_qs],
     })
 
+   
+@staff_member_required
+def debug_config(request):
+    return JsonResponse({
+        "DEBUG": settings.DEBUG,
+        "ALLOWED_HOSTS": settings.ALLOWED_HOSTS,
+        "STATIC_URL": settings.STATIC_URL,
+        "MEDIA_URL": settings.MEDIA_URL,
+        "DATABASES": list(settings.DATABASES.keys()),
+        "CLOUDINARY_CONFIGURED": hasattr(settings, "CLOUDINARY_URL"),
+    })
+

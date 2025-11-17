@@ -3,6 +3,7 @@ from . import views
 from django.conf import settings
 from django.conf.urls.static import static
 from listings.views import debug_cloudinary
+from .views import debug_config
 
 app_name = "listings"
 
@@ -15,6 +16,7 @@ urlpatterns = [
     path("contact/<int:pk>/", views.contact_agent, name="contact_agent"),
     path('__debug_cloudinary__/', debug_cloudinary),
     path('debug-featured/', views.debug_featured, name='debug-featured'),
+    path("debug-config/", debug_config, name="debug_config"),
 ]
 
 if settings.DEBUG:
