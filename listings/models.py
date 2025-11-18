@@ -13,7 +13,7 @@ class Category(models.TextChoices):
     FIVE_BR = '5BR', '5 Bedroom Apartment'
     FARM_LAND = 'FARM', 'Farm Land'
     LAND_ASSET = 'LAND', 'Land Asset'
-    MALL_SHOP = 'SHOP', 'Mall Shop'
+    SHOPING_MALL = 'SHOP', 'Shoping Mall'
 
 class Property(models.Model):
     title = models.CharField(max_length=200)
