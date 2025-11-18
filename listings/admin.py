@@ -37,7 +37,7 @@ class PropertyAdmin(admin.ModelAdmin):
 
     def cover_thumb(self, obj):
         if obj.cover and hasattr(obj.cover, "url"):
-            return format_html('<img src="{}" width="80" style="object-fit: cover; border-radius: 4px;">', obj.cover.url)
+            return format_html('<img src="{}" width="80" style="object-fit: cover; border-radius: 8px;">', obj.cover.url)
         return "-"
     cover_thumb.short_description = "Cover"
 

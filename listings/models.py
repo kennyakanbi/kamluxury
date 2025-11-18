@@ -4,11 +4,13 @@ from cloudinary.models import CloudinaryField
 
 class Category(models.TextChoices):
     STUDIO = 'STUDIO', 'Studio Apartment'
+    DIPLEX = 'DUPLEX', 'Duplex'
     RESIDENT = 'RESIDENT', 'Residential'
     ONE_BR = '1BR', '1 Bedroom Apartment'
     TWO_BR = '2BR', '2 Bedroom Apartment'
     THREE_BR = '3BR', '3 Bedroom Apartment'
     FOUR_BR = '4BR', '4 Bedroom Apartment'
+    FIVE_BR = '5BR', '5 Bedroom Apartment'
     FARM_LAND = 'FARM', 'Farm Land'
     LAND_ASSET = 'LAND', 'Land Asset'
     MALL_SHOP = 'SHOP', 'Mall Shop'
